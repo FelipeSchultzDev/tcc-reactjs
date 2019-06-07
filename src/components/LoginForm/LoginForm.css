@@ -1,0 +1,21 @@
+.form-container{
+    width: 360px;
+    height: 544px;
+    background-image: url('./../../Assets/images/Group.svg');
+}
+
+.title{
+    color: #E0E0E0;
+}
+
+.logo-container{
+    width: 180px;
+    height: 180px;
+    background-color: #6FCF97;
+    border-radius: 100%;
+    position: relative;
+}
+
+.logo-container img{
+    width: 120px;
+}
