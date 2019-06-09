@@ -1,0 +1,30 @@
+.input-container{
+    width: 240px;
+    height: 30px;
+    border-bottom: 1px solid #6FCF97;
+}
+
+.icon{
+    float: left;
+    width: 30px;
+    height: 30px;
+}
+
+.icon svg{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.input-container input{
+    float: left;
+    width: 210px;
+    height: 30px;
+    border: none;
+    font-size: 24px;
+    background-color: transparent;
+    color: #BDBDBD;
+    outline-color: transparent;
+    font-weight: 500;
+}
