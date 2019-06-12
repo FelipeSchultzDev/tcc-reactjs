@@ -6,13 +6,13 @@ import './LoginInput.css';
 
 
 const LoginInput = ({
-  icon, placeholder, type, onKeyPress,
+  icon, placeholder, type, onKeyPress, name,
 }) => {
   const Icon = FontAwesome[icon];
   return (
     <div className="input-container">
       <div className="icon"><Icon size="22" color="#BDBDBD" /></div>
-      <input onKeyPress={onKeyPress} type={type} placeholder={placeholder} />
+      <input name={name} onKeyUp={onKeyPress} type={type} placeholder={placeholder} />
     </div>
   );
 };
@@ -22,6 +22,7 @@ LoginInput.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string,
   onKeyPress: PropTypes.func,
+  name: PropTypes.string,
 };
 
 LoginInput.defaultProps = {
@@ -29,6 +30,7 @@ LoginInput.defaultProps = {
   placeholder: '',
   type: '',
   onKeyPress: () => {},
+  name: '',
 };
 
 export default LoginInput;
