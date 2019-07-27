@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
 import './Login.css';
 
@@ -7,7 +8,7 @@ import Logo from '../../Assets/images/logo.svg';
 
 import LoginInput from '../../components/LoginInput/LoginInput';
 import Button from '../../components/Button/Button';
-import Loading from '../../components/Loading/Loading';
+import loader from '../../components/Loading/Loading';
 
 import login from '../../Services/login';
 
@@ -18,20 +19,19 @@ export default class Login extends Component {
       user: '',
       password: '',
       loading: false,
-      btnDisabled: false,
       redirectToHome: false,
     };
   }
 
   changeValue = (e) => {
     this.setState({
-      [e.target.attributes.name.value]: e.target.value,
+      [e.target.name]: e.target.value,
     });
   }
 
   doLogin = async (e) => {
     e.preventDefault();
-    this.setState({ loading: true, btnDisabled: true });
+    this.setState({ loading: true });
 
     const { user, password } = this.state;
 
@@ -42,12 +42,15 @@ export default class Login extends Component {
 
     login.post('/login', body)
       .then((res) => {
+        this.setState({ loading: false });
         if (res.data.success) {
           localStorage.setItem('token', res.data._token);
           this.setState({ redirectToHome: true });
+        } else {
+          ToastsStore.error('Credenciais inválidas');
         }
-        this.setState({ loading: false, btnDisabled: false });
-      });
+      })
+      .catch(() => this.setState({ loading: false }));
   }
 
   render() {
@@ -56,9 +59,8 @@ export default class Login extends Component {
     }
     return (
       <div className="wrapper">
-        {this.state.loading
-        && <Loading />
-        }
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
+        {loader(this.state.loading)}
         <div className="form-container">
           <div className="logo-container">
             <img src={Logo} alt="logo narguile" />
@@ -67,9 +69,9 @@ export default class Login extends Component {
             <span>Login</span>
           </div>
           <form onSubmit={this.doLogin}>
-            <LoginInput name="user" icon="FaUserAlt" placeholder="Usuario" type="text" onKeyPress={this.changeValue} />
-            <LoginInput name="password" icon="FaLock" placeholder="Senha" type="password" onKeyPress={this.changeValue} />
-            <Button disabled={this.state.btnDisabled} title="Entrar" background="#EB5757" />
+            <LoginInput name="user" label="Usuario" placeholder="" type="text" onKeyPress={this.changeValue} />
+            <LoginInput name="password" label="Senha" placeholder="" type="password" onKeyPress={this.changeValue} />
+            <Button disabled={this.state.loading} title="Entrar" background="#EB5757" />
           </form>
         </div>
       </div>

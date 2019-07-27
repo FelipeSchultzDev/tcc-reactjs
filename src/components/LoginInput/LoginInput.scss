@@ -1,0 +1,53 @@
+@import './../../Assets/styles';
+
+.input-container{
+    width: 240px;
+    height: 40px;
+    position: relative;
+
+    input{
+        width: calc(100% - 8px);
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid $grey;
+        outline: none;
+        caret-color: $grey;
+        padding-left: 8px;
+        font-size: 16px;
+        line-height: 19px;
+        font-weight: 300;
+        color: $grey;
+        transition: .2s;
+    }
+
+    span{
+        color: $grey;
+        position: absolute;
+        top: 20px;
+        left: 8px;
+        font-size: 16px;
+        line-height: 19px;
+        pointer-events: none;
+        transform: translateY(-50%);
+        transition: .2s;
+    }
+
+    input:focus ~ span{
+        top: 0;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    input:valid{
+        border-bottom-color: $green;
+
+        ~ span{
+            top: 0;
+            font-size: 12px;
+            line-height: 14px;
+            color: $green;
+        }
+    }
+    
+}

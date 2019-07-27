@@ -1,0 +1,18 @@
+.loading-wrapper{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(50, 60, 50, 0.4);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+
+    .loading{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 6;
+    }
+}

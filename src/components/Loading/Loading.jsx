@@ -1,14 +1,19 @@
 import React from 'react';
+import Loader from 'react-loader-spinner';
 
-import './Loading.css';
-import loading from '../../Assets/giphy.gif';
+import './Loading.scss';
 
-export default function Loading() {
-  return (
-    <div className="loading-container">
-      <div className="loading-content">
-        <img src={loading} alt="" />
+const loader = (state) => {
+  if (state) {
+    return (
+      <div className="loading-wrapper">
+        <div className="loading">
+          <Loader type="Triangle" color="#6FCF97" height={200} width={200} />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+  return <div />;
+};
+
+export default loader;
