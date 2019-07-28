@@ -4,7 +4,7 @@ import Loader from 'react-loader-spinner';
 import './Loading.scss';
 
 const loader = (state) => {
-  if (state) {
+  if (state === true) {
     return (
       <div className="loading-wrapper">
         <div className="loading">
