@@ -1,16 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import { Switch, Redirect } from 'react-router-dom';
-
-import PrivateRoute from '../../PrivateRoute';
+import { Redirect } from 'react-router-dom';
 
 import Logo from '../../Assets/images/logo-green.svg';
 import './Sidebar.scss';
 
 export default class Sidebar extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      path: props.home ? props.home : '/menu',
+      path: this.props.path ? this.props.path : '/home',
     };
   }
 
@@ -19,27 +17,21 @@ export default class Sidebar extends Component {
   render() {
     return (
       <Fragment>
+        <Redirect to={this.state.path} />
         <div className="sidebar-container">
           <div className="logo">
             <img src={Logo} alt="narguile" />
           </div>
-          {this.props.data.map(page => (
-            <button
-              type="button"
-              onClick={() => this.redirect(page.path)}
-              className={`sidebar-link ${(page.path === this.state.path ? 'active' : '')}`}
-              key={page.path}
-            >
-              {page.title}
-            </button>
-          ))}
+          <button type="button" onClick={() => this.redirect('/home')} className="sidebar-link">Home</button>
+          <button type="button" onClick={() => this.redirect('/clientes')} className="sidebar-link">Clientes</button>
+          <button type="button" onClick={() => this.redirect('/marcas')} className="sidebar-link">Marcas</button>
+          <button type="button" onClick={() => this.redirect('/produtos')} className="sidebar-link">Produtos</button>
+          <button type="button" onClick={() => this.redirect('/movimentacoes')} className="sidebar-link">Movimentação</button>
+          <button type="button" onClick={() => this.redirect('/vendas')} className="sidebar-link">Vendas</button>
+          <button type="button" onClick={() => this.redirect('/terminal')} className="sidebar-link">TERMINAL DE VENDAS</button>
         </div>
-        <div className="screen">
-          <Redirect to={this.state.path} />
-          <Switch>
-            {this.props.data.map(page => <PrivateRoute key={page.path} path={`/menu${page.path}`} component={page.component} />)}
-            <Redirect from="/menu/*" to="/menu/home" />
-          </Switch>
+        <div className="page">
+          {this.props.children}
         </div>
       </Fragment>
     );

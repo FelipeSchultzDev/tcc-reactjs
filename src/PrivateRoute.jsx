@@ -29,7 +29,9 @@ class PrivateRoute extends React.Component {
             <Component {...this.props} />
           </div>
         )}
-      />
+      >
+        {this.props.children}
+      </Route>
     );
   }
 }
