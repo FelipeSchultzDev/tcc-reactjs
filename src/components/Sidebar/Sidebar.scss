@@ -1,9 +1,10 @@
 @import './../../Assets/styles';
 
 .sidebar-container{
-  width: 240px;
+  width: 224px;
   height: 100vh;
   background-color: $black-menu;
+  font-family: 'Exo 2', sans-serif;
   position: fixed;
 
   .sidebar-link{
@@ -14,10 +15,11 @@
     background-color: $black-menu;
     outline: none;
     color: $green;
-    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: normal;
     font-size: 24px;
-    line-height: 60px;
-    transition: .2s; 
+    transition: .2s;
+
   }
 
   .active{
@@ -44,6 +46,7 @@
 
   .logo{
     height: 286px;
+    // height: 48px;
     position: relative;
 
     img{
@@ -52,11 +55,23 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+
+    span{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $green;
+      font-weight: bold;
+      font-size: 25px;
+      white-space: nowrap;
+      font-style: italic;
+    }
   }
 }
 
 .page{
   float: right;
-  width: calc(100% - 240px);
+  width: calc(100% - 224px);
   height: 100vh;
 }

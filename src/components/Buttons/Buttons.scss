@@ -1,0 +1,18 @@
+.primary-button{
+  padding: 0px 8px 0px 8px;
+  height: 40px;
+  position: relative;
+
+  .icon{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+  }
+
+  span{
+    padding-left: 32px;
+  }
+}

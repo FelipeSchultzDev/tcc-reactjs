@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import './LoginInput.scss';
 
@@ -10,17 +9,5 @@ const LoginInput = ({ type, onKeyPress, name, label }) => (
     <span>{label}</span>
   </div>
 );
-
-LoginInput.propTypes = {
-  type: PropTypes.string,
-  onKeyPress: PropTypes.func,
-  name: PropTypes.string,
-};
-
-LoginInput.defaultProps = {
-  type: '',
-  onKeyPress: () => {},
-  name: '',
-};
 
 export default LoginInput;
