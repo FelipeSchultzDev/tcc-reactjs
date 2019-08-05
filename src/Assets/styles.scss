@@ -5,3 +5,90 @@ $black: #323C32; //Saporra não é preto
 $black-menu: #303030;
 $background: #FBFBFB;
 $red: #EB5757;
+
+$red-normal: #EB5757;
+
+$header-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+$button-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+
+//-----------------------------------------------------------
+
+$color-madatory: #1C1818;
+$white: #FFFFFF;
+
+$green-darker: #146E37;
+$green-dark: #59B22D;
+$green-normal: #64C832;
+$green-light: #D7E6C8;
+$green-lighter: #EBF3E3;
+
+$orange-darker: #B33600;
+$orange-dark: #E64600;
+$orange-normal: #FF6400;
+$orange-light: #FAA56E;
+$orange-lighter: #FCD2B7;
+
+$blue-darker: #1C82B3;
+$blue-dark: #28B9FF;
+$blue-normal: #46D7FF;
+$blue-light: #B4EBFF;
+$blue-lighter: #D9F5FF;
+
+$yellow-darker: #8C5F0F;
+$yellow-dark: #E6A500;
+$yellow-normal: #FFCD00;
+$yellow-light: #FFEB8C;
+$yellow-lighter: #FFF5C5;
+
+$pink-darker: #730028;
+$pink-dark: #AA003C;
+$pink-normal: #E60050;
+$pink-light: #FAC5CB;
+$pink-lighter: #FCE2E5;
+
+$grey-darker: #323C32;
+$grey-dark: #828482;
+$grey-normal: #E1E6E1;
+$grey-light: #F8F8F8;
+$grey-lighter: #FFFFFF;
+
+$disabled: #E1E6E1;
+
+$drawer-width: 224px;
+
+.ripple {
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+}
+.ripple:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .5s, opacity 1s;
+}
+.ripple:active:after {
+    transform: scale(0, 0);
+    opacity: .6;
+    transition: 0s;
+}
+
+
+.required-symbol {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 19px;
+  color: $orange-normal;
+  transition: .1s;
+}

@@ -2,12 +2,12 @@ import React from 'react';
 import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
 import './Produtos.scss';
-import Menu from '../../components/Sidebar/Sidebar';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 const Produtos = ({ path }) => (
   <div className="page-wrapper">
     <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-    <Menu path={path} />
+    <Sidebar path={path} />
   </div>
 );
 export default Produtos;
