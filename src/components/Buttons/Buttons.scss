@@ -1,7 +1,15 @@
+@import './../../Assets/styles';
+
 .primary-button{
-  padding: 0px 8px 0px 8px;
+  padding: 0px 16px 0px 8px;
   height: 40px;
   position: relative;
+  border: none;
+  border-radius: 4px;
+  color: $white;
+  outline: none;
+  font-size: 18px;
+  transition: .2s;
 
   .icon{
     width: 24px;
@@ -10,9 +18,60 @@
     top: 50%;
     left: 8px;
     transform: translateY(-50%);
+
+    svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+    }
   }
 
   span{
     padding-left: 32px;
   }
 }
+
+.secondary-button{
+  padding: 0px 16px 0px 8px;
+  height: 40px;
+  position: relative;
+  border: 1px solid;
+  border-radius: 4px;
+  background-color: transparent;
+  outline: none;
+  font-size: 18px;
+  transition: .2s;
+
+  .icon{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+
+    svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+    }
+  }
+
+  span{
+    padding-left: 32px;
+  }
+}
+
+.shadow:hover{ box-shadow: $button-shadow }
+
+.primary-button.green{ background-color: $green-normal }
+.primary-button.red{ background-color: $red-normal }
+.primary-button.grey{ background-color: $grey-normal }
+
+.secondary-button.green{ border-color: $green-normal; color: $green-normal; }
+.secondary-button.red{ border-color: $red-normal; color: $red-normal; }
+.secondary-button.grey{ border-color: $grey-normal; color: $grey-normal; }
