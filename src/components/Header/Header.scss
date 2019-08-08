@@ -1,0 +1,33 @@
+@import '../../Assets/styles';
+
+.header-wrapper{
+  background-color: $background;
+  height: 48px;
+  position: relative;
+  box-shadow: $header-shadow;
+
+  .header-title{
+    color: $green-logo;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+  }
+
+  .header-logout{
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    color: $color-madatory;
+  }
+
+  .header-logout:hover{
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

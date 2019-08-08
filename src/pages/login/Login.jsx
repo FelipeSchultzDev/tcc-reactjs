@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
-import './Login.css';
+import './Login.scss';
 
 import Logo from '../../Assets/images/logo.svg';
 
@@ -55,7 +55,7 @@ export default class Login extends Component {
 
   render() {
     if (this.state.redirectToHome) {
-      return <Redirect to="/menu" />;
+      return <Redirect to="/home" />;
     }
     return (
       <div className="wrapper">
