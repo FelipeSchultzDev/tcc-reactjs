@@ -1,0 +1,87 @@
+@import '../../Assets/styles';
+
+.table-wrapper{
+    padding: 16px;
+    background-color: $white;
+    border-radius: 4px;
+    box-shadow: $header-shadow;
+
+    .table-component{
+        width: 100%;
+        border-collapse: collapse;
+
+        thead{
+            tr{
+                border-bottom: 1px solid $border;
+                color: $color-madatory;
+
+                th{
+                    border-right: 1px solid $border;
+                    height: 64px;
+                    font-size: 14px;
+                    color: $grey-normal;
+                    text-align: start;
+                    padding-left: 12px;
+                }
+
+                th:last-child{
+                    border: none;
+                    text-align: center;
+                    width: 120px;
+                    padding: 0;
+                }
+            }
+        }
+
+        tbody{
+            tr{
+                background-color: $white;
+
+                td{
+                    border-right: 1px solid $border;
+                    padding-left: 12px;
+                    height: 48px;
+                    font-weight: 300;
+                }
+
+                td:last-child{
+                    border: none;
+                    padding: 0px 16px 0px 16px;
+                    text-align: center;
+                }
+
+                .actions{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+
+                    .edit, .delete, .details{
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 2px;
+                        opacity: .5;
+                        transition: .2s;
+                    }
+
+                    .edit:hover{ background-color: orange; }
+                    .delete:hover{ background-color: $red-normal; }
+                    .details:hover{ background-color: $green-normal; }
+                }
+
+
+            }
+
+            tr:nth-child(2n + 1){
+                background-color: $background;
+            }
+
+            tr:last-child{
+                border-bottom: 1px solid $border;
+            }
+
+            tr:hover{
+                box-shadow: $header-shadow;
+            }
+        }
+    }
+}

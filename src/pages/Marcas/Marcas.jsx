@@ -31,7 +31,7 @@ const Marcas = ({ path }) => (
     <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
     <Sidebar path={path}>
       <Header />
-      <div style={{ padding: 24 }}>
+      <div style={{ padding: 24, minWidth: 1094 }}>
         <div className="top-items">
           <div className="left">
             <div className="cadastrar"><Primary title="Cadastrar marca" icon={faPlusCircle} color={ButtonsColor.GREEN} /></div>
