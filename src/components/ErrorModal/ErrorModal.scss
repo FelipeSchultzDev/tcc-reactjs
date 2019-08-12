@@ -1,0 +1,83 @@
+@import './../../Assets/styles';
+
+.error-modal-wrapper{
+  width: 400px;
+  height: 362px;
+  background-color: $white;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $header-shadow;
+
+  .error-modal-icon{
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg{
+      width: 80px;
+      height: 80px;
+      overflow: visible;
+      position: relative;
+
+      path, polygon{
+        fill: $yellow-normal;
+      }
+    }
+  }
+
+  .error-modal-content{
+    color: $grey-lighter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    
+    h1{
+      font-size: 24px;
+      width: min-content;
+      white-space: nowrap;
+    }
+  }
+
+  .error-modal-footer{
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+// #triangle{
+//   stroke-dasharray: 1000;
+//   stroke-dashoffset: 1000;
+//   animation: slowShow 1s ease-in-out;
+// }
+
+// #atention{
+//   stroke-dasharray: 1000;
+//   stroke-dashoffset: 1000;
+//   animation: slowShow2 1s ease-in-out;
+// }
+
+// @keyframes slowShow{
+//   from{
+//     stroke-dashoffset: 700;
+//   }
+  
+//   to{
+//     stroke-dashoffset: 1000;
+//   }
+// }
+
+// @keyframes slowShow2{
+//   from{
+//     stroke-dashoffset: 0;
+//   }
+  
+//   to{
+//     stroke-dashoffset: 1000;
+//   }
+// }

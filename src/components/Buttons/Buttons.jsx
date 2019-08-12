@@ -1,23 +1,26 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFont } from '@fortawesome/free-solid-svg-icons';
 
 import './Buttons.scss';
 
-export const Primary = ({ title = 'button', type = 'button', icon = faFont, color = 'green' }) => (
-  <button className={`primary-button shadow ripple ${color}`} type={type}>
+export const Primary = ({ title = '', type = 'button', icon, color, click = () => {} }) => (
+  <button className="primary-button shadow ripple" style={{ backgroundColor: color }} onClick={click} type={type}>
+    {icon && (
     <div className="icon">
       <FontAwesomeIcon icon={icon} />
     </div>
+    )}
     <span>{title}</span>
   </button>
 );
 
-export const Secondary = ({ title = 'button', type = 'button', icon = faFont, color = 'green' }) => (
-  <button className={`secondary-button shadow ripple ${color}`} type={type}>
+export const Secondary = ({ title = '', type = 'button', icon, color, click = () => {} }) => (
+  <button className="secondary-button shadow ripple" style={{ borderColor: color, color }} onClick={click} type={type}>
+    {icon && (
     <div className="icon">
       <FontAwesomeIcon icon={icon} />
     </div>
+    )}
     <span>{title}</span>
   </button>
 );

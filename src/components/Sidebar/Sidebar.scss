@@ -6,6 +6,7 @@
   background-color: $grey-dark;
   font-family: $font;
   position: fixed;
+  z-index: 5;
 
   .sidebar-link{
     width: 100%;

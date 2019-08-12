@@ -1,0 +1,14 @@
+@import '../../Assets/styles';
+
+.input{
+  border: 1px solid $border;
+  height: 40px;
+  width: calc(100% - 12px);
+  font-size: 18px;
+  padding-left: 12px;
+  transition: .2s;
+}
+
+.input:hover{
+  box-shadow: $header-shadow;
+}
