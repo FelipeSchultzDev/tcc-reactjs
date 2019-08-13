@@ -1,0 +1,37 @@
+@import './../../../Assets/styles';
+
+.button-details{
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: transparent;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: .2s;
+
+  svg{
+    font-size: 24px;
+
+    path{
+      fill: $green-normal;
+      transition: .2s;
+    }
+  }
+}
+
+.button-details:hover{
+  background-color: $green-normal;
+  opacity: .8;
+  box-shadow: $button-shadow;
+
+  svg{
+
+    path{
+      fill: $white;
+    }
+  }
+}
+
+.button-details:active{
+  background-color: $green-dark;
+}

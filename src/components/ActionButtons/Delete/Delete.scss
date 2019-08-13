@@ -1,0 +1,35 @@
+@import './../../../Assets/styles';
+
+.button-delete{
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: transparent;
+  border-radius: 2px;
+  transition: .2s;
+
+  svg{
+
+    path{
+      fill: $red-normal;
+      transition: .2s;
+    }
+  }
+}
+
+.button-delete:hover{
+  background-color: $red-normal;
+  opacity: .8;
+  box-shadow: $button-shadow;
+
+  svg{
+
+    path{
+      fill: $white;
+    }
+  }
+}
+
+.button-delete:active{
+  background-color: $red-dark;
+}

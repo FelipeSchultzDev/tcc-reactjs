@@ -1,38 +1,25 @@
-$green: #6FCF97;
-$grey: #E0E0E0;
-$line-color: #4C4C4C;
-$black: #323C32; //Saporra não é preto
-$black-menu: #303030;
-$background: #FBFBFB;
-$red: #EB5757;
-
-$red-normal: #EB5757;
-
 $header-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
 $button-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 
-//-----------------------------------------------------------
+$font: 'Rubik', sans-serif;
 
 $color-madatory: #1C1818;
 $white: #FFFFFF;
+$background: #F8F8F8;
+$green-logo: #6FCF97;
+$border: #E1E6E1;
 
-$green-darker: #146E37;
-$green-dark: #59B22D;
-$green-normal: #64C832;
-$green-light: #D7E6C8;
-$green-lighter: #EBF3E3;
+$green-darker: #114527;
+$green-dark: #1A6E3E;
+$green-normal: #27AE60;
+$green-light: #2BC36B;
+$green-lighter: #49D886;
 
-$orange-darker: #B33600;
-$orange-dark: #E64600;
-$orange-normal: #FF6400;
-$orange-light: #FAA56E;
-$orange-lighter: #FCD2B7;
-
-$blue-darker: #1C82B3;
-$blue-dark: #28B9FF;
-$blue-normal: #46D7FF;
-$blue-light: #B4EBFF;
-$blue-lighter: #D9F5FF;
+$red-darker: #AB1717;
+$red-dark: #D91C1C;
+$red-normal: #EB5757;
+$red-light: #EE6E6E;
+$red-lighter: #F49B9B;
 
 $yellow-darker: #8C5F0F;
 $yellow-dark: #E6A500;
@@ -40,21 +27,11 @@ $yellow-normal: #FFCD00;
 $yellow-light: #FFEB8C;
 $yellow-lighter: #FFF5C5;
 
-$pink-darker: #730028;
-$pink-dark: #AA003C;
-$pink-normal: #E60050;
-$pink-light: #FAC5CB;
-$pink-lighter: #FCE2E5;
-
-$grey-darker: #323C32;
-$grey-dark: #828482;
-$grey-normal: #E1E6E1;
-$grey-light: #F8F8F8;
-$grey-lighter: #FFFFFF;
-
-$disabled: #E1E6E1;
-
-$drawer-width: 224px;
+$grey-darker: #0F0F0F;
+$grey-dark: #292828;
+$grey-normal: #4F4F4F;
+$grey-light: #5F5959;
+$grey-lighter: #7A7171;
 
 .ripple {
     position: relative;
@@ -81,14 +58,4 @@ $drawer-width: 224px;
     transform: scale(0, 0);
     opacity: .6;
     transition: 0s;
-}
-
-
-.required-symbol {
-  font-style: normal;
-  font-weight: 900;
-  font-size: 16px;
-  line-height: 19px;
-  color: $orange-normal;
-  transition: .1s;
 }
