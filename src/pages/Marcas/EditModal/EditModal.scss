@@ -1,0 +1,18 @@
+@import './../../../Assets/styles';
+
+.edit-marca-modal{
+  background-color: $background;
+  padding: 32px;
+  border-radius: 4px;
+  box-shadow: $header-shadow;
+
+  .edit-modal-content{
+    width: 300px;
+    margin-bottom: 16px;
+  }
+
+  .edit-modal-footer{
+    display: flex;
+    justify-content: space-between;
+  }
+}

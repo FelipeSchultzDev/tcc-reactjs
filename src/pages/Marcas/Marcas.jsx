@@ -12,46 +12,55 @@ import ButtonsColor from '../../components/Buttons/ButtonsColor.enum';
 import ModalController from '../../components/ModalController/ModalController';
 import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import CreateModal from './CreateModal/CreateModal';
+import EditModal from './EditModal/EditModal';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import PositiveModal from '../../components/PositiveModal/PositiveModal';
 import { Primary } from '../../components/Buttons/Buttons';
 
 import MarcaService from '../../Services/Marca.service';
 
 const tableHead = [
-  { title: 'Nome', col: 'title' },
-  { title: 'Data de cadastro', col: 'data' },
-];
-
-const dataMock = [
-  { id: 1, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
-  { id: 2, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
-  { id: 3, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
-  { id: 4, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
-  { id: 5, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
-  { id: 6, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
-  { id: 7, title: 'teste', data: (new Date()).toLocaleDateString('pt-br') },
+  { title: 'Nome', col: 'nome' },
+  { title: 'Data de cadastro', col: 'createdAt' },
 ];
 
 export default class Marcas extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      itemTemp: {},
       delete: false,
-      deleteItemTemp: {},
       create: false,
       error: false,
+      conclued: false,
+      edit: false,
       errorMsg: '',
+      marcas: [],
     };
+  }
+
+  async componentDidMount() {
+    const response = await MarcaService.get('/habilitados');
+    const { marcas } = response.data;
+    if (response.data.success) {
+      this.setState({
+        marcas: marcas.map(marca => ({
+          ...marca,
+          createdAt: new Date(marca.createdAt).toLocaleDateString('pt-br'),
+        })),
+      });
+    }
   }
 
   handleCreateMarca = async (e) => {
     if (e.nome.length > 0) {
-      const response = await MarcaService.post('/cadastrar', e);
+      const response = await MarcaService.post('', e);
       const { data } = response;
       if (data.success) {
-        // this.closeModal('create');
+        this.componentDidMount();
+        this.closeModal('create');
+        this.openModal('conclued');
       } else {
-        // this.closeModal('create');
         this.setState({
           errorMsg: data.msg,
         });
@@ -79,20 +88,26 @@ export default class Marcas extends Component {
 
   deleteItemSelect = (item) => {
     this.setState({
-      deleteItemTemp: item,
+      itemTemp: item,
     });
     this.openModal('delete');
   }
 
-  clearDeleteItemSelect = () => {
+  clearItemSelect = () => {
     this.setState({
-      deleteItemTemp: {},
+      itemTemp: {},
     });
     this.closeModal('delete');
   }
 
-  deleteItem = () => {
+  deleteItem = async () => {
     this.closeModal('delete');
+    const id = this.state.deleteItemTemp._id;
+    const response = await MarcaService.delete(`${id}`);
+    if (response.data.success) {
+      this.componentDidMount();
+      this.openModal('conclued');
+    }
   }
 
   openCreateModal = () => {
@@ -107,7 +122,7 @@ export default class Marcas extends Component {
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
         {this.state.delete && (
         <ModalController>
-          <DeleteModal onCancel={this.clearDeleteItemSelect} onAccept={this.deleteItem} />
+          <DeleteModal onCancel={this.clearItemSelect} onAccept={this.deleteItem} />
         </ModalController>
         )}
         {this.state.create && (
@@ -118,6 +133,16 @@ export default class Marcas extends Component {
         {this.state.error && (
         <ModalController>
           <ErrorModal onAccept={() => this.closeModal('error')} msg={this.state.errorMsg} />
+        </ModalController>
+        )}
+        {this.state.conclued && (
+        <ModalController>
+          <PositiveModal onAccept={() => this.closeModal('conclued')} />
+        </ModalController>
+        )}
+        {this.state.edit && (
+        <ModalController>
+          <EditModal onCancel={this.clearItemSelect} onAccept={this.editItem} />
         </ModalController>
         )}
         <Sidebar path={this.props.path}>
@@ -134,7 +159,7 @@ export default class Marcas extends Component {
               </div>
             </div>
             <div className="table">
-              <Table header={tableHead} data={dataMock} edit="true" remove="true" onEdit={this.teste} onDelete={this.deleteItemSelect} onDetail={this.teste} />
+              <Table header={tableHead} data={this.state.marcas} edit="true" remove="true" onEdit={this.teste} onDelete={this.deleteItemSelect} onDetail={this.teste} />
             </div>
           </div>
         </Sidebar>

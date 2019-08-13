@@ -8,10 +8,13 @@ import './ErrorModal.scss';
 const ErrorModal = ({ onAccept, msg }) => (
   <div className="error-modal-wrapper">
     <div className="error-modal-icon">
-      <svg viewBox="0 0 1000 1000">
-        <path id="triangle" strokeWidth="4" stroke="#ffffff" d="M979.5,835.6L554,98.7c-11.1-19.3-31.8-31.3-54.1-31.3c-22.3,0-43,12-54.2,31.3L18.4,838.9c-11.1,19.3-11.1,43.2,0,62.5c11.1,19.3,31.9,31.3,54.1,31.3h855.1c34.4,0,62.5-28.1,62.5-62.5C990,857.3,986.2,844.9,979.5,835.6z M927.5,896.5h-855c-9.4,0-18.1-5-22.8-13.1c-4.7-8.1-4.7-18.2,0-26.3l427.4-740.3c4.7-8.1,13.4-13.1,22.8-13.1c9.4,0,18.2,5.1,22.8,13.1L949.1,855c3.1,4.4,4.8,9.7,4.8,15.1C953.9,884.7,942,896.5,927.5,896.5z" />
-        <polygon id="atention" strokeWidth="4" stroke="#ffffff" points="519.6,680.8 529.4,344.3 455.9,344.3 465.7,680.8 " />
-        <path id="atention" strokeWidth="4" stroke="#ffffff" d="M492.7,729c-25.6,0-44.1,19.4-44.1,46.1c0,26.8,18.6,46.2,44.1,46.2c26,0,44.2-19,44.2-46.2C536.8,748,518.7,729,492.7,729z" />
+      <svg x="0px" y="0px" width="100px" height="85px" viewBox="0 0 100 85">
+        <g>
+          <path id="triangle" fill="#FFFFFF" d="M5.684,80.499c-0.055,0-0.078-0.039-0.05-0.086L49.95,4.586c0.027-0.047,0.073-0.047,0.101,0l44.315,75.827 c0.028,0.047,0.006,0.086-0.049,0.086H5.684z" />
+          <path id="triangle" fill="none" stroke="#000000" strokeWidth="4" strokeMiterlimit="10" d="M5.684,80.499c-0.055,0-0.078-0.039-0.05-0.086 L49.95,4.586c0.027-0.047,0.073-0.047,0.101,0l44.315,75.827c0.028,0.047,0.006,0.086-0.049,0.086H5.684z" />
+        </g>
+        <polygon id="line" stroke="#000000" strokeMiterlimit="10" points="52.594,56.25 47.406,56.25 45.406,30.5 54.594,30.5 " />
+        <circle id="line" stroke="#000000" strokeMiterlimit="10" cx="50" cy="63.813" r="4.5" />
       </svg>
     </div>
     <div className="error-modal-content">

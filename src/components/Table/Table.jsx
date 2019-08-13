@@ -27,7 +27,7 @@ const Table = ({
         </thead>
         <tbody>
           {data.map(row => (
-            <tr key={row.id}>
+            <tr key={row._id}>
               {header.map(head => (
                 <td key={head.col}>{row[head.col]}</td>
               ))}

@@ -21,7 +21,12 @@
       overflow: visible;
       position: relative;
 
-      path, polygon{
+      path{
+        stroke: $yellow-normal;
+      }
+
+      polygon, circle{
+        stroke: $yellow-normal;
         fill: $yellow-normal;
       }
     }
@@ -50,34 +55,24 @@
 }
 
 
-// #triangle{
-//   stroke-dasharray: 1000;
-//   stroke-dashoffset: 1000;
-//   animation: slowShow 1s ease-in-out;
-// }
+#triangle{
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: slowShow 2s ease-in-out;
+}
 
-// #atention{
-//   stroke-dasharray: 1000;
-//   stroke-dashoffset: 1000;
-//   animation: slowShow2 1s ease-in-out;
-// }
+#line{
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: slowShow2 5s ease-in-out;
+}
 
-// @keyframes slowShow{
-//   from{
-//     stroke-dashoffset: 700;
-//   }
+@keyframes slowShow{
+  from{
+    stroke-dashoffset: 1000;
+  }
   
-//   to{
-//     stroke-dashoffset: 1000;
-//   }
-// }
-
-// @keyframes slowShow2{
-//   from{
-//     stroke-dashoffset: 0;
-//   }
-  
-//   to{
-//     stroke-dashoffset: 1000;
-//   }
-// }
+  to{
+    stroke-dashoffset: 0;
+  }
+}
