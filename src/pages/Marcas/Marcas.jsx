@@ -4,6 +4,7 @@ import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toa
 import { faPlusCircle, faEye, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import './Marcas.scss';
+
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import InputSearch from '../../components/InputSearch/InputSearch';
