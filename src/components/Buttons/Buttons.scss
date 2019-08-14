@@ -9,15 +9,13 @@
   color: $white;
   outline: none;
   font-size: 18px;
+  display: flex;
   transition: .2s;
 
   .icon{
     width: 24px;
     height: 24px;
-    position: absolute;
-    top: 50%;
-    left: 8px;
-    transform: translateY(-50%);
+    position: relative;
 
     svg{
       position: absolute;
@@ -29,7 +27,7 @@
   }
 
   span{
-    padding-left: 32px;
+    padding-left: 8px;
   }
 }
 
@@ -42,15 +40,13 @@
   background-color: transparent;
   outline: none;
   font-size: 18px;
+  display: flex;
   transition: .2s;
 
   .icon{
     width: 24px;
     height: 24px;
-    position: absolute;
-    top: 50%;
-    left: 8px;
-    transform: translateY(-50%);
+    position: relative;
 
     svg{
       position: absolute;
@@ -62,16 +58,16 @@
   }
 
   span{
-    padding-left: 32px;
+    padding-left: 8px;
   }
 }
 
 .shadow:hover{ box-shadow: $button-shadow }
 
-.primary-button.green{ background-color: $green-normal }
-.primary-button.red{ background-color: $red-normal }
-.primary-button.grey{ background-color: $grey-normal }
+// .primary-button.green{ background-color: $green-normal }
+// .primary-button.red{ background-color: $red-normal }
+// .primary-button.grey{ background-color: $grey-normal }
 
-.secondary-button.green{ border-color: $green-normal; color: $green-normal; }
-.secondary-button.red{ border-color: $red-normal; color: $red-normal; }
-.secondary-button.grey{ border-color: $grey-normal; color: $grey-normal; }
+// .secondary-button.green{ border-color: $green-normal; color: $green-normal; }
+// .secondary-button.red{ border-color: $red-normal; color: $red-normal; }
+// .secondary-button.grey{ border-color: $grey-normal; color: $grey-normal; }

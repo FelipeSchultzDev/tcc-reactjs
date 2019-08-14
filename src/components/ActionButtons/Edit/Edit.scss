@@ -1,0 +1,35 @@
+@import './../../../Assets/styles';
+
+.button-edit{
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: transparent;
+  border-radius: 2px;
+  transition: .2s;
+
+  svg{
+
+    path{
+      fill: $yellow-normal;
+      transition: .2s;
+    }
+  }
+}
+
+.button-edit:hover{
+  background-color: $yellow-normal;
+  opacity: .8;
+  box-shadow: $button-shadow;
+
+  svg{
+
+    path{
+      fill: $white;
+    }
+  }
+}
+
+.button-edit:active{
+  background-color: $yellow-dark;
+}

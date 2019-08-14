@@ -1,0 +1,85 @@
+@import './../../Assets/styles';
+
+.delete-modal-wrapper{
+  width: 400px;
+  height: 362px;
+  background-color: $white;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $header-shadow;
+
+  .delete-modal-icon{
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg{
+      width: 80px;
+      height: 80px;
+      overflow: visible;
+      position: relative;
+
+      circle, line{
+        stroke: $red-normal;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+        animation: slowShow 3s ease-in-out;
+      }
+
+      line{
+        animation-delay: 2s;
+        animation: slowShow 5s ease-in-out;
+      }
+    }
+  }
+
+  
+
+  .delete-modal-content{
+    color: $grey-lighter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    
+    h1{
+      font-size: 24px;
+      width: min-content;
+      white-space: nowrap;
+    }
+  }
+
+  .delete-modal-footer{
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button:first-child{
+      margin-right: 16px;
+    }
+  }
+  
+  @keyframes slowShow{
+    from{
+      stroke-dashoffset: 1000;
+    }
+    to{
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  // @keyframes slowShow2{
+  //   from{
+  //     stroke-dashoffset: 0;
+  //   }
+    
+  //   to{
+  //     stroke-dashoffset: 1000;
+  //   }
+  // }
+}
+
+
