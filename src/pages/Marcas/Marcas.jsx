@@ -41,6 +41,8 @@ export default class Marcas extends Component {
   }
 
   async componentDidMount() {
+    console.log(1);
+
     const response = await MarcaService.get('/habilitados');
     const { marcas } = response.data;
     if (response.data.success) {
@@ -103,11 +105,14 @@ export default class Marcas extends Component {
 
   deleteItem = async () => {
     this.closeModal('delete');
-    const id = this.state.deleteItemTemp._id;
-    const response = await MarcaService.delete(`${id}`);
-    if (response.data.success) {
-      this.componentDidMount();
-      this.openModal('conclued');
+
+    const id = this.state.itemTemp._id;
+    if (id) {
+      const response = await MarcaService.delete(`${id}`);
+      if (response.data.success) {
+        this.componentDidMount();
+        this.openModal('conclued');
+      }
     }
   }
 
