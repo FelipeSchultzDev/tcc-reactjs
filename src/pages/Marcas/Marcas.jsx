@@ -41,8 +41,6 @@ export default class Marcas extends Component {
   }
 
   async componentDidMount() {
-    console.log(1);
-
     const response = await MarcaService.get('/habilitados');
     const { marcas } = response.data;
     if (response.data.success) {
