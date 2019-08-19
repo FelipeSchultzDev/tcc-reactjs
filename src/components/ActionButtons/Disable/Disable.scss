@@ -1,6 +1,6 @@
 @import './../../../Assets/styles';
 
-.button-details{
+.button-disable{
   width: 24px;
   height: 24px;
   border: none;
@@ -11,17 +11,17 @@
   transition: .2s;
 
   svg{
-    font-size: 24px;
+    font-size: 16px;
 
     path{
-      fill: $green-normal;
+      fill: $grey-normal;
       transition: .2s;
     }
   }
 }
 
-.button-details:hover{
-  background-color: $green-normal;
+.button-disable:hover{
+  background-color: $grey-normal;
   opacity: .8;
   box-shadow: $button-shadow;
 
@@ -33,6 +33,6 @@
   }
 }
 
-.button-details:active{
-  background-color: $green-dark;
+.button-disable:active{
+  background-color: $grey-dark;
 }

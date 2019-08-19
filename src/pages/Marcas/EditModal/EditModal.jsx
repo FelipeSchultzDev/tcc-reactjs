@@ -33,11 +33,11 @@ export default class EditModal extends Component {
       <div className="edit-marca-modal">
         <form onSubmit={this.handleSubmit}>
           <div className="edit-modal-content">
-            <Input type="text" placeholder="Digite o nome da marca" name="nome" onChange={this.handleChange} value={this.state.nome} />
+            <Input type="text" placeholder="Digite o novo nome da marca" name="nome" onChange={this.handleChange} value={this.state.nome} />
           </div>
           <div className="edit-modal-footer">
             <Secondary click={this.props.handleBack} color={ButtonsColor.RED} title="Voltar" />
-            <Primary type="submit" color={ButtonsColor.GREEN} title="Cadastrar" />
+            <Primary type="submit" color={ButtonsColor.GREEN} title="Salvar alterações" />
           </div>
         </form>
       </div>
