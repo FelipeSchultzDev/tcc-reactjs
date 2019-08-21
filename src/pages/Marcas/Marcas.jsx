@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
-import { faPlusCircle, faEye, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faEyeSlash, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import './Marcas.scss';
 
@@ -15,6 +15,7 @@ import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import CreateModal from './CreateModal/CreateModal';
 import EditModal from './EditModal/EditModal';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import WarningModal from '../../components/WarningModal/WarningModal';
 import PositiveModal from '../../components/PositiveModal/PositiveModal';
 import { Primary } from '../../components/Buttons/Buttons';
 
@@ -34,6 +35,7 @@ export default class Marcas extends Component {
       create: false,
       error: false,
       conclued: false,
+      warning: false,
       edit: false,
       errorMsg: '',
       marcas: [],
@@ -44,32 +46,31 @@ export default class Marcas extends Component {
     const response = await MarcaService.get('/habilitados');
     const { marcas } = response.data;
     if (response.data.success) {
-      this.setState({
-        marcas: marcas.map(marca => ({
-          ...marca,
-          createdAt: new Date(marca.createdAt).toLocaleDateString('pt-br'),
-        })),
-      });
+      if (response.data.marcas.length === 0) {
+        this.setState({
+          marcas: [],
+        });
+      } else {
+        this.setState({
+          marcas: marcas.map(marca => ({
+            ...marca,
+            createdAt: new Date(marca.createdAt).toLocaleDateString('pt-br'),
+          })),
+        });
+      }
     }
   }
 
   handleCreateMarca = async (e) => {
-    if (e.nome.length > 0) {
-      const response = await MarcaService.post('', e);
-      const { data } = response;
-      if (data.success) {
-        this.componentDidMount();
-        this.closeModal('create');
-        this.openModal('conclued');
-      } else {
-        this.setState({
-          errorMsg: data.msg,
-        });
-        this.openModal('error');
-      }
+    const response = await MarcaService.post('', e);
+    const { data } = response;
+    if (data.success) {
+      this.componentDidMount();
+      this.closeModal('create');
+      this.openModal('conclued');
     } else {
       this.setState({
-        errorMsg: 'O campo nome não pode ficar vazio!',
+        errorMsg: data.msg,
       });
       this.openModal('error');
     }
@@ -94,20 +95,56 @@ export default class Marcas extends Component {
     this.openModal('delete');
   }
 
-  clearItemSelect = () => {
+  editItemSelect = (item) => {
+    this.setState({
+      itemTemp: item,
+    });
+    this.openModal('edit');
+  }
+
+  disableItemSelect = (item) => {
+    this.setState({
+      itemTemp: item,
+    });
+    this.openModal('warning');
+  }
+
+  clearItemSelect = (modal) => {
     this.setState({
       itemTemp: {},
     });
-    this.closeModal('delete');
+    this.closeModal(modal);
   }
 
   deleteItem = async () => {
-    this.closeModal('delete');
-    const id = this.state.deleteItemTemp._id;
-    const response = await MarcaService.delete(`${id}`);
+    const id = this.state.itemTemp._id;
+    if (id) {
+      const response = await MarcaService.delete(`${id}`);
+      if (response.data.success) {
+        this.componentDidMount();
+        this.closeModal('delete');
+        this.openModal('conclued');
+      } else {
+        this.setState({
+          errorMsg: response.data.msg,
+        });
+        this.openModal('error');
+      }
+    }
+  }
+
+  editItem = async (e) => {
+    const id = this.state.itemTemp._id;
+    const response = await MarcaService.put(`${id}`, e);
     if (response.data.success) {
       this.componentDidMount();
+      this.closeModal('edit');
       this.openModal('conclued');
+    } else {
+      this.setState({
+        errorMsg: response.data.msg,
+      });
+      this.openModal('error');
     }
   }
 
@@ -117,13 +154,29 @@ export default class Marcas extends Component {
     });
   }
 
+  disableItem = async () => {
+    const id = this.state.itemTemp._id;
+    const response = await MarcaService.put(`${id}/desativar`);
+    console.log(response);
+    if (response.data.success) {
+      this.closeModal('warning');
+      this.openModal('conclued');
+      this.componentDidMount();
+    } else {
+      this.setState({
+        errorMsg: 'Houve um erro ao tentar desabilitar marca',
+      });
+      this.openModal('error');
+    }
+  }
+
   render() {
     return (
       <div className="page-wrapper">
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
         {this.state.delete && (
         <ModalController>
-          <DeleteModal onCancel={this.clearItemSelect} onAccept={this.deleteItem} />
+          <DeleteModal onCancel={() => this.clearItemSelect('delete')} onAccept={this.deleteItem} />
         </ModalController>
         )}
         {this.state.create && (
@@ -143,7 +196,12 @@ export default class Marcas extends Component {
         )}
         {this.state.edit && (
         <ModalController>
-          <EditModal onCancel={this.clearItemSelect} onAccept={this.editItem} />
+          <EditModal handleBack={() => this.clearItemSelect('edit')} submit={this.editItem} />
+        </ModalController>
+        )}
+        {this.state.warning && (
+        <ModalController>
+          <WarningModal onCancel={() => this.clearItemSelect('warning')} onAccept={this.disableItem} />
         </ModalController>
         )}
         <Sidebar path={this.props.path}>
@@ -152,7 +210,7 @@ export default class Marcas extends Component {
             <div className="top-items">
               <div className="left">
                 <div className="cadastrar"><Primary title="Cadastrar marca" icon={faPlusCircle} color={ButtonsColor.GREEN} click={() => this.openModal('create')} /></div>
-                <div className="desabilitados"><Primary title="Desabilitados" icon={faEye} color={ButtonsColor.GREY} /></div>
+                <div className="desabilitados"><Primary title="Desabilitados" icon={faEyeSlash} color={ButtonsColor.GREY} /></div>
               </div>
               <div className="right">
                 <div className="busca"><InputSearch /></div>
@@ -160,7 +218,7 @@ export default class Marcas extends Component {
               </div>
             </div>
             <div className="table">
-              <Table header={tableHead} data={this.state.marcas} edit="true" remove="true" onEdit={this.teste} onDelete={this.deleteItemSelect} onDetail={this.teste} />
+              <Table header={tableHead} data={this.state.marcas} disable="true" edit="true" remove="true" onDisable={this.disableItemSelect} onEdit={this.editItemSelect} onDelete={this.deleteItemSelect} />
             </div>
           </div>
         </Sidebar>

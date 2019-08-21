@@ -5,13 +5,16 @@ import './Table.scss';
 import Edit from '../ActionButtons/Edit/Edit';
 import Delete from '../ActionButtons/Delete/Delete';
 import Details from '../ActionButtons/Details/Details';
+import Disable from '../ActionButtons/Disable/Disable';
 
 const Table = ({
   header = [],
   data = [],
+  disable,
   edit,
   remove,
   details,
+  onDisable = () => {},
   onEdit = () => {},
   onDelete = () => {},
   onDetail = () => {},
@@ -33,6 +36,7 @@ const Table = ({
               ))}
               <td>
                 <div className="actions">
+                  {disable && <Disable click={() => onDisable(row)} /> }
                   {edit && <Edit click={() => onEdit(row)} /> }
                   {remove && <Delete click={() => onDelete(row)} /> }
                   {details && <Details click={() => onDetail(row)} /> }
