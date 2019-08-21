@@ -117,7 +117,6 @@ export default class Marcas extends Component {
   }
 
   deleteItem = async () => {
-    
     const id = this.state.itemTemp._id;
     if (id) {
       const response = await MarcaService.delete(`${id}`);
