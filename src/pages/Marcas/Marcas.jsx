@@ -4,6 +4,7 @@ import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toa
 import { faPlusCircle, faEyeSlash, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import './Marcas.scss';
+
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import InputSearch from '../../components/InputSearch/InputSearch';
@@ -116,12 +117,20 @@ export default class Marcas extends Component {
   }
 
   deleteItem = async () => {
-    this.closeModal('delete');
+    
     const id = this.state.itemTemp._id;
-    const response = await MarcaService.delete(`${id}`);
-    if (response.data.success) {
-      this.componentDidMount();
-      this.openModal('conclued');
+    if (id) {
+      const response = await MarcaService.delete(`${id}`);
+      if (response.data.success) {
+        this.componentDidMount();
+        this.closeModal('delete');
+        this.openModal('conclued');
+      } else {
+        this.setState({
+          errorMsg: response.data.msg,
+        });
+        this.openModal('error');
+      }
     }
   }
 
