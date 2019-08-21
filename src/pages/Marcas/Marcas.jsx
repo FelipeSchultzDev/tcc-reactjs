@@ -14,6 +14,7 @@ import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import CreateModal from './CreateModal/CreateModal';
 import EditModal from './EditModal/EditModal';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import WarningModal from '../../components/WarningModal/WarningModal';
 import PositiveModal from '../../components/PositiveModal/PositiveModal';
 import { Primary } from '../../components/Buttons/Buttons';
 
@@ -33,6 +34,7 @@ export default class Marcas extends Component {
       create: false,
       error: false,
       conclued: false,
+      warning: false,
       edit: false,
       errorMsg: '',
       marcas: [],
@@ -103,7 +105,7 @@ export default class Marcas extends Component {
     this.setState({
       itemTemp: item,
     });
-    this.openModal('edit');
+    this.openModal('warning');
   }
 
   clearItemSelect = (modal) => {
@@ -144,6 +146,22 @@ export default class Marcas extends Component {
     });
   }
 
+  disableItem = async () => {
+    const id = this.state.itemTemp._id;
+    const response = await MarcaService.put(`${id}/desativar`);
+    console.log(response);
+    if (response.data.success) {
+      this.closeModal('warning');
+      this.openModal('conclued');
+      this.componentDidMount();
+    } else {
+      this.setState({
+        errorMsg: 'Houve um erro ao tentar desabilitar marca',
+      });
+      this.openModal('error');
+    }
+  }
+
   render() {
     return (
       <div className="page-wrapper">
@@ -171,6 +189,11 @@ export default class Marcas extends Component {
         {this.state.edit && (
         <ModalController>
           <EditModal handleBack={() => this.clearItemSelect('edit')} submit={this.editItem} />
+        </ModalController>
+        )}
+        {this.state.warning && (
+        <ModalController>
+          <WarningModal onCancel={() => this.clearItemSelect('warning')} onAccept={this.disableItem} />
         </ModalController>
         )}
         <Sidebar path={this.props.path}>
