@@ -6,6 +6,7 @@ import Edit from '../ActionButtons/Edit/Edit';
 import Delete from '../ActionButtons/Delete/Delete';
 import Details from '../ActionButtons/Details/Details';
 import Disable from '../ActionButtons/Disable/Disable';
+import TableType from './TableType.enum';
 
 const Table = ({
   header = [],
@@ -36,10 +37,18 @@ const Table = ({
               ))}
               <td>
                 <div className="actions">
-                  {disable && <Disable click={() => onDisable(row)} /> }
-                  {edit && <Edit click={() => onEdit(row)} /> }
-                  {remove && <Delete click={() => onDelete(row)} /> }
-                  {details && <Details click={() => onDetail(row)} /> }
+                  {disable && (
+                    <Disable click={() => onDisable({ type: TableType.DISABLE, item: row })} />
+                  )}
+                  {edit && (
+                    <Edit click={() => onEdit({ type: TableType.EDIT, item: row })} />
+                  )}
+                  {remove && (
+                    <Delete click={() => onDelete({ type: TableType.DELETE, item: row })} />
+                  )}
+                  {details && (
+                    <Details click={() => onDetail({ type: TableType.DETAIL, item: row })} />
+                  )}
                 </div>
               </td>
             </tr>
