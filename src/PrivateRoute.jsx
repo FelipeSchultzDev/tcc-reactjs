@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import isAuthenticated from './auth';
-import loader from './components/Loading/Loading';
 
 class PrivateRoute extends React.Component {
   state = { loading: true, isAuth: false }
@@ -18,7 +17,7 @@ class PrivateRoute extends React.Component {
   render() {
     const { component: Component, ...rest } = this.props;
     if (this.state.loading) {
-      return loader(true);
+      return null;
     }
     return (
       <Route
