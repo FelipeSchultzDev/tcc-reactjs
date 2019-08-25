@@ -24,13 +24,11 @@ class PrivateRoute extends React.Component {
         {...rest}
         render={() => (
           <div>
-            {!this.state.isAuth && <Redirect to={{ pathname: '/', state: { from: this.props.location } }} />}
+            {!this.state.isAuth && <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />}
             <Component {...this.props} />
           </div>
         )}
-      >
-        {this.props.children}
-      </Route>
+      />
     );
   }
 }

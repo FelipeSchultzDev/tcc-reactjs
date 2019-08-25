@@ -3,10 +3,9 @@
 .sidebar-container{
   width: 224px;
   height: 100vh;
+  position: fixed;
   background-color: $grey-dark;
   font-family: $font;
-  position: fixed;
-  z-index: 5;
 
   .sidebar-link{
     width: 100%;
@@ -44,6 +43,7 @@
     border: none;
     color: $red-normal;
     font-size: 18px;
+    width: 224px;
   }
 
   .logo{
@@ -57,10 +57,4 @@
       transform: translate(-50%, -50%);
     }
   }
-}
-
-.page{
-  float: right;
-  width: calc(100% - 224px);
-  height: 100vh;
 }

@@ -2,8 +2,8 @@ import React from 'react';
 
 import './DeleteModal.scss';
 
-import { Primary, Secondary } from '../Buttons/Buttons';
-import ButtonsColor from '../Buttons/ButtonsColor.enum';
+import { Primary, Secondary } from '../../Buttons/Buttons';
+import ButtonsColor from '../../Buttons/ButtonsColor.enum';
 
 const DeleteModal = ({ onCancel, onAccept }) => (
   <div className="delete-modal-wrapper">

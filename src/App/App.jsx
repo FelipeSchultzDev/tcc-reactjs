@@ -1,7 +1,31 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import Routes from '../routes';
+import './App.scss';
 
-const App = () => <Routes />;
+import PrivateRoute from '../PrivateRoute';
+import Login from '../pages/login/Login';
+import Sidebar from '../components/Sidebar/Sidebar';
+import Marcas from '../pages/Marcas/Marcas';
+
+const container = props => (
+  <div>
+    <Sidebar />
+    <div style={{ width: 'calc(100% - 224px)', position: 'absolute', right: 0 }}>
+      <Route path={`${props.path}/home`} component={() => <h1>Home</h1>} />
+      <Route path={`${props.path}/marcas`} component={Marcas} />
+    </div>
+  </div>
+);
+
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/login" exact component={Login} />
+      <PrivateRoute path="/menu" component={container} />
+      <Redirect from="*" to="/login" />
+    </Switch>
+  </BrowserRouter>
+);
 
 export default App;
