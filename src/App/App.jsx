@@ -10,7 +10,7 @@ import Marcas from '../pages/Marcas/Marcas';
 
 const container = props => (
   <div>
-    <Sidebar />
+    <Sidebar {...props} />
     <div style={{ width: 'calc(100% - 224px)', position: 'absolute', right: 0 }}>
       <Route path={`${props.path}/home`} component={() => <h1>Home</h1>} />
       <Route path={`${props.path}/marcas`} component={Marcas} />

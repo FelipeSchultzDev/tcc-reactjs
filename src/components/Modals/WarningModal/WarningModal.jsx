@@ -4,8 +4,15 @@ import { Primary, Secondary } from '../../Buttons/Buttons';
 import ButtonsColor from '../../Buttons/ButtonsColor.enum';
 
 import './WarningModal.scss';
+import TableType from '../../Table/TableType.enum';
 
-const WarningModal = ({ onAccept, onCancel, msg }) => (
+const WarningModal = ({
+  onAccept = () => {},
+  onCancel = () => {},
+  primaryMsg,
+  secondaryMsg,
+  type
+}) => (
   <div className="warning-modal-wrapper">
     <div className="warning-modal-icon">
       <svg x="0px" y="0px" width="100px" height="85px" viewBox="0 0 100 85">
@@ -18,12 +25,12 @@ const WarningModal = ({ onAccept, onCancel, msg }) => (
       </svg>
     </div>
     <div className="warning-modal-content">
-      <h1>Você tem certeza?</h1>
-      <span>{msg}</span>
+      <h1>{primaryMsg}</h1>
+      <span>{secondaryMsg}</span>
     </div>
     <div className="warning-modal-footer">
-      <Secondary color={ButtonsColor.YELLOW} title="Voltar" click={onCancel} />
-      <Primary color={ButtonsColor.YELLOW} title="Desabilitar" click={onAccept} />
+      <Secondary color={ButtonsColor.YELLOW} title="Voltar" click={() => onCancel({type, action: TableType.ACTION.CANCEL})} />
+      <Primary color={ButtonsColor.YELLOW} title="Desabilitar" click={() => onAccept({type, action: TableType.ACTION.ACCEPT})} />
     </div>
   </div>
 );

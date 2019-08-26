@@ -38,16 +38,16 @@ const Table = ({
               <td>
                 <div className="actions">
                   {disable && (
-                    <Disable click={() => onDisable({ type: TableType.DISABLE, item: row })} />
+                    <Disable click={() => onDisable({ type: TableType.TYPE.DISABLE, item: row })} />
                   )}
                   {edit && (
-                    <Edit click={() => onEdit({ type: TableType.EDIT, item: row })} />
+                    <Edit click={() => onEdit({ type: TableType.TYPE.EDIT, item: row })} />
                   )}
                   {remove && (
-                    <Delete click={() => onDelete({ type: TableType.DELETE, item: row })} />
+                    <Delete click={() => onDelete({ type: TableType.TYPE.DELETE, item: row })} />
                   )}
                   {details && (
-                    <Details click={() => onDetail({ type: TableType.DETAIL, item: row })} />
+                    <Details click={() => onDetail({ type: TableType.TYPE.DETAIL, item: row })} />
                   )}
                 </div>
               </td>

@@ -1,6 +1,6 @@
-@import './../../Assets/styles';
+@import './../../../Assets/styles';
 
-.delete-modal-wrapper{
+.destructive-modal-wrapper{
   width: 400px;
   height: 362px;
   background-color: $white;
@@ -9,7 +9,7 @@
   flex-direction: column;
   box-shadow: $header-shadow;
 
-  .delete-modal-icon{
+  .destructive-modal-icon{
     height: 150px;
     display: flex;
     align-items: center;
@@ -37,7 +37,7 @@
 
   
 
-  .delete-modal-content{
+  .destructive-modal-content{
     color: $grey-lighter;
     display: flex;
     flex-direction: column;
@@ -51,7 +51,7 @@
     }
   }
 
-  .delete-modal-footer{
+  .destructive-modal-footer{
     height: 150px;
     display: flex;
     justify-content: center;
@@ -70,16 +70,6 @@
       stroke-dashoffset: 0;
     }
   }
-  
-  // @keyframes slowShow2{
-  //   from{
-  //     stroke-dashoffset: 0;
-  //   }
-    
-  //   to{
-  //     stroke-dashoffset: 1000;
-  //   }
-  // }
 }
 
 

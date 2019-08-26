@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../Assets/images/logo-green.svg';
 import './Sidebar.scss';
@@ -7,30 +7,53 @@ import './Sidebar.scss';
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      path: '/home',
-    };
+    this.state = {};
   }
 
-  redirect = path => this.setState({ path });
-
-  activeStyle = path => (this.state.path === path ? 'active' : '');
+  activeStyle = path => (this.props.location.pathname.search(path) > 1 ? 'active' : '');
 
   render() {
     return (
       <>
-        <Redirect to={`/menu${this.state.path}`} />
         <div className="sidebar-container">
           <div className="logo">
             <img src={Logo} alt="narguile" />
           </div>
-          <button type="button" onClick={() => this.redirect('/home')} className={`sidebar-link ${this.activeStyle('home')}`}>Home</button>
-          <button type="button" onClick={() => this.redirect('/clientes')} className={`sidebar-link ${this.activeStyle('clientes')}`}>Clientes</button>
-          <button type="button" onClick={() => this.redirect('/marcas/listar')} className={`sidebar-link ${this.activeStyle('marcas')}`}>Marcas</button>
-          <button type="button" onClick={() => this.redirect('/produtos')} className={`sidebar-link ${this.activeStyle('produtos')}`}>Produtos</button>
-          <button type="button" onClick={() => this.redirect('/movimentacoes')} className={`sidebar-link ${this.activeStyle('movimentacoes')}`}>Movimentação</button>
-          <button type="button" onClick={() => this.redirect('/vendas')} className={`sidebar-link ${this.activeStyle('vendas')}`}>Vendas</button>
-          <button type="button" onClick={() => this.redirect('/terminal')} className="sidebar-link">TERMINAL DE VENDAS</button>
+          <Link to={`${this.props.path}/home`}>
+            <div className={`link ${this.activeStyle('home')}`}>
+              <span>Home</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/clientes/listar`}>
+            <div className={`link ${this.activeStyle('clientes')}`}>
+              <span>clientes</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/marcas/listar`}>
+            <div className={`link ${this.activeStyle('marca')}`}>
+              <span>Marcas</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/produtos/listar`}>
+            <div className={`link ${this.activeStyle('produtos')}`}>
+              <span>produtos</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/movimentacoes/listar`}>
+            <div className={`link ${this.activeStyle('movimentacoes')}`}>
+              <span>movimentacoes</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/vendas/listar`}>
+            <div className={`link ${this.activeStyle('vendas')}`}>
+              <span>vendas</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/terminal`}>
+            <div className={`link ${this.activeStyle('terminal')}`}>
+              <span>terminal</span>
+            </div>
+          </Link>
         </div>
       </>
     );

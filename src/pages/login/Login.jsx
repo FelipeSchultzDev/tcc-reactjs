@@ -55,7 +55,7 @@ export default class Login extends Component {
 
   render() {
     if (this.state.redirectToHome) {
-      return <Redirect to="/menu" />;
+      return <Redirect to="/menu/home" />;
     }
     return (
       <div className="wrapper">
