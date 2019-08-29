@@ -5,11 +5,13 @@ import './Marcas.scss';
 
 import Header from '../../components/Header/Header';
 import Listar from './Listar/Listar';
+import Cadastrar from './Cadastrar/Cadastrar';
 
 const Marcas = props => (
   <>
     <Header />
     <Route path={`${props.match.path}/listar`} component={Listar} />
+    <Route path={`${props.match.path}/cadastrar`} component={Cadastrar} />
   </>
 );
 export default Marcas;

@@ -1,17 +1,18 @@
 import React from 'react';
 
+import './WarningModal.scss';
+
 import { Primary, Secondary } from '../../Buttons/Buttons';
 import ButtonsColor from '../../Buttons/ButtonsColor.enum';
-
-import './WarningModal.scss';
 import TableType from '../../Table/TableType.enum';
 
 const WarningModal = ({
   onAccept = () => {},
   onCancel = () => {},
-  primaryMsg,
-  secondaryMsg,
-  type
+  primaryMsg = '',
+  secondaryMsg = '',
+  primaryBtn = '',
+  type,
 }) => (
   <div className="warning-modal-wrapper">
     <div className="warning-modal-icon">
@@ -29,8 +30,16 @@ const WarningModal = ({
       <span>{secondaryMsg}</span>
     </div>
     <div className="warning-modal-footer">
-      <Secondary color={ButtonsColor.YELLOW} title="Voltar" click={() => onCancel({type, action: TableType.ACTION.CANCEL})} />
-      <Primary color={ButtonsColor.YELLOW} title="Desabilitar" click={() => onAccept({type, action: TableType.ACTION.ACCEPT})} />
+      <Secondary
+        color={ButtonsColor.YELLOW}
+        title="Voltar"
+        click={() => onCancel({ type, action: TableType.ACTION.CANCEL })}
+      />
+      <Primary
+        color={ButtonsColor.YELLOW}
+        title={primaryBtn}
+        click={() => onAccept({ type, action: TableType.ACTION.ACCEPT })}
+      />
     </div>
   </div>
 );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { faPlusCircle, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import './Listar.scss';
@@ -20,13 +21,10 @@ const header = [
 ];
 
 export default class Listar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      marcas: [],
-      itemTemp: {},
-      [TableType.TYPE.DISABLE]: false,
-    };
+  state = {
+    marcas: [],
+    itemTemp: {},
+    [TableType.TYPE.DISABLE]: false,
   }
 
   async componentDidMount() {
@@ -51,20 +49,20 @@ export default class Listar extends Component {
   onActionToModal = ({ type, item, action }) => {
     if (action && (type === TableType.TYPE.DISABLE || type === TableType.TYPE.DELETE)) {
       switch (action) {
-        case  TableType.ACTION.CANCEL:
+        case TableType.ACTION.CANCEL:
           this.closeModal(type);
           this.clearItemTemp();
           break;
         case TableType.ACTION.ACCEPT:
           this.closeModal(type);
-          this[type]()
+          this[type]();
           break;
-          default:
-            break;
+        default:
+          break;
       }
       return;
-    } else if(type === TableType.TYPE.EDIT){
-      console.log('edit');
+    } if (type === TableType.TYPE.EDIT) {
+      this.props.history.push('./editar');
     }
     this.openModal(type);
     this.setItemTemp(item);
@@ -72,6 +70,11 @@ export default class Listar extends Component {
 
   [TableType.TYPE.DISABLE] = async () => {
     const response = await MarcaService.put(`${this.state.itemTemp._id}/desativar`);
+    if (response.data.success) this.componentDidMount();
+  };
+
+  [TableType.TYPE.DELETE] = async () => {
+    const response = await MarcaService.delete(`${this.state.itemTemp._id}`);
     if (response.data.success) this.componentDidMount();
   };
 
@@ -88,18 +91,40 @@ export default class Listar extends Component {
       <div style={{ padding: 24, minWidth: 954 }}>
         {this.state[TableType.TYPE.DISABLE] && (
         <ModalControler>
-          <WarningModal type={TableType.TYPE.DISABLE} onCancel={this.onActionToModal} onAccept={this.onActionToModal} primaryMsg="Tem certeza?" secondaryMsg="Você tem certeza que deseja desabilitar esta marca?" />
+          <WarningModal
+            type={TableType.TYPE.DISABLE}
+            onCancel={this.onActionToModal}
+            onAccept={this.onActionToModal}
+            primaryMsg="Tem certeza?"
+            secondaryMsg="Você tem certeza que deseja desabilitar esta marca?"
+            primaryBtn="Deletar"
+          />
         </ModalControler>
         )}
         {this.state[TableType.TYPE.DELETE] && (
         <ModalControler>
-          <DestructiveModal type={TableType.TYPE.DISABLE} onCancel={this.onActionToModal} onAccept={this.onActionToModal} primaryMsg="Tem certeza?" secondaryMsg="Você tem certeza que deseja desabilitar esta marca?" />
+          <DestructiveModal
+            type={TableType.TYPE.DELETE}
+            onCancel={this.onActionToModal}
+            onAccept={this.onActionToModal}
+            primaryMsg="Tem certeza?"
+            secondaryMsg="Você tem certeza que deseja desabilitar esta marca? Esta ação não pode ser revertida."
+            primaryBtn="Deletar"
+          />
         </ModalControler>
         )}
         <div className="top-items">
           <div className="left">
-            <div className="cadastrar"><Primary title="Cadastrar marca" icon={faPlusCircle} color={ButtonsColor.GREEN} click={() => null} /></div>
-            <div className="desabilitados"><Primary title="Desabilitados" icon={faEyeSlash} color={ButtonsColor.GREY} /></div>
+            <div className="cadastrar">
+              <Link to="cadastrar" style={{ textDecoration: 'none' }}>
+                <Primary title="Cadastrar marca" icon={faPlusCircle} color={ButtonsColor.GREEN} />
+              </Link>
+            </div>
+            <div className="desabilitados">
+              <Link to="desabilitados" style={{ textDecoration: 'none' }}>
+                <Primary title="Desabilitados" icon={faEyeSlash} color={ButtonsColor.GREY} />
+              </Link>
+            </div>
           </div>
           <div className="right">
             <div className="busca"><InputSearch /></div>

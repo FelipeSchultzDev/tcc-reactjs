@@ -2,8 +2,9 @@
 
 .input{
   border: 1px solid $border;
+  box-sizing: border-box;
   height: 40px;
-  width: calc(100% - 12px);
+  width: 100%;
   font-size: 18px;
   padding-left: 12px;
   transition: .2s;

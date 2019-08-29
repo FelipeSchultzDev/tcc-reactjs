@@ -25,6 +25,6 @@
         "react/prop-types": 0,
         "object-curly-newline": 0,
         "react/button-has-type": 0,
-        "react/no-find-dom-node": 0,
+        "react/no-find-dom-node": 0
     }
 }

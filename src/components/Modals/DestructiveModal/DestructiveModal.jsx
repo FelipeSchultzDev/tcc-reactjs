@@ -4,8 +4,16 @@ import './DestructiveModal.scss';
 
 import { Primary, Secondary } from '../../Buttons/Buttons';
 import ButtonsColor from '../../Buttons/ButtonsColor.enum';
+import TableType from '../../Table/TableType.enum';
 
-const DestructiveModal = ({ onCancel, onAccept }) => (
+const DestructiveModal = ({
+  onCancel = () => {},
+  onAccept = () => {},
+  primaryMsg = '',
+  secondaryMsg = '',
+  primaryBtn = '',
+  type,
+}) => (
   <div className="destructive-modal-wrapper">
     <div className="destructive-modal-icon">
       <svg width="100px" height="100px" viewBox="0 0 100 100">
@@ -16,13 +24,20 @@ const DestructiveModal = ({ onCancel, onAccept }) => (
 
     </div>
     <div className="destructive-modal-content">
-      <h1>Tem certeza?</h1>
-      <span>Você tem certeza de que quer deletar este item?</span>
-      <span>Esta ação não pode ser revertida.</span>
+      <h1>{primaryMsg}</h1>
+      <span>{secondaryMsg}</span>
     </div>
     <div className="destructive-modal-footer">
-      <Secondary color={ButtonsColor.GREY_LIGHT} title="Cancelar" click={onCancel} />
-      <Primary color={ButtonsColor.RED} title="Deletar" click={onAccept} />
+      <Secondary
+        color={ButtonsColor.GREY_LIGHT}
+        title="Cancelar"
+        click={() => onCancel({ type, action: TableType.ACTION.CANCEL })}
+      />
+      <Primary
+        color={ButtonsColor.RED}
+        title={primaryBtn}
+        click={() => onAccept({ type, action: TableType.ACTION.ACCEPT })}
+      />
     </div>
   </div>
 );
