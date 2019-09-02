@@ -28,7 +28,9 @@ export default class Listar extends Component {
   }
 
   async componentDidMount() {
-    const response = await MarcaService.get('habilitados');
+    const response = await MarcaService.get('habilitados', { headers: {
+      _token: localStorage.getItem('token'),
+    } });
     if (response.data.success) {
       if (response.data.marcas.length === 0) {
         this.setState({
@@ -62,6 +64,7 @@ export default class Listar extends Component {
       }
       return;
     } if (type === TableType.TYPE.EDIT) {
+      localStorage.setItem('marca', item);
       this.props.history.push('./editar');
     }
     this.openModal(type);
@@ -69,12 +72,16 @@ export default class Listar extends Component {
   }
 
   [TableType.TYPE.DISABLE] = async () => {
-    const response = await MarcaService.put(`${this.state.itemTemp._id}/desativar`);
+    const response = await MarcaService.put(`${this.state.itemTemp._id}/desativar`, { headers: {
+      _token: localStorage.getItem('token'),
+    } });
     if (response.data.success) this.componentDidMount();
   };
 
   [TableType.TYPE.DELETE] = async () => {
-    const response = await MarcaService.delete(`${this.state.itemTemp._id}`);
+    const response = await MarcaService.delete(`${this.state.itemTemp._id}`, { headers: {
+      _token: localStorage.getItem('token'),
+    } });
     if (response.data.success) this.componentDidMount();
   };
 

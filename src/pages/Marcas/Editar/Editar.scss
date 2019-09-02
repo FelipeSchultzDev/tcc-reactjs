@@ -1,6 +1,6 @@
 @import '../../../Assets/styles';
 
-.cadastrar-wrapper{
+.editar-wrapper{
   padding: 24px;
   min-width: 954px;
   display: flex;
@@ -8,17 +8,17 @@
   align-items: center;
   height: calc(100vh - 96px);
 
-  .form-cadastrar-container{
+  .form-editar-container{
     width: 100%;
     max-width: 840px;
     padding: 16px;
     border-radius: 4px;
     box-shadow: $header-shadow;
 
-    .cadastrar-content{
+    .editar-content{
       margin-bottom: 32px;
     }
-    .cadastrar-footer{
+    .editar-footer{
       width: 100%;
       display: flex;
       justify-content: space-between;
