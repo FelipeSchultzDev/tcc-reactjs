@@ -4,9 +4,9 @@ import './InputSearch.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const InputSearch = () => (
+const InputSearch = ({ value, change }) => (
   <div className="input-search-wrapper">
-    <input placeholder="Buscar" type="text" />
+    <input id="buscar" placeholder="Buscar" type="text" value={value} onKeyUp={change} />
     <div><FontAwesomeIcon icon={faSearch} /></div>
   </div>
 );

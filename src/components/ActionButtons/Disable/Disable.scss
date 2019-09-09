@@ -1,6 +1,6 @@
 @import './../../../Assets/styles';
 
-.button-edit{
+.button-disable{
   width: 24px;
   height: 24px;
   border: none;
@@ -11,16 +11,17 @@
   transition: .2s;
 
   svg{
+    font-size: 16px;
 
     path{
-      fill: $yellow-normal;
+      fill: $grey-normal;
       transition: .2s;
     }
   }
 }
 
-.button-edit:hover{
-  background-color: $yellow-normal;
+.button-disable:hover{
+  background-color: $grey-normal;
   opacity: .8;
   box-shadow: $button-shadow;
 
@@ -32,12 +33,12 @@
   }
 }
 
-.button-edit:active{
-  background-color: $yellow-dark;
+.button-disable:active{
+  background-color: $grey-dark;
 }
 
-.button-edit:hover::after{
-  content: 'Editar';
+.button-disable:hover::after{
+  content: 'Desabilitar';
   background-color: $color-madatory;
   position: absolute;
   top: -20px;

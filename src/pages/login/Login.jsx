@@ -7,8 +7,8 @@ import './Login.scss';
 import Logo from '../../Assets/images/logo.svg';
 
 import LoginInput from '../../components/LoginInput/LoginInput';
-import Button from '../../components/Button/Button';
-import loader from '../../components/Loading/Loading';
+import LoadButton from '../../components/LoadButton/LoadButton';
+import Colors from '../../Assets/Colors.enum';
 
 import login from '../../Services/login';
 
@@ -55,12 +55,11 @@ export default class Login extends Component {
 
   render() {
     if (this.state.redirectToHome) {
-      return <Redirect to="/home" />;
+      return <Redirect to="/menu/home" />;
     }
     return (
       <div className="wrapper">
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-        {loader(this.state.loading)}
         <div className="form-container">
           <div className="logo-container">
             <img src={Logo} alt="logo narguile" />
@@ -71,7 +70,7 @@ export default class Login extends Component {
           <form onSubmit={this.doLogin}>
             <LoginInput name="user" label="Usuario" placeholder="" type="text" onKeyPress={this.changeValue} />
             <LoginInput name="password" label="Senha" placeholder="" type="password" onKeyPress={this.changeValue} />
-            <Button disabled={this.state.loading} title="Entrar" background="#EB5757" />
+            <LoadButton loading={this.state.loading} title="Entrar" background={Colors.RED_NORMAL} />
           </form>
         </div>
       </div>

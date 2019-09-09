@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Primary } from '../Buttons/Buttons';
-import ButtonsColor from '../Buttons/ButtonsColor.enum';
+import { Primary } from '../../Buttons/Buttons';
+import ButtonsColor from '../../Buttons/ButtonsColor.enum';
 
 import './ErrorModal.scss';
 
@@ -22,7 +22,7 @@ const ErrorModal = ({ onAccept, msg }) => (
       <span>{msg}</span>
     </div>
     <div className="error-modal-footer">
-      <Primary color={ButtonsColor.YELLOW} title="Voltar" click={onAccept} />
+      <Primary color={ButtonsColor.RED} title="Voltar" click={onAccept} />
     </div>
   </div>
 );

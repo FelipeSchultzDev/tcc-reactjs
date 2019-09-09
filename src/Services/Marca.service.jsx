@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-const login = axios.create({ baseURL: 'http://localhost:3001/marca',
-  headers: {
-    _token: localStorage.getItem('token'),
-  } });
+const marca = axios.create({ baseURL: 'http://localhost:3001/marca' });
 
-export default login;
+export default marca;

@@ -1,6 +1,6 @@
 @import './../../Assets/styles';
 
-.delete-modal-wrapper{
+.error-modal-wrapper{
   width: 400px;
   height: 362px;
   background-color: $white;
@@ -9,7 +9,7 @@
   flex-direction: column;
   box-shadow: $header-shadow;
 
-  .delete-modal-icon{
+  .error-modal-icon{
     height: 150px;
     display: flex;
     align-items: center;
@@ -21,23 +21,18 @@
       overflow: visible;
       position: relative;
 
-      circle, line{
+      path{
         stroke: $red-normal;
-        stroke-dasharray: 1000;
-        stroke-dashoffset: 0;
-        animation: slowShow 3s ease-in-out;
       }
 
-      line{
-        animation-delay: 2s;
-        animation: slowShow 5s ease-in-out;
+      polygon, circle{
+        stroke: $red-normal;
+        fill: $red-normal;
       }
     }
   }
 
-  
-
-  .delete-modal-content{
+  .error-modal-content{
     color: $grey-lighter;
     display: flex;
     flex-direction: column;
@@ -51,35 +46,33 @@
     }
   }
 
-  .delete-modal-footer{
+  .error-modal-footer{
     height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    button:first-child{
-      margin-right: 16px;
-    }
   }
-  
-  @keyframes slowShow{
-    from{
-      stroke-dashoffset: 1000;
-    }
-    to{
-      stroke-dashoffset: 0;
-    }
-  }
-  
-  // @keyframes slowShow2{
-  //   from{
-  //     stroke-dashoffset: 0;
-  //   }
-    
-  //   to{
-  //     stroke-dashoffset: 1000;
-  //   }
-  // }
 }
 
 
+#triangle{
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: slowShow 2s ease-in-out;
+}
+
+#line{
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: slowShow2 5s ease-in-out;
+}
+
+@keyframes slowShow{
+  from{
+    stroke-dashoffset: 1000;
+  }
+  
+  to{
+    stroke-dashoffset: 0;
+  }
+}

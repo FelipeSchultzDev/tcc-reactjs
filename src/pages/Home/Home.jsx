@@ -1,13 +1,15 @@
 import React from 'react';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
 import './Home.scss';
+
 import Sidebar from '../../components/Sidebar/Sidebar';
+import Header from '../../components/Header/Header';
 
 const Home = ({ path }) => (
   <div className="page-wrapper">
-    <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-    <Sidebar path={path} />
+    <Sidebar path={path}>
+      <Header />
+    </Sidebar>
   </div>
 );
 export default Home;

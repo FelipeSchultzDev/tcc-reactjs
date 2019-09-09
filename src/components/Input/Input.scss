@@ -1,14 +1,42 @@
 @import '../../Assets/styles';
 
-.input{
-  border: 1px solid $border;
+.input-wrapper{
   height: 40px;
-  width: calc(100% - 12px);
-  font-size: 18px;
-  padding-left: 12px;
-  transition: .2s;
+  position: relative;
+
+  .input{
+    border: 1px solid $border;
+    box-sizing: border-box;
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+    padding-left: 12px;
+    outline: none;
+    transition: .2s;
+  }
+  
+  .input:hover{
+    box-shadow: $header-shadow;
+  }
+
+  .input:focus{
+    border-color: $green-normal;
+
+    ~ span{
+      display: none;
+    }
+  }
+
+  span{
+    position: absolute;
+    top: 42px;
+    left: 12px;
+    font-size: 12px;
+    color: red;
+    white-space: nowrap;
+  }
 }
 
-.input:hover{
-  box-shadow: $header-shadow;
+.error .input{
+  border-color: red;
 }
