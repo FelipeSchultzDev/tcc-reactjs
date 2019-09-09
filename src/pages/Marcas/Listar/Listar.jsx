@@ -23,6 +23,7 @@ const header = [
 export default class Listar extends Component {
   state = {
     marcas: [],
+    marcasFiltradas: [],
     itemTemp: {},
     [TableType.TYPE.DISABLE]: false,
   }
@@ -46,6 +47,7 @@ export default class Listar extends Component {
         });
       }
     }
+    this.filter();
   }
 
   onActionToModal = ({ type, item, action }) => {
@@ -64,8 +66,8 @@ export default class Listar extends Component {
       }
       return;
     } if (type === TableType.TYPE.EDIT) {
-      localStorage.setItem('marca', item);
-      this.props.history.push('./editar');
+      localStorage.setItem('marca', item.nome);
+      this.props.history.push(`./editar/${item._id}`);
     }
     this.openModal(type);
     this.setItemTemp(item);
@@ -84,6 +86,35 @@ export default class Listar extends Component {
     } });
     if (response.data.success) this.componentDidMount();
   };
+
+  filter = (e) => {
+    const { marcas } = this.state;
+    if (e) {
+      const query = e.target.value.trim();
+      if (query) {
+        const filteredMarcas = marcas.filter((marca) => {
+          let TMP = false;
+          header.forEach((head) => {
+            if (marca[head.col].includes(query)) {
+              TMP = true;
+            }
+          });
+          return TMP;
+        });
+        this.setState({
+          marcasFiltradas: filteredMarcas,
+        });
+      } else {
+        this.setState({
+          marcasFiltradas: marcas,
+        });
+      }
+    } else {
+      this.setState({
+        marcasFiltradas: marcas,
+      });
+    }
+  }
 
   openModal = type => this.setState({ [type]: true });
 
@@ -134,11 +165,11 @@ export default class Listar extends Component {
             </div>
           </div>
           <div className="right">
-            <div className="busca"><InputSearch /></div>
+            <div className="busca"><InputSearch change={this.filter} /></div>
           </div>
         </div>
         <div className="table">
-          <Table header={header} data={this.state.marcas} disable="true" edit="true" remove="true" onDisable={this.onActionToModal} onEdit={this.onActionToModal} onDelete={this.onActionToModal} />
+          <Table header={header} data={this.state.marcasFiltradas} disable="true" edit="true" remove="true" onDisable={this.onActionToModal} onEdit={this.onActionToModal} onDelete={this.onActionToModal} />
         </div>
       </div>
 

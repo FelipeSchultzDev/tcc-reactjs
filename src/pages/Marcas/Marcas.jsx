@@ -13,7 +13,7 @@ const Marcas = props => (
     <Header />
     <Route path={`${props.match.path}/listar`} component={Listar} />
     <Route path={`${props.match.path}/cadastrar`} component={Cadastrar} />
-    <Route path={`${props.match.path}/editar`} component={Editar} />
+    <Route path={`${props.match.path}/editar/:id`} component={Editar} />
   </>
 );
 export default Marcas;

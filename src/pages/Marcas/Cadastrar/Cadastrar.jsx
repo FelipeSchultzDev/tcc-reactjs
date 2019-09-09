@@ -79,7 +79,7 @@ export default class Cadastrar extends Component {
       <div className="cadastrar-wrapper">
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
-            <Input placeholder="Digite o nome da marca" name="nome" errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
+            <Input placeholder="Digite o nome da marca" name="nome" value={this.state.nome} errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
           </div>
           <div className="cadastrar-footer">
             <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />

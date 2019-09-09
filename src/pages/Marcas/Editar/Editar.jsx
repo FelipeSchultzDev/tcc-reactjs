@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './Editar.scss';
 
-// import MarcaService from '../../../Services/Marca.service';
+import MarcaService from '../../../Services/Marca.service';
 
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
@@ -10,9 +10,13 @@ import Input from '../../../components/Input/Input';
 
 
 export default class Editar extends Component {
-  state = {
-    erro: false,
-    errorMsg: 'O campo nome é obrigatório!',
+  constructor(props) {
+    super(props);
+    this.state = {
+      nome: localStorage.getItem('marca'),
+      erro: false,
+      errorMsg: 'O campo nome é obrigatório!',
+    };
   }
 
   handleChange = (e) => {
@@ -33,7 +37,22 @@ export default class Editar extends Component {
   }
 
   backPage = () => {
-    this.props.history.push('./listar');
+    this.props.history.push('../listar');
+  }
+
+  edit = async () => {
+    const { nome } = this.state;
+    const response = await MarcaService.put(this.props.match.params.id, { nome }, { headers: {
+      _token: localStorage.getItem('token'),
+    } });
+    if (response.data.success) {
+      this.backPage();
+    } else {
+      this.setState({
+        errorMsg: response.data.msg,
+        erro: true,
+      });
+    }
   }
 
   render() {
@@ -41,12 +60,12 @@ export default class Editar extends Component {
       <div className="editar-wrapper">
         <div className="form-editar-container">
           <div className="editar-content">
-            <Input placeholder="Digite o nome da marca" name="nome" errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
+            <Input placeholder="Digite o nome da marca" name="nome" value={this.state.nome} errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
           </div>
           <div className="editar-footer">
             <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
             <div>
-              <Primary title="Salvar edições" color={ButtonsColor.GREEN} />
+              <Primary title="Salvar edições" color={ButtonsColor.GREEN} click={this.edit} />
             </div>
           </div>
         </div>
