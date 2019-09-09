@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../Assets/images/logo-green.svg';
 import './Sidebar.scss';
@@ -7,34 +7,55 @@ import './Sidebar.scss';
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      path: this.props.path ? this.props.path : '/home',
-    };
+    this.state = {};
   }
 
-  redirect = path => this.setState({ path });
+  activeStyle = path => (this.props.location.pathname.search(path) > 1 ? 'active' : '');
 
   render() {
     return (
-      <Fragment>
-        <Redirect to={this.state.path} />
+      <>
         <div className="sidebar-container">
           <div className="logo">
-            {/* <span>HOOKAH CLAN</span> */}
             <img src={Logo} alt="narguile" />
           </div>
-          <button type="button" onClick={() => this.redirect('/home')} className={`sidebar-link ${this.state.path === '/home' ? 'active' : ''}`}>Home</button>
-          <button type="button" onClick={() => this.redirect('/clientes')} className={`sidebar-link ${this.state.path === '/clientes' ? 'active' : ''}`}>Clientes</button>
-          <button type="button" onClick={() => this.redirect('/marcas')} className={`sidebar-link ${this.state.path === '/marcas' ? 'active' : ''}`}>Marcas</button>
-          <button type="button" onClick={() => this.redirect('/produtos')} className={`sidebar-link ${this.state.path === '/produtos' ? 'active' : ''}`}>Produtos</button>
-          <button type="button" onClick={() => this.redirect('/movimentacoes')} className={`sidebar-link ${this.state.path === '/movimentacoes' ? 'active' : ''}`}>Movimentação</button>
-          <button type="button" onClick={() => this.redirect('/vendas')} className={`sidebar-link ${this.state.path === '/vendas' ? 'active' : ''}`}>Vendas</button>
-          <button type="button" onClick={() => this.redirect('/terminal')} className="sidebar-link">TERMINAL DE VENDAS</button>
+          <Link to={`${this.props.path}/home`}>
+            <div className={`link ${this.activeStyle('home')}`}>
+              <span>Home</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/clientes/listar`}>
+            <div className={`link ${this.activeStyle('clientes')}`}>
+              <span>clientes</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/marcas/listar`}>
+            <div className={`link ${this.activeStyle('marca')}`}>
+              <span>Marcas</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/produtos/listar`}>
+            <div className={`link ${this.activeStyle('produtos')}`}>
+              <span>produtos</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/movimentacoes/listar`}>
+            <div className={`link ${this.activeStyle('movimentacoes')}`}>
+              <span>movimentacoes</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/vendas/listar`}>
+            <div className={`link ${this.activeStyle('vendas')}`}>
+              <span>vendas</span>
+            </div>
+          </Link>
+          <Link to={`${this.props.path}/terminal`}>
+            <div className={`link ${this.activeStyle('terminal')}`}>
+              <span>terminal</span>
+            </div>
+          </Link>
         </div>
-        <div className="page">
-          {this.props.children}
-        </div>
-      </Fragment>
+      </>
     );
   }
 }

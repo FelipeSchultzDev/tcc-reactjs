@@ -8,6 +8,7 @@
   border-radius: 2px;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
   transition: .2s;
 
   svg{
@@ -35,4 +36,16 @@
 
 .button-details:active{
   background-color: $green-dark;
+}
+
+.button-details:hover::after{
+  content: 'Detalhes';
+  background-color: $color-madatory;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px;
+  border-radius: 4px;
+  color: white;
 }

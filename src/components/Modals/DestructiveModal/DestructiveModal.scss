@@ -1,16 +1,15 @@
-@import './../../Assets/styles';
+@import './../../../Assets/styles';
 
-.warning-modal-wrapper{
+.destructive-modal-wrapper{
   width: 400px;
   height: 362px;
   background-color: $white;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   box-shadow: $header-shadow;
 
-  .warning-modal-icon{
+  .destructive-modal-icon{
     height: 150px;
     display: flex;
     align-items: center;
@@ -22,18 +21,23 @@
       overflow: visible;
       position: relative;
 
-      path{
-        stroke: $yellow-normal;
+      circle, line{
+        stroke: $red-normal;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+        animation: slowShow 3s ease-in-out;
       }
 
-      polygon, circle{
-        stroke: $yellow-normal;
-        fill: $yellow-normal;
+      line{
+        animation-delay: 2s;
+        animation: slowShow 5s ease-in-out;
       }
     }
   }
 
-  .warning-modal-content{
+  
+
+  .destructive-modal-content{
     color: $grey-lighter;
     display: flex;
     flex-direction: column;
@@ -45,36 +49,31 @@
       width: min-content;
       white-space: nowrap;
     }
+
+    span{
+      text-align: center;
+    }
   }
 
-  .warning-modal-footer{
-    width: 236px;
+  .destructive-modal-footer{
     height: 150px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-  }
-}
 
-
-#triangle{
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 0;
-  animation: slowShow 2s ease-in-out;
-}
-
-#line{
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 0;
-  animation: slowShow2 5s ease-in-out;
-}
-
-@keyframes slowShow{
-  from{
-    stroke-dashoffset: 1000;
+    button:first-child{
+      margin-right: 16px;
+    }
   }
   
-  to{
-    stroke-dashoffset: 0;
+  @keyframes slowShow{
+    from{
+      stroke-dashoffset: 1000;
+    }
+    to{
+      stroke-dashoffset: 0;
+    }
   }
 }
+
+

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Primary } from '../Buttons/Buttons';
-import ButtonsColor from '../Buttons/ButtonsColor.enum';
+import { Primary } from '../../Buttons/Buttons';
+import ButtonsColor from '../../Buttons/ButtonsColor.enum';
 
 import './PositiveModal.scss';
 
