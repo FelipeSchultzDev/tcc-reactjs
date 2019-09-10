@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { faPlusCircle, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-import './Listar.scss';
+import './ListarDesabilitados.scss';
 
 import MarcaService from '../../../Services/Marca.service';
 
@@ -10,9 +8,6 @@ import InputSearch from '../../../components/InputSearch/InputSearch';
 import Table from '../../../components/Table/Table';
 import ModalControler from '../../../components/Modals/ModalController/ModalController';
 import WarningModal from '../../../components/Modals/WarningModal/WarningModal';
-import DestructiveModal from '../../../components/Modals/DestructiveModal/DestructiveModal';
-import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
-import { Primary } from '../../../components/Buttons/Buttons';
 import TableType from '../../../components/Table/TableType.enum';
 
 const header = [
@@ -20,16 +15,16 @@ const header = [
   { title: 'Data de cadastro', col: 'createdAt' },
 ];
 
-export default class Listar extends Component {
+export default class ListarDesabilitados extends Component {
   state = {
     marcas: [],
     marcasFiltradas: [],
     itemTemp: {},
-    [TableType.TYPE.DISABLE]: false,
+    [TableType.TYPE.ENABLE]: false,
   }
 
   async componentDidMount() {
-    const response = await MarcaService.get('habilitados', { headers: {
+    const response = await MarcaService.get('desabilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
     if (response.data.success) {
@@ -51,7 +46,7 @@ export default class Listar extends Component {
   }
 
   onActionToModal = ({ type, item, action }) => {
-    if (action && (type === TableType.TYPE.DISABLE || type === TableType.TYPE.DELETE)) {
+    if (action && type === TableType.TYPE.ENABLE) {
       switch (action) {
         case TableType.ACTION.CANCEL:
           this.closeModal(type);
@@ -65,25 +60,14 @@ export default class Listar extends Component {
           break;
       }
       return;
-    } if (type === TableType.TYPE.EDIT) {
-      localStorage.setItem('marca', item.nome);
-      this.props.history.push(`./editar/${item._id}`);
     }
     this.openModal(type);
     this.setItemTemp(item);
   }
 
-  [TableType.TYPE.DISABLE] = async () => {
-    const response = await MarcaService.put(`${this.state.itemTemp._id}/desativar`, {}, { headers: {
-      _token: localStorage.getItem('token'),
-    } });
-    if (response.data.success) this.componentDidMount();
-  };
-
-  [TableType.TYPE.DELETE] = async () => {
-    const response = await MarcaService.delete(`${this.state.itemTemp._id}`, { headers: {
-      _token: localStorage.getItem('token'),
-    } });
+  [TableType.TYPE.ENABLE] = async () => {
+    const _token = localStorage.getItem('token');
+    const response = await MarcaService.put(`${this.state.itemTemp._id}/ativar`, {}, { headers: { _token } });
     if (response.data.success) this.componentDidMount();
   };
 
@@ -126,50 +110,24 @@ export default class Listar extends Component {
 
   render() {
     return (
-      <div style={{ padding: 24, minWidth: 954 }}>
-        {this.state[TableType.TYPE.DISABLE] && (
+      <div className="lista-desabilitados" style={{ padding: 24, minWidth: 954 }}>
+        {this.state[TableType.TYPE.ENABLE] && (
         <ModalControler>
           <WarningModal
-            type={TableType.TYPE.DISABLE}
+            type={TableType.TYPE.ENABLE}
             onCancel={this.onActionToModal}
             onAccept={this.onActionToModal}
             primaryMsg="Tem certeza?"
-            secondaryMsg="Você tem certeza que deseja desabilitar esta marca?"
-            primaryBtn="Deletar"
-          />
-        </ModalControler>
-        )}
-        {this.state[TableType.TYPE.DELETE] && (
-        <ModalControler>
-          <DestructiveModal
-            type={TableType.TYPE.DELETE}
-            onCancel={this.onActionToModal}
-            onAccept={this.onActionToModal}
-            primaryMsg="Tem certeza?"
-            secondaryMsg="Você tem certeza que deseja desabilitar esta marca? Esta ação não pode ser revertida."
-            primaryBtn="Deletar"
+            secondaryMsg="Você tem certeza que deseja habilitar esta marca?"
+            primaryBtn="Habilitar"
           />
         </ModalControler>
         )}
         <div className="top-items">
-          <div className="left">
-            <div className="cadastrar">
-              <Link to="cadastrar" style={{ textDecoration: 'none' }}>
-                <Primary title="Cadastrar marca" icon={faPlusCircle} color={ButtonsColor.GREEN} />
-              </Link>
-            </div>
-            <div className="desabilitados">
-              <Link to="desabilitados" style={{ textDecoration: 'none' }}>
-                <Primary title="Desabilitados" icon={faEyeSlash} color={ButtonsColor.GREY} />
-              </Link>
-            </div>
-          </div>
-          <div className="right">
-            <div className="busca"><InputSearch change={this.filter} /></div>
-          </div>
+          <div className="busca"><InputSearch change={this.filter} /></div>
         </div>
         <div className="table">
-          <Table header={header} data={this.state.marcasFiltradas} disable="true" edit="true" remove="true" onDisable={this.onActionToModal} onEdit={this.onActionToModal} onDelete={this.onActionToModal} />
+          <Table header={header} data={this.state.marcasFiltradas} enable="true" onEnable={this.onActionToModal} />
         </div>
       </div>
 

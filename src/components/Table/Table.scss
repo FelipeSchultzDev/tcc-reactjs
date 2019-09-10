@@ -114,4 +114,12 @@
     .previous:disabled, .next:disabled{
         opacity: .3;
     }
+
+    .recordsPerPage{
+        width: 60px;
+        height: 40px;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #d8d8d8;
+    }
 }
