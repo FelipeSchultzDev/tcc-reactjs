@@ -8,15 +8,18 @@ import Edit from '../ActionButtons/Edit/Edit';
 import Delete from '../ActionButtons/Delete/Delete';
 import Details from '../ActionButtons/Details/Details';
 import Disable from '../ActionButtons/Disable/Disable';
+import Enable from '../ActionButtons/Enable/Enable';
 import TableType from './TableType.enum';
 
 const Table = ({
   header = [],
   data = [],
+  enable,
   disable,
   edit,
   remove,
   details,
+  onEnable = () => {},
   onDisable = () => {},
   onEdit = () => {},
   onDelete = () => {},
@@ -35,7 +38,7 @@ const Table = ({
   });
 
   function filter() {
-    const dataFilter = data.slice(filterState.from, filterState.to);
+    const dataFilter = data.slice(1 - filterState.from, filterState.to);
     setTableData(dataFilter);
   }
 
@@ -74,6 +77,13 @@ const Table = ({
 
   useEffect(() => {
     setTotalItems(data.length);
+    setNextButtonState((data.length > itemsPerPage));
+    if (filterState.to > data.length) {
+      setFilterState({
+        ...filterState,
+        to: itemsPerPage,
+      });
+    }
     filter();
   }, [data]);
 
@@ -108,6 +118,9 @@ const Table = ({
               ))}
               <td>
                 <div className="actions">
+                  {enable && (
+                  <Enable click={() => onEnable({ type: TableType.TYPE.ENABLE, item: row })} />
+                  )}
                   {disable && (
                   <Disable click={() => onDisable({ type: TableType.TYPE.DISABLE, item: row })} />
                   )}
@@ -132,7 +145,7 @@ const Table = ({
         </button>
         <div className="quantidade">
           <span>Registros por paginas: </span>
-          <select datatype="number" onChange={e => setItemsPerPage(parseInt(e.target.value, 10))}>
+          <select className="recordsPerPage" onChange={e => setItemsPerPage(parseInt(e.target.value, 10))}>
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option>

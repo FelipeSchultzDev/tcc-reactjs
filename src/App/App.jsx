@@ -7,6 +7,7 @@ import PrivateRoute from '../PrivateRoute';
 import Login from '../pages/login/Login';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Marcas from '../pages/Marcas/Marcas';
+import Clientes from '../pages/Clientes/Clientes';
 
 const container = props => (
   <div>
@@ -14,6 +15,7 @@ const container = props => (
     <div style={{ width: 'calc(100% - 224px)', position: 'absolute', right: 0 }}>
       <Route path={`${props.path}/home`} component={() => <h1>Home</h1>} />
       <Route path={`${props.path}/marcas`} component={Marcas} />
+      <Route path={`${props.path}/clientes`} component={Clientes} />
     </div>
   </div>
 );

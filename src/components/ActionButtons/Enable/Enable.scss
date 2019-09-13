@@ -1,0 +1,50 @@
+@import './../../../Assets/styles';
+
+.button-enable{
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: .2s;
+
+  svg{
+    font-size: 16px;
+
+    path{
+      fill: $grey-normal;
+      transition: .2s;
+    }
+  }
+}
+
+.button-enable:hover{
+  background-color: $grey-normal;
+  opacity: .8;
+  box-shadow: $button-shadow;
+
+  svg{
+
+    path{
+      fill: $white;
+    }
+  }
+}
+
+.button-enable:active{
+  background-color: $grey-dark;
+}
+
+.button-enable:hover::after{
+  content: 'Habilitar';
+  background-color: $color-madatory;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px;
+  border-radius: 4px;
+  color: white;
+}
