@@ -1,5 +1,6 @@
 const TableType = {
   TYPE: {
+    ENABLE: 'enable',
     DISABLE: 'disable',
     EDIT: 'edit',
     DELETE: 'delete',
@@ -8,6 +9,6 @@ const TableType = {
   ACTION: {
     CANCEL: 'cancel',
     ACCEPT: 'accept',
-  }
+  },
 };
 export default TableType;
