@@ -38,7 +38,7 @@ const Table = ({
   });
 
   function filter() {
-    const dataFilter = data.slice(filterState.from, filterState.to);
+    const dataFilter = data.slice(1 - filterState.from, filterState.to);
     setTableData(dataFilter);
   }
 
