@@ -17,16 +17,20 @@
 
     .cadastrar-content{
       margin-bottom: 32px;
+
+      .separator{
+        margin-bottom: 32px;
+      }
     }
     .cadastrar-footer{
       width: 100%;
       display: flex;
       justify-content: space-between;
-      
+
       div{
         display: flex;
         justify-content: space-between;
-  
+
         .secondary-button{
           margin-right: 24px;
         }

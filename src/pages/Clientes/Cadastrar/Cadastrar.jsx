@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './Cadastrar.scss';
 
-import MarcaService from '../../../Services/Marca.service';
+import ClienteService from '../../../Services/Cliente.service';
 
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
@@ -12,8 +12,10 @@ import Input from '../../../components/Input/Input';
 export default class Cadastrar extends Component {
   state = {
     nome: '',
-    erro: false,
-    errorMsg: 'O campo nome é obrigatório!',
+    email: '',
+    celular: '',
+    cpf: '',
+    nascimento: '',
   }
 
   handleChange = (e) => {
@@ -38,24 +40,14 @@ export default class Cadastrar extends Component {
   }
 
   create = async () => {
-    const { nome } = this.state;
-    if (nome) {
-      const { data } = await MarcaService.post('', { nome }, { headers: {
-        _token: localStorage.getItem('token'),
-      } });
-      if (!data.success) {
-        this.setState({
-          erro: true,
-          errorMsg: data.msg,
-        });
-      }
-      return data;
-    }
-    this.setState({
-      erro: true,
-    });
-    return { success: false };
+    const { data } = await ClienteService.post('', {}, { headers: {
+      _token: localStorage.getItem('token'),
+    } });
+    console.log(data);
+    return data;
   }
+
+  validate = () => {}
 
   createAndback= async () => {
     const data = await this.create();
@@ -65,13 +57,7 @@ export default class Cadastrar extends Component {
   }
 
   createAndNew = async () => {
-    const data = await this.create();
-    if (data.success) {
-      this.setState({
-        nome: '',
-        erro: false,
-      });
-    }
+    await this.create();
   }
 
   render() {
@@ -79,7 +65,21 @@ export default class Cadastrar extends Component {
       <div className="cadastrar-wrapper">
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
-            <Input placeholder="Digite o nome da marca" name="nome" value={this.state.nome} errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
+            <div className="separator">
+              <Input placeholder="Digite o nome" name="nome" value={this.state.nome} errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
+            </div>
+            <div className="separator">
+              <Input placeholder="Digite o email" name="email" value={this.state.email} onChange={this.handleChange} />
+            </div>
+            <div className="separator">
+              <Input placeholder="Digite o celular" name="celular" value={this.state.celular} onChange={this.handleChange} />
+            </div>
+            <div className="separator">
+              <Input placeholder="Digite o cpf" name="cpf" value={this.state.cpf} onChange={this.handleChange} />
+            </div>
+            <div className="separator">
+              <Input placeholder="Digite a data de nascimento" name="nascimento" value={this.state.nascimento} onChange={this.handleChange} />
+            </div>
           </div>
           <div className="cadastrar-footer">
             <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
