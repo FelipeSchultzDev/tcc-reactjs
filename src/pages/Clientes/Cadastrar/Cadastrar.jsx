@@ -71,6 +71,7 @@ export default class Cadastrar extends Component {
       cpf: this.state.cpf.value.trim(),
       nascimento: this.dateFormat(this.state.nascimento.value.trim()),
     };
+    console.log(person);
     return person;
   }
 
@@ -142,7 +143,12 @@ export default class Cadastrar extends Component {
     }
   }
 
-  dateFormat = date => new Date(date).toLocaleString('pt-br');
+  dateFormat = (date) => {
+    if (date) {
+      return `${date.substring(8, 10)}/${date.substring(5, 7)}/${date.substring(0, 4)}`;
+    }
+    return '';
+  };
 
   render() {
     return (
