@@ -11,28 +11,42 @@ import Input from '../../../components/Input/Input';
 
 export default class Cadastrar extends Component {
   state = {
-    nome: '',
-    email: '',
-    celular: '',
-    cpf: '',
-    nascimento: '',
+    nome: {
+      value: '',
+      error: false,
+      msg: '',
+    },
+    email: {
+      value: '',
+      error: false,
+      msg: '',
+    },
+    celular: {
+      value: '',
+      error: false,
+      msg: '',
+    },
+    cpf: {
+      value: '',
+      error: false,
+      msg: '',
+    },
+    nascimento: {
+      value: '',
+      error: false,
+      msg: '',
+    },
   }
 
   handleChange = (e) => {
+    const previousState = this.state[e.target.name];
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: {
+        ...previousState,
+        error: false,
+        value: e.target.value,
+      },
     });
-    if (e.target.value) {
-      if (this.state.erro) {
-        this.setState({
-          erro: false,
-        });
-      }
-    } else {
-      this.setState({
-        erro: true,
-      });
-    }
   }
 
   backPage = () => {
@@ -40,14 +54,79 @@ export default class Cadastrar extends Component {
   }
 
   create = async () => {
-    const { data } = await ClienteService.post('', {}, { headers: {
+    const { data } = await ClienteService.post('', this.createObj(), { headers: {
       _token: localStorage.getItem('token'),
     } });
-    console.log(data);
+    if (typeof data.msg === 'object') {
+      this.validate(data.msg);
+    }
     return data;
   }
 
-  validate = () => {}
+  createObj = () => {
+    const person = {
+      nome: this.state.nome.value.trim(),
+      email: this.state.email.value.trim(),
+      celular: this.state.celular.value.trim(),
+      cpf: this.state.cpf.value.trim(),
+      nascimento: this.dateFormat(this.state.nascimento.value.trim()),
+    };
+    return person;
+  }
+
+  clear = () => {
+    Object.keys(this.state).forEach((key) => {
+      this.setState({
+        [key]: {
+          value: '',
+          error: false,
+          msg: '',
+        },
+      });
+    });
+  }
+
+  validate = (errorList = []) => {
+    Object.keys(this.state).forEach((key) => {
+      // console.log(key, errorList.some(error => error.toLowerCase().includes(key)));
+
+      if (errorList.some(error => error.toLowerCase().includes(key))) {
+        const { value } = this.state[key];
+        this.setState({
+          [key]: {
+            value,
+            error: true,
+            msg: errorList.filter(error => error.toLowerCase().includes(key))[0],
+          },
+        });
+      } else {
+        const { value } = this.state[key];
+        this.setState({
+          [key]: {
+            value,
+            error: false,
+            msg: '',
+          },
+        });
+      }
+    });
+
+
+    // errorList.forEach((element) => {
+    //   Object.keys(this.state).forEach((key) => {
+    //     if (element.toLowerCase().includes(key)) {
+    //       const { value } = this.state[key];
+    //       this.setState({
+    //         [key]: {
+    //           value,
+    //           error: true,
+    //           msg: element,
+    //         },
+    //       });
+    //     }
+    //   });
+    // });
+  }
 
   createAndback= async () => {
     const data = await this.create();
@@ -57,8 +136,13 @@ export default class Cadastrar extends Component {
   }
 
   createAndNew = async () => {
-    await this.create();
+    const data = await this.create();
+    if (data.success) {
+      this.clear();
+    }
   }
+
+  dateFormat = date => new Date(date).toLocaleString('pt-br');
 
   render() {
     return (
@@ -66,19 +150,19 @@ export default class Cadastrar extends Component {
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
             <div className="separator">
-              <Input placeholder="Digite o nome" name="nome" value={this.state.nome} errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />
+              <Input placeholder="Digite o nome" name="nome" value={this.state.nome.value} errorMsg={this.state.nome.msg} error={this.state.nome.error} onChange={this.handleChange} />
             </div>
             <div className="separator">
-              <Input placeholder="Digite o email" name="email" value={this.state.email} onChange={this.handleChange} />
+              <Input placeholder="Digite o email" name="email" value={this.state.email.value} errorMsg={this.state.email.msg} error={this.state.email.error} onChange={this.handleChange} />
             </div>
             <div className="separator">
-              <Input placeholder="Digite o celular" name="celular" value={this.state.celular} onChange={this.handleChange} />
+              <Input placeholder="Digite o celular" name="celular" value={this.state.celular.value} errorMsg={this.state.celular.msg} error={this.state.celular.error} onChange={this.handleChange} />
             </div>
             <div className="separator">
-              <Input placeholder="Digite o cpf" name="cpf" value={this.state.cpf} onChange={this.handleChange} />
+              <Input placeholder="Digite o cpf" name="cpf" value={this.state.cpf.value} errorMsg={this.state.cpf.msg} error={this.state.cpf.error} onChange={this.handleChange} />
             </div>
             <div className="separator">
-              <Input placeholder="Digite a data de nascimento" name="nascimento" value={this.state.nascimento} onChange={this.handleChange} />
+              <Input placeholder="Digite a data de nascimento" type="date" name="nascimento" value={this.state.nascimento.value} errorMsg={this.state.nascimento.msg} error={this.state.nascimento.error} onChange={this.handleChange} />
             </div>
           </div>
           <div className="cadastrar-footer">

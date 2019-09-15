@@ -73,7 +73,6 @@ export default class Listar extends Component {
       }
       return;
     } if (type === TableType.TYPE.EDIT) {
-      localStorage.setItem('marca', item.nome);
       this.props.history.push(`./editar/${item._id}`);
     }
     this.openModal(type);
@@ -91,6 +90,7 @@ export default class Listar extends Component {
     const response = await ClienteService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    console.log(response.data);
     if (response.data.success) this.componentDidMount();
   };
 

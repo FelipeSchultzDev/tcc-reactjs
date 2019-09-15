@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header';
 import Listar from './Listar/Listar';
 import ListarDesabilitados from './ListarDesabilitados/ListarDesabilitados';
 import Cadastrar from './Cadastrar/Cadastrar';
+import Editar from './Editar/Editar';
 
 const Clientes = props => (
   <>
@@ -14,7 +15,7 @@ const Clientes = props => (
     <Route path={`${props.match.path}/listar`} component={Listar} />
     <Route path={`${props.match.path}/cadastrar`} component={Cadastrar} />
     <Route path={`${props.match.path}/desabilitados`} component={ListarDesabilitados} />
-    {/* <Route path={`${props.match.path}/editar/:id`} component={Editar} /> */}
+    <Route path={`${props.match.path}/editar/:id`} component={Editar} />
   </>
 );
 
