@@ -7,6 +7,7 @@ import ClienteService from '../../../Services/Cliente.service';
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Input from '../../../components/Input/Input';
+import MyInputMask from '../../../components/MyInputMask/MyInputMask';
 
 
 export default class Cadastrar extends Component {
@@ -71,7 +72,6 @@ export default class Cadastrar extends Component {
       cpf: this.state.cpf.value.trim(),
       nascimento: this.dateFormat(this.state.nascimento.value.trim()),
     };
-    console.log(person);
     return person;
   }
 
@@ -89,8 +89,6 @@ export default class Cadastrar extends Component {
 
   validate = (errorList = []) => {
     Object.keys(this.state).forEach((key) => {
-      // console.log(key, errorList.some(error => error.toLowerCase().includes(key)));
-
       if (errorList.some(error => error.toLowerCase().includes(key))) {
         const { value } = this.state[key];
         this.setState({
@@ -145,7 +143,7 @@ export default class Cadastrar extends Component {
 
   dateFormat = (date) => {
     if (date) {
-      return `${date.substring(8, 10)}/${date.substring(5, 7)}/${date.substring(0, 4)}`;
+      return `${date.substring(0, 2)}/${date.substring(3, 5)}/${date.substring(6, 10)}`;
     }
     return '';
   };
@@ -156,19 +154,62 @@ export default class Cadastrar extends Component {
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
             <div className="separator">
-              <Input placeholder="Digite o nome" name="nome" value={this.state.nome.value} errorMsg={this.state.nome.msg} error={this.state.nome.error} onChange={this.handleChange} />
+              <Input
+                placeholder="Ex. João da silva"
+                label="Nome do cliente"
+                name="nome"
+                value={this.state.nome.value}
+                errorMsg={this.state.nome.msg}
+                error={this.state.nome.error}
+                onChange={this.handleChange}
+              />
             </div>
             <div className="separator">
-              <Input placeholder="Digite o email" name="email" value={this.state.email.value} errorMsg={this.state.email.msg} error={this.state.email.error} onChange={this.handleChange} />
+              <Input
+                placeholder="Ex. teste@hotmail.com"
+                name="email"
+                label="E-mail"
+                value={this.state.email.value}
+                errorMsg={this.state.email.msg}
+                error={this.state.email.error}
+                onChange={this.handleChange}
+              />
             </div>
             <div className="separator">
-              <Input placeholder="Digite o celular" name="celular" value={this.state.celular.value} errorMsg={this.state.celular.msg} error={this.state.celular.error} onChange={this.handleChange} />
+              <MyInputMask
+                placeholder="Ex. (00)00000-0000"
+                label="Digite o celular"
+                name="celular"
+                mask="(99)99999-9999"
+                value={this.state.celular.value}
+                errorMsg={this.state.celular.msg}
+                error={this.state.celular.error}
+                onChange={this.handleChange}
+              />
             </div>
             <div className="separator">
-              <Input placeholder="Digite o cpf" name="cpf" value={this.state.cpf.value} errorMsg={this.state.cpf.msg} error={this.state.cpf.error} onChange={this.handleChange} />
+              <MyInputMask
+                placeholder="Ex. 000.000.000-00"
+                label="Digite o cpf"
+                mask="999.999.999-99"
+                name="cpf"
+                value={this.state.cpf.value}
+                errorMsg={this.state.cpf.msg}
+                error={this.state.cpf.error}
+                onChange={this.handleChange}
+              />
             </div>
             <div className="separator">
-              <Input placeholder="Digite a data de nascimento" type="date" name="nascimento" value={this.state.nascimento.value} errorMsg={this.state.nascimento.msg} error={this.state.nascimento.error} onChange={this.handleChange} />
+              <MyInputMask
+                label="Data de nascimento"
+                mask="99/99/9999"
+                placeholder="Ex. 00/00/0000"
+                name="nascimento"
+                value={this.state.nascimento.value}
+                errorMsg={this.state.nascimento.msg}
+                error={this.state.nascimento.error}
+                onChange={this.handleChange}
+              />
             </div>
           </div>
           <div className="cadastrar-footer">
