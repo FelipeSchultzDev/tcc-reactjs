@@ -1,0 +1,18 @@
+@import '../../../../Assets/styles';
+
+.detalhes-wrapper{
+  width: 500px;
+  height: 700px;
+  background-color: $white;
+  border-radius: 4px;
+  box-shadow: $header-shadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  .separator{
+    margin-bottom: 32px;
+    width: 300px;
+  }
+}

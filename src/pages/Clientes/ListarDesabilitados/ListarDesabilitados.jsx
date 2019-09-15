@@ -40,8 +40,8 @@ export default class ListarDesabilitados extends Component {
       } else {
         const newClientes = response.data.clientes.map(cliente => ({
           ...cliente,
-          createdAt: new Date(cliente.createdAt).toLocaleDateString('pt-br'),
-          nascimento: new Date(cliente.nascimento).toLocaleDateString('pt-br'),
+          createdAt: this.dateConvert(cliente.createdAt),
+          nascimento: this.dateConvert(cliente.nascimento),
           cpf: this.convertCpf(cliente.cpf),
         }));
         this.setState({
@@ -51,6 +51,17 @@ export default class ListarDesabilitados extends Component {
     }
     this.filter();
   }
+
+  dateConvert = (date) => {
+    if (date) {
+      const year = date.substring(0, 4);
+      const month = date.substring(5, 7);
+      const day = date.substring(8, 10);
+      const data = `${day}/${month}/${year}`;
+      return data;
+    }
+    return '';
+  };
 
   onActionToModal = ({ type, item, action }) => {
     if (action && type === TableType.TYPE.ENABLE) {

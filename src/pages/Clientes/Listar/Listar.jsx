@@ -14,6 +14,7 @@ import DestructiveModal from '../../../components/Modals/DestructiveModal/Destru
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import TableType from '../../../components/Table/TableType.enum';
+import Detalhes from './Detalhes/Detalhes';
 
 const header = [
   { title: 'Nome', col: 'nome' },
@@ -29,6 +30,7 @@ export default class Listar extends Component {
     itemTemp: {},
     [TableType.TYPE.DISABLE]: false,
     [TableType.TYPE.DELETE]: false,
+    [TableType.TYPE.DETAIL]: false,
   }
 
 
@@ -44,8 +46,8 @@ export default class Listar extends Component {
       } else {
         const newClientes = response.data.clientes.map(cliente => ({
           ...cliente,
-          createdAt: new Date(cliente.createdAt).toLocaleDateString('pt-br'),
-          nascimento: new Date(cliente.nascimento).toLocaleDateString('pt-br'),
+          createdAt: this.dateConvert(cliente.createdAt),
+          nascimento: this.dateConvert(cliente.nascimento, 'asd'),
           cpf: this.convertCpf(cliente.cpf),
         }));
         this.setState({
@@ -58,7 +60,7 @@ export default class Listar extends Component {
 
 
   onActionToModal = ({ type, item, action }) => {
-    if (action && (type === TableType.TYPE.DISABLE || type === TableType.TYPE.DELETE)) {
+    if (action && (type === TableType.TYPE.DETAIL || type === TableType.TYPE.DISABLE || type === TableType.TYPE.DELETE)) {
       switch (action) {
         case TableType.ACTION.CANCEL:
           this.closeModal(type);
@@ -72,12 +74,14 @@ export default class Listar extends Component {
           break;
       }
       return;
-    } if (type === TableType.TYPE.EDIT) {
-      localStorage.setItem('marca', item.nome);
+    }
+    if (type === TableType.TYPE.EDIT) {
       this.props.history.push(`./editar/${item._id}`);
     }
     this.openModal(type);
-    this.setItemTemp(item);
+    if (item) {
+      this.setItemTemp(item);
+    }
   }
 
   [TableType.TYPE.DISABLE] = async () => {
@@ -91,6 +95,7 @@ export default class Listar extends Component {
     const response = await ClienteService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    console.log(response.data);
     if (response.data.success) this.componentDidMount();
   };
 
@@ -135,9 +140,25 @@ export default class Listar extends Component {
 
   convertCpf = cpf => `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}`;
 
+  dateConvert = (date) => {
+    if (date) {
+      const year = date.substring(0, 4);
+      const month = date.substring(5, 7);
+      const day = date.substring(8, 10);
+      const data = `${day}/${month}/${year}`;
+      return data;
+    }
+    return '';
+  };
+
   render() {
     return (
       <div style={{ padding: 24, minWidth: 954 }}>
+        {this.state[TableType.TYPE.DETAIL] && (
+        <ModalControler>
+          <Detalhes type={TableType.TYPE.DETAIL} onAccept={this.onActionToModal} id={this.state.itemTemp._id} />
+        </ModalControler>
+        )}
         {this.state[TableType.TYPE.DISABLE] && (
         <ModalControler>
           <WarningModal
@@ -180,7 +201,18 @@ export default class Listar extends Component {
           </div>
         </div>
         <div className="table">
-          <Table header={header} data={this.state.clientesFiltrados} details="true" disable="true" edit="true" remove="true" onDisable={this.onActionToModal} onEdit={this.onActionToModal} onDelete={this.onActionToModal} />
+          <Table
+            header={header}
+            data={this.state.clientesFiltrados}
+            details="true"
+            disable="true"
+            edit="true"
+            remove="true"
+            onDisable={this.onActionToModal}
+            onEdit={this.onActionToModal}
+            onDelete={this.onActionToModal}
+            onDetail={this.onActionToModal}
+          />
         </div>
         <div className="footer" style={{ marginTop: 24 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
