@@ -49,7 +49,7 @@ export default class Sidebar extends Component {
               <span>vendas</span>
             </div>
           </Link>
-          <Link to={`${this.props.path}/terminal`}>
+          <Link to="/terminal">
             <div className={`link ${this.activeStyle('terminal')}`}>
               <span>terminal</span>
             </div>

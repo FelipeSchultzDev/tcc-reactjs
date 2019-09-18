@@ -8,6 +8,8 @@ import Login from '../pages/login/Login';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Marcas from '../pages/Marcas/Marcas';
 import Clientes from '../pages/Clientes/Clientes';
+import Terminal from '../pages/Terminal/Terminal';
+import Produtos from '../pages/Produtos/Produtos';
 
 const container = props => (
   <div>
@@ -16,6 +18,7 @@ const container = props => (
       <Route path={`${props.path}/home`} component={() => <h1>Home</h1>} />
       <Route path={`${props.path}/marcas`} component={Marcas} />
       <Route path={`${props.path}/clientes`} component={Clientes} />
+      <Route path={`${props.path}/produtos`} component={Produtos} />
     </div>
   </div>
 );
@@ -25,6 +28,7 @@ const App = () => (
     <Switch>
       <Route path="/login" exact component={Login} />
       <PrivateRoute path="/menu" component={container} />
+      <PrivateRoute path="/terminal" component={Terminal} />
       <Redirect from="*" to="/login" />
     </Switch>
   </BrowserRouter>

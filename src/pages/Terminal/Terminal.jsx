@@ -2,9 +2,14 @@ import React from 'react';
 
 import './Terminal.scss';
 
+import Header from '../../components/Header/Header';
+
 const Terminal = () => (
-  <div className="page-wrapper">
-    <h1>Terminal</h1>
-  </div>
+  <>
+    <Header />
+    <div style={{ padding: 24, minWidth: 954 }}>
+      <span>teste</span>
+    </div>
+  </>
 );
 export default Terminal;
