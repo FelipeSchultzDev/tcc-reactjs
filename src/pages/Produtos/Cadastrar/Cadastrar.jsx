@@ -94,19 +94,32 @@ export default class Cadastrar extends Component {
     return data;
   }
 
-  // TODO: converter o valor e adicionar o layout de error nos selects
   createObj = () => {
     const product = {
       barcode: this.state.barcode.value,
       nome: this.state.nome.value,
-      valorVenda: this.state.valorVenda.value.replace(',', '.'),
+      valorVenda: this.convertCurrency(this.state.valorVenda.value),
       quantidade: this.state.quantidade.value,
       descricao: this.state.descricao.value,
-      marca: this.state.marca.value,
       unidadeMedida: this.state.unidadeMedida.value,
       qtdMinima: this.state.qtdMinima.value,
     };
+    if (this.state.marca.value) {
+      product.marca = this.state.marca.value;
+    }
     return product;
+  }
+
+  convertCurrency = (value = '') => {
+    const newValue = value
+      .replace('.', '')
+      .replace('.', '')
+      .replace('.', '')
+      .replace('.', '')
+      .replace('.', '')
+      .replace('.', '')
+      .replace(',', '.');
+    return newValue;
   }
 
   clear = () => {
@@ -214,6 +227,8 @@ export default class Cadastrar extends Component {
                 value={this.state.marca.value}
                 name="marca"
                 onChange={this.handleChange}
+                errorMsg={this.state.marca.msg}
+                error={this.state.marca.error}
               />
             </div>
             <div className="separator">
@@ -222,6 +237,8 @@ export default class Cadastrar extends Component {
                 value={this.state.unidadeMedida.value}
                 name="unidadeMedida"
                 onChange={this.handleChange}
+                errorMsg={this.state.unidadeMedida.msg}
+                error={this.state.unidadeMedida.error}
               />
             </div>
             <div className="separator">

@@ -19,8 +19,10 @@ import Detalhes from './Detalhes/Detalhes';
 const header = [
   { title: 'Nome', col: 'nome' },
   { title: 'Data de cadastro', col: 'createdAt' },
-  { title: 'Cpf', col: 'cpf' },
-  { title: 'Data de nascimento', col: 'nascimento' },
+  { title: 'Marca', col: 'marca' },
+  { title: 'Quantidade', col: 'quantidade' },
+  { title: 'Quantidade mínima', col: 'qtdMinima' },
+  { title: 'Valor de venda', col: 'valorVenda' },
 ];
 
 export default class Listar extends Component {
@@ -44,11 +46,13 @@ export default class Listar extends Component {
           produtos: [],
         });
       } else {
-        const newProdutos = response.data.produtos.map(cliente => ({
-          ...cliente,
-          createdAt: this.dateConvert(cliente.createdAt),
-          nascimento: this.dateConvert(cliente.nascimento, 'asd'),
-          cpf: this.convertCpf(cliente.cpf),
+        const newProdutos = response.data.produtos.map(produto => ({
+          ...produto,
+          quantidade: `${produto.quantidade} ${produto.unidadeMedida.nome}`,
+          qtdMinima: `${produto.qtdMinima} ${produto.unidadeMedida.nome}`,
+          valorVenda: new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(produto.valorVenda),
+          marca: produto.marca ? produto.marca.nome : '-',
+          createdAt: this.dateConvert(produto.createdAt),
         }));
         this.setState({
           produtos: newProdutos,
@@ -96,6 +100,7 @@ export default class Listar extends Component {
     const response = await ProdutoService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    console.log(response.data);
     if (response.data.success) this.componentDidMount();
   };
 

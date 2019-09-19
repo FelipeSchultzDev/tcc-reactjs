@@ -39,9 +39,10 @@
 
                 td{
                     border-right: 1px solid $border;
-                    padding-left: 12px;
+                    padding: 4px 12px;
                     height: 48px;
                     font-weight: 300;
+                    text-align: center;
                 }
 
                 td:last-child{

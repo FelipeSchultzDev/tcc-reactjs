@@ -2,7 +2,7 @@ import React from 'react';
 
 import './StyledSelect.scss';
 
-const StyledSelect = ({ name, options = [], value = '', onChange }) => (
+const StyledSelect = ({ name, options = [], value = '', onChange, error, errorMsg }) => (
   <div className="styled-select-wrapper">
     <span className="select-label">Teste</span>
     <select name={name} value={value} onChange={onChange}>
@@ -11,6 +11,7 @@ const StyledSelect = ({ name, options = [], value = '', onChange }) => (
         <option key={option.value} value={option.value}>{option.label}</option>
       ))}
     </select>
+    {error && <span className="hint">{errorMsg}</span>}
   </div>
 );
 
