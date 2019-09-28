@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import './Detalhes.scss';
 
-import ClienteService from '../../../../Services/Cliente.service';
+import ProdutoService from '../../../../Services/Produto.service';
 
 import { Primary } from '../../../../components/Buttons/Buttons';
 import Label from '../../../../components/Label/Label';
@@ -10,8 +10,7 @@ import Color from '../../../../components/Buttons/ButtonsColor.enum';
 import TableType from '../../../../components/Table/TableType.enum';
 
 const Detalhes = ({ id, type, onAccept }) => {
-  const [cliente, setCliente] = useState({
-    Nome: '',
+  const [produto, setProduto] = useState({
   });
 
   function dateFormat(date) {
@@ -19,16 +18,16 @@ const Detalhes = ({ id, type, onAccept }) => {
   }
 
   async function getCliente() {
-    const { data } = await ClienteService.get(id, { headers: {
+    const { data } = await ProdutoService.get(id, { headers: {
       _token: localStorage.getItem('token'),
     } });
     if (data.success) {
-      data.cliente = {
-        ...data.cliente,
-        nascimento: dateFormat(data.cliente.nascimento),
-        createdAt: dateFormat(data.cliente.createdAt),
+      data.produto = {
+        ...data.produto,
+        createdAt: dateFormat(data.produto.createdAt),
       };
-      setCliente(data.cliente);
+      console.log(data.produto);
+      setProduto(data.produto);
     }
   }
 
@@ -38,47 +37,68 @@ const Detalhes = ({ id, type, onAccept }) => {
 
 
   return (
-    <div className="detalhes-wrapper">
+    <div className="detalhes-produto-wrapper">
       <div className="separator">
         <Label>
-          Nome:
+          <span className="label-title">Barcode:</span>
           {' '}
-          {cliente.nome}
+          {produto.barcode}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        E-mail:
+          <span className="label-title">Nome:</span>
           {' '}
-          {cliente.email ? cliente.email : '-'}
+          {produto.nome}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        Celular:
+          <span className="label-title">Valor de venda:</span>
           {' '}
-          {cliente.celular ? cliente.celular : '-'}
+          {produto.valorVenda}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        Cpf:
+          <span className="label-title">Marca:</span>
           {' '}
-          {cliente.cpf}
+          {produto.marca && produto.marca.nome}
         </Label>
       </div>
       <div className="separator">
         <Label>
-          Data de nascimento:
+          <span className="label-title">Unidade de medida:</span>
           {' '}
-          {cliente.nascimento}
+          {produto.unidadeMedida && produto.unidadeMedida.nome}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        Data de criação:
+          <span className="label-title">Quantidade:</span>
           {' '}
-          {cliente.createdAt}
+          {produto.quantidade}
+        </Label>
+      </div>
+      <div className="separator">
+        <Label>
+          <span className="label-title">Quantidade mínima:</span>
+          {' '}
+          {produto.qtdMinima}
+        </Label>
+      </div>
+      <div className="separator">
+        <Label>
+          <span className="label-title">Descricao:</span>
+          {' '}
+          {produto.descricao}
+        </Label>
+      </div>
+      <div className="separator">
+        <Label>
+          <span className="label-title">Data de cadastro:</span>
+          {' '}
+          {produto.createdAt}
         </Label>
       </div>
       <Primary color={Color.GREEN} title="Ok" click={() => onAccept({ type, action: TableType.ACTION.CANCEL })} />

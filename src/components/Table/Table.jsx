@@ -19,6 +19,7 @@ const Table = ({
   edit,
   remove,
   details,
+  noAction,
   onEnable = () => {},
   onDisable = () => {},
   onEdit = () => {},
@@ -107,15 +108,18 @@ const Table = ({
         <thead>
           <tr>
             {header.map(head => <th key={head.title}>{ head.title }</th>)}
-            <th>Ações</th>
+            {!noAction && <th>Ações</th>}
           </tr>
         </thead>
         <tbody>
           {tableData.map(row => (
             <tr key={row._id}>
               {header.map(head => (
-                <td key={head.col}>{row[head.col]}</td>
+                <td key={head.col}>
+                  <span>{row[head.col]}</span>
+                </td>
               ))}
+              {!noAction && (
               <td>
                 <div className="actions">
                   {enable && (
@@ -135,6 +139,7 @@ const Table = ({
                   )}
                 </div>
               </td>
+              )}
             </tr>
           ))}
         </tbody>

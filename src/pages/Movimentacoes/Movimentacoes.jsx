@@ -1,15 +1,15 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 
 import './Movimentacoes.scss';
 
-import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
+import Listar from './Listar/Listar';
 
-const Movimentacoes = ({ path }) => (
-  <div className="page-wrapper">
-    <Sidebar path={path}>
-      <Header />
-    </Sidebar>
-  </div>
+const Movimentacoes = props => (
+  <>
+    <Header />
+    <Route path={`${props.match.path}/listar`} component={Listar} />
+  </>
 );
 export default Movimentacoes;

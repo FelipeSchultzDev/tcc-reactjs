@@ -226,6 +226,7 @@ export default class Cadastrar extends Component {
                 options={this.state.combo.marcas}
                 value={this.state.marca.value}
                 name="marca"
+                label="Marca"
                 onChange={this.handleChange}
                 errorMsg={this.state.marca.msg}
                 error={this.state.marca.error}
@@ -233,9 +234,11 @@ export default class Cadastrar extends Component {
             </div>
             <div className="separator">
               <StyledSelect
+                required
                 options={this.state.combo.tipos}
                 value={this.state.unidadeMedida.value}
                 name="unidadeMedida"
+                label="Unidade de medida"
                 onChange={this.handleChange}
                 errorMsg={this.state.unidadeMedida.msg}
                 error={this.state.unidadeMedida.error}

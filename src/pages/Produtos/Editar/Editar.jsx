@@ -2,60 +2,86 @@ import React, { Component } from 'react';
 
 import './Editar.scss';
 
-import ClienteService from '../../../Services/Cliente.service';
+import ProdutoService from '../../../Services/Produto.service';
 
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Input from '../../../components/Input/Input';
-import MyInputMask from '../../../components/MyInputMask/MyInputMask';
+import StyledSelect from '../../../components/StyledSelect/StyledSelect';
+import MyCurrencyInput from '../../../components/MyCurrencyInput/MyCurrencyInput';
 
 
 export default class Editar extends Component {
   state = {
+    barcode: {
+      value: '',
+      error: false,
+      msg: '',
+    },
     nome: {
       value: '',
       error: false,
       msg: '',
     },
-    email: {
+    valorVenda: {
       value: '',
       error: false,
       msg: '',
     },
-    celular: {
+    quantidade: {
       value: '',
       error: false,
       msg: '',
     },
-    cpf: {
+    descricao: {
       value: '',
       error: false,
       msg: '',
     },
-    nascimento: {
+    marca: {
       value: '',
       error: false,
       msg: '',
+    },
+    unidadeMedida: {
+      value: '',
+      error: false,
+      msg: '',
+    },
+    qtdMinima: {
+      value: '',
+      error: false,
+      msg: '',
+    },
+    combo: {
+      marcas: [],
+      tipos: [],
     },
   }
 
   async componentDidMount() {
-    const { data } = await ClienteService.get(this.props.match.params.id, { headers: {
+    const { data } = await ProdutoService.get(this.props.match.params.id, { headers: {
       _token: localStorage.getItem('token'),
     } });
-    const cliente = {
-      nome: data.cliente.nome,
-      email: data.cliente.email,
-      celular: data.cliente.celular,
-      cpf: data.cliente.cpf,
-      nascimento: this.dateFormat(data.cliente.nascimento),
+    this.setState({
+      combo: data.combo,
+    });
+    const produto = {
+      barcode: data.produto.barcode,
+      nome: data.produto.nome,
+      valorVenda: data.produto.valorVenda,
+      quantidade: data.produto.quantidade,
+      descricao: data.produto.descricao,
+      marca: data.produto.marca._id,
+      unidadeMedida: data.produto.unidadeMedida._id,
+      qtdMinima: data.produto.qtdMinima,
     };
-    Object.keys(cliente).forEach((key) => {
+    Object.keys(produto).forEach((key) => {
       const previouState = this.state[key];
       this.setState({
         [key]: {
           ...previouState,
-          value: cliente[key],
+          value: produto[key],
         },
       });
     });
@@ -78,7 +104,7 @@ export default class Editar extends Component {
 
   edit = async () => {
     const { id } = this.props.match.params;
-    const { data } = await ClienteService.put(id, this.createObj(), { headers: {
+    const { data } = await ProdutoService.put(id, this.createObj(), { headers: {
       _token: localStorage.getItem('token'),
     } });
     if (typeof data.msg === 'object') {
@@ -90,14 +116,34 @@ export default class Editar extends Component {
   }
 
   createObj = () => {
-    const person = {
+    const product = {
+      barcode: this.state.barcode.value.trim(),
       nome: this.state.nome.value.trim(),
-      email: this.state.email.value.trim(),
-      celular: this.state.celular.value.trim(),
-      cpf: this.state.cpf.value.trim(),
-      nascimento: this.state.nascimento.value.trim(),
+      valorVenda: this.convertCurrency(this.state.valorVenda.value),
+      quantidade: this.state.quantidade.value,
+      descricao: this.state.descricao.value.trim(),
+      unidadeMedida: this.state.unidadeMedida.value,
+      qtdMinima: this.state.qtdMinima.value,
     };
-    return person;
+    if (this.state.marca.value) {
+      product.marca = this.state.marca.value;
+    }
+    return product;
+  }
+
+  convertCurrency = (value) => {
+    if (typeof value === 'string') {
+      const newValue = value
+        .replace('.', '')
+        .replace('.', '')
+        .replace('.', '')
+        .replace('.', '')
+        .replace('.', '')
+        .replace('.', '')
+        .replace(',', '.');
+      return newValue;
+    }
+    return value;
   }
 
   clear = () => {
@@ -116,38 +162,50 @@ export default class Editar extends Component {
 
   validate = (errorList = []) => {
     Object.keys(this.state).forEach((key) => {
-      if (errorList.some(error => error.toLowerCase().includes(key))) {
-        const { value } = this.state[key];
-        this.setState({
-          [key]: {
-            value,
-            error: true,
-            msg: errorList.filter(error => error.toLowerCase().includes(key))[0],
-          },
-        });
-      } else {
-        const { value } = this.state[key];
-        this.setState({
-          [key]: {
-            value,
-            error: false,
-            msg: '',
-          },
-        });
+      if (key !== 'combo') {
+        if (errorList.some(error => error.toLowerCase().includes(key.toLocaleLowerCase()))) {
+          const { value } = this.state[key];
+          this.setState({
+            [key]: {
+              value,
+              error: true,
+              msg: errorList.filter(err => err.toLowerCase().includes(key.toLocaleLowerCase()))[0],
+            },
+          });
+        } else {
+          const { value } = this.state[key];
+          this.setState({
+            [key]: {
+              value,
+              error: false,
+              msg: '',
+            },
+          });
+        }
       }
     });
   }
 
   render() {
     return (
-
       <div className="editar-wrapper">
         <div className="form-editar-container">
           <div className="cadastrar-content">
             <div className="separator">
               <Input
-                placeholder="Ex. João da silva"
-                label="Nome do cliente"
+                placeholder="Ex. 0000000000000000000000"
+                label="Código de barras(Identificação)"
+                name="barcode"
+                value={this.state.barcode.value}
+                errorMsg={this.state.barcode.msg}
+                error={this.state.barcode.error}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="separator">
+              <Input
+                placeholder="Ex. rosh"
+                label="Nome do produto"
                 name="nome"
                 value={this.state.nome.value}
                 errorMsg={this.state.nome.msg}
@@ -156,49 +214,73 @@ export default class Editar extends Component {
               />
             </div>
             <div className="separator">
+              <MyCurrencyInput
+                placeholder="Ex. 55,90"
+                name="valorVenda"
+                label="Valor de venda"
+                value={this.state.valorVenda.value}
+                errorMsg={this.state.valorVenda.msg}
+                error={this.state.valorVenda.error}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="separator">
+              <StyledSelect
+                options={this.state.combo.marcas}
+                value={this.state.marca.value}
+                name="marca"
+                label="Marca"
+                onChange={this.handleChange}
+                errorMsg={this.state.marca.msg}
+                error={this.state.marca.error}
+              />
+            </div>
+            <div className="separator">
+              <StyledSelect
+                options={this.state.combo.tipos}
+                value={this.state.unidadeMedida.value}
+                name="unidadeMedida"
+                label="Unidade de medida"
+                onChange={this.handleChange}
+                errorMsg={this.state.unidadeMedida.msg}
+                error={this.state.unidadeMedida.error}
+              />
+            </div>
+            <div className="separator">
               <Input
-                placeholder="Ex. teste@hotmail.com"
-                name="email"
-                label="E-mail"
-                value={this.state.email.value}
-                errorMsg={this.state.email.msg}
-                error={this.state.email.error}
+                placeholder="Ex. 12"
+                label="Quantidade"
+                name="quantidade"
+                type="number"
+                config={{ min: 0 }}
+                value={this.state.quantidade.value}
+                errorMsg={this.state.quantidade.msg}
+                error={this.state.quantidade.error}
                 onChange={this.handleChange}
               />
             </div>
             <div className="separator">
-              <MyInputMask
-                placeholder="Ex. (00)00000-0000"
-                label="Digite o celular"
-                name="celular"
-                mask="(99)99999-9999"
-                value={this.state.celular.value}
-                errorMsg={this.state.celular.msg}
-                error={this.state.celular.error}
+              <Input
+                placeholder="Ex. incenso natural"
+                label="Descrição do produto"
+                name="descricao"
+                type="text"
+                value={this.state.descricao.value}
+                errorMsg={this.state.descricao.msg}
+                error={this.state.descricao.error}
                 onChange={this.handleChange}
               />
             </div>
             <div className="separator">
-              <MyInputMask
-                placeholder="Ex. 000.000.000-00"
-                label="Digite o cpf"
-                mask="999.999.999-99"
-                name="cpf"
-                value={this.state.cpf.value}
-                errorMsg={this.state.cpf.msg}
-                error={this.state.cpf.error}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="separator">
-              <MyInputMask
-                label="Data de nascimento"
-                mask="99/99/9999"
-                placeholder="Ex. 00/00/0000"
-                name="nascimento"
-                value={this.state.nascimento.value}
-                errorMsg={this.state.nascimento.msg}
-                error={this.state.nascimento.error}
+              <Input
+                placeholder="Ex. 5"
+                label="Quantidade mínima"
+                name="qtdMinima"
+                type="number"
+                config={{ min: 0 }}
+                value={this.state.qtdMinima.value}
+                errorMsg={this.state.qtdMinima.msg}
+                error={this.state.qtdMinima.error}
                 onChange={this.handleChange}
               />
             </div>

@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Buttons.scss';
 
-export const Primary = ({ title = '', type = 'button', icon, color, click = () => {} }) => (
-  <button className="primary-button shadow ripple" style={{ backgroundColor: color }} onClick={click} type={type}>
+export const Primary = ({ title = '', type = 'button', disabled, icon, color, click = () => {} }) => (
+  <button className="primary-button shadow ripple" disabled={disabled} style={{ backgroundColor: color }} onClick={click} type={type}>
     {icon && (
     <div className="icon">
       <FontAwesomeIcon icon={icon} />

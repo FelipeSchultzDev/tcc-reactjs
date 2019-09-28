@@ -10,6 +10,8 @@
   outline: none;
   font-size: 18px;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   cursor: pointer;
   transition: .2s;
 
@@ -30,6 +32,11 @@
   span{
     padding-left: 8px;
   }
+}
+
+.primary-button:disabled{
+  background-color: $border !important;
+  pointer-events: none;
 }
 
 .secondary-button{
@@ -64,7 +71,7 @@
   }
 }
 
-.shadow:hover{ box-shadow: $button-shadow }
+.shadow:not(:disabled):hover{ box-shadow: $button-shadow }
 
 // .primary-button.green{ background-color: $green-normal }
 // .primary-button.red{ background-color: $red-normal }

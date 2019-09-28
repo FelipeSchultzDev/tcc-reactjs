@@ -10,6 +10,7 @@ import Marcas from '../pages/Marcas/Marcas';
 import Clientes from '../pages/Clientes/Clientes';
 import Terminal from '../pages/Terminal/Terminal';
 import Produtos from '../pages/Produtos/Produtos';
+import Movimentacoes from '../pages/Movimentacoes/Movimentacoes';
 
 const container = props => (
   <div>
@@ -19,6 +20,7 @@ const container = props => (
       <Route path={`${props.path}/marcas`} component={Marcas} />
       <Route path={`${props.path}/clientes`} component={Clientes} />
       <Route path={`${props.path}/produtos`} component={Produtos} />
+      <Route path={`${props.path}/movimentacoes`} component={Movimentacoes} />
     </div>
   </div>
 );
