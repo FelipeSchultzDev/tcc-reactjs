@@ -19,7 +19,7 @@ const TerminalTable = ({
       </thead>
       <tbody>
         {data.map(row => (
-          <tr key={row._id}>
+          <tr key={row.random}>
             {header.map(head => (
               <td key={head.col}>
                 <span>{row[head.col]}</span>

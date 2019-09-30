@@ -86,6 +86,7 @@ const Table = ({
       });
     }
     filter();
+    // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
@@ -100,6 +101,7 @@ const Table = ({
 
   useEffect(() => {
     filter();
+    // eslint-disable-next-line
   }, [filterState]);
 
   return (

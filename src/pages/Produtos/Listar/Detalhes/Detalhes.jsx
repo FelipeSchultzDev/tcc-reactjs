@@ -26,14 +26,13 @@ const Detalhes = ({ id, type, onAccept }) => {
         ...data.produto,
         createdAt: dateFormat(data.produto.createdAt),
       };
-      console.log(data.produto);
       setProduto(data.produto);
     }
   }
 
   useEffect(() => {
     getCliente();
-  }, []);
+  });
 
 
   return (

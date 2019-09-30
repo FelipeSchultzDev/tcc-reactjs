@@ -109,22 +109,6 @@ export default class Cadastrar extends Component {
         });
       }
     });
-
-
-    // errorList.forEach((element) => {
-    //   Object.keys(this.state).forEach((key) => {
-    //     if (element.toLowerCase().includes(key)) {
-    //       const { value } = this.state[key];
-    //       this.setState({
-    //         [key]: {
-    //           value,
-    //           error: true,
-    //           msg: element,
-    //         },
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   createAndback= async () => {

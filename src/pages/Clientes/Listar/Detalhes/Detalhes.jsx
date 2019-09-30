@@ -39,7 +39,7 @@ const Detalhes = ({ id, type, onAccept }) => {
 
   useEffect(() => {
     getCliente();
-  }, []);
+  });
 
 
   return (
