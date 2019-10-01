@@ -13,6 +13,38 @@
     flex-direction: column;
     justify-content: space-between;
 
+    .cliente{
+      padding: 0 16px;
+      background-color: $grey-normal;
+      color: white;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cliente::after{
+      content: 'Clique para remover o cliente';
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 8px;
+      width: 200px;
+      border-radius: 4px;
+      color: white;
+      opacity: 0;
+      font-size: 14px;
+      background-color: #1C1818;
+      transition: .2s;
+    }
+    .cliente:hover::after{
+      opacity: .8;
+    }
+
     footer{
       display: flex;
       flex-direction: row;

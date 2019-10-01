@@ -51,7 +51,7 @@ const ReferenciarCliente = ({ onSelect, onCancel }) => {
 
   useEffect(() => {
     getClientes();
-  }, []);
+  });
 
   return (
     <div className="referenciar-cliente">
@@ -59,14 +59,21 @@ const ReferenciarCliente = ({ onSelect, onCancel }) => {
       <div className="list-wrapper">
         {clientesFiltrado.map(cliente => (
           <div key={cliente._id} onDoubleClick={() => onSelect(cliente)} className="content">
-            <span>
-              {cliente.nome}
-            </span>
-            {cliente.cpf}
-            <span />
-            <span>
-              {cliente.email}
-            </span>
+            <div>
+              <span>
+                {cliente.nome}
+              </span>
+            </div>
+            <div>
+              <span>
+                {cliente.cpf}
+              </span>
+            </div>
+            <div>
+              <span>
+                {cliente.email}
+              </span>
+            </div>
           </div>
         ))}
       </div>

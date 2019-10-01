@@ -9,7 +9,7 @@ import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Color from '../../../components/Buttons/ButtonsColor.enum';
 import VendaService from '../../../Services/Venda.service';
 
-const Add = ({ onChose }) => {
+const Add = ({ onChose, clearForm, afterClearForm }) => {
   const [options, setOptions] = useState([]);
   const [qtdError, setQtdError] = useState(false);
   const [canUseInsert, setCanUseInsert] = useState(false);
@@ -109,6 +109,22 @@ const Add = ({ onChose }) => {
   useEffect(() => {
     retrieveOptions();
   }, []);
+
+  useEffect(() => {
+    if (clearForm) {
+      setProduto({
+        id: '',
+        barcode: '',
+        quantidade: '',
+        desconto: '',
+        valorVenda: '',
+      });
+      afterClearForm();
+      setClearAutocomplete(true);
+      setCanUseInsert(false);
+      setSelectedProduct(false);
+    }
+  }, [clearForm]);
 
   return (
     <>

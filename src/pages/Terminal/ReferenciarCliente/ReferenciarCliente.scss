@@ -27,6 +27,13 @@
       border-bottom: 1px solid $border;
       transition: .2s;
 
+      div:nth-child(1), div:nth-child(3){
+        width: calc(60% - 140px);
+      }
+      div:nth-child(2){
+        width: 140px;
+      }
+
       span{
         pointer-events: none;
       }

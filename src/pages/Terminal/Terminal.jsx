@@ -15,10 +15,11 @@ import Add from './add/Add';
 import ReferenciarCliente from './ReferenciarCliente/ReferenciarCliente';
 
 const Terminal = () => {
-  // const [cliente, setCliente] = useState('');
+  const [cliente, setCliente] = useState(null);
   const [modalCliente, setModalCliente] = useState(false);
   const [valorTotal, setValorTotal] = useState(0);
   const [listaProdutos, setListaProdutos] = useState([]);
+  const [clear, setClear] = useState(false);
 
   const verifyRandom = () => {
     let val = true;
@@ -85,8 +86,41 @@ const Terminal = () => {
   };
 
   const onSelectCliente = (e) => {
-    console.log(e);
     setModalCliente(false);
+    setCliente(e);
+  };
+
+  const afterClearForm = () => {
+    setClear(false);
+  };
+
+  const onFinalze = async () => {
+    const listProducts = listaProdutos.map(produto => ({
+      produto: produto._id,
+      quantidade: produto.quantidade,
+      valor: produto.valorUnitario,
+      desconto: produto.desconto,
+    }));
+    const body = {
+      produtos: listProducts,
+      valorTotal,
+    };
+    if (cliente) {
+      body.cliente = cliente._id;
+    }
+    const { data } = await VendaService.post('vender', body, { headers: {
+      _token: localStorage.getItem('token'),
+    } });
+
+    if (data.success) {
+      setListaProdutos([]);
+      setValorTotal(0);
+      setCliente(null);
+      setClear(true);
+      ToastsStore.success('Venda concluida!');
+    } else {
+      ToastsStore.error('Ocorreu um erro!');
+    }
   };
 
   useEffect(() => {
@@ -115,15 +149,21 @@ const Terminal = () => {
               <TerminalTable onDelete={handleDelete} data={listaProdutos} />
             </section>
             <footer>
-              <Primary color={Color.RED} title="Finalizar" />
-              <Primary color={Color.GREY} title="Referenciar cliente" click={() => setModalCliente(true)} />
+              <Primary color={Color.RED} disabled={!listaProdutos.length} title="Finalizar venda" click={onFinalze} />
+              {!cliente ? (
+                <Primary color={Color.GREY} title="Referenciar cliente" click={() => setModalCliente(true)} />
+              ) : (
+                <div className="cliente">
+                  <Primary color={Color.GREY} title={cliente.nome} click={() => setCliente(null)} />
+                </div>
+              )}
               <span className="valor-total">
                 {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(valorTotal)}
               </span>
             </footer>
           </div>
           <div className="right">
-            <Add onChose={handleChose} />
+            <Add onChose={handleChose} clearForm={clear} afterClearForm={afterClearForm} />
           </div>
         </div>
       </div>
