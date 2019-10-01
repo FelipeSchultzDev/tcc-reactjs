@@ -124,7 +124,7 @@ const Add = ({ onChose, clearForm, afterClearForm }) => {
       setCanUseInsert(false);
       setSelectedProduct(false);
     }
-  }, [clearForm]);
+  }, [clearForm, afterClearForm]);
 
   return (
     <>
