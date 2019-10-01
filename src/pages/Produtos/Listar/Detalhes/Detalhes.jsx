@@ -39,13 +39,6 @@ const Detalhes = ({ id, type, onAccept }) => {
     <div className="detalhes-produto-wrapper">
       <div className="separator">
         <Label>
-          <span className="label-title">Barcode:</span>
-          {' '}
-          {produto.barcode}
-        </Label>
-      </div>
-      <div className="separator">
-        <Label>
           <span className="label-title">Nome:</span>
           {' '}
           {produto.nome}

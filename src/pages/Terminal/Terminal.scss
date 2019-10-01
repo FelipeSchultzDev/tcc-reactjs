@@ -1,3 +1,5 @@
+@import '../../Assets/styles';
+
 .terminal-wrapper{
   width: 100%;
   height: 100%;
@@ -37,6 +39,16 @@
       }
       .tooltip:hover::after{
         opacity: .8;
+      }
+
+      .valor-total{
+        background-color: $grey-normal;
+        border-radius: 4px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 16px;
       }
     }
   }

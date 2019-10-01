@@ -7,22 +7,17 @@ import ProdutoService from '../../Services/Produto.service';
 import VendaService from '../../Services/Venda.service';
 
 import Header from '../../components/Header/Header';
+import ModalController from '../../components/Modals/ModalController/ModalController';
 import TerminalTable from '../../components/TerminalTable/TerminalTable';
 import { Primary } from '../../components/Buttons/Buttons';
 import Color from '../../components/Buttons/ButtonsColor.enum';
 import Add from './add/Add';
-
-const header = [
-  { title: 'Código', col: 'barcode' },
-  { title: 'Nome', col: 'nome' },
-  { title: 'Valor unitário', col: 'valorUnitario' },
-  { title: 'Quantidade', col: 'quantidade' },
-  { title: 'Desconto', col: 'desconto' },
-  { title: 'Valor final', col: 'valorFinal' },
-];
+import ReferenciarCliente from './ReferenciarCliente/ReferenciarCliente';
 
 const Terminal = () => {
-  const [valorTotal, setValorTotal] = useState('R$ 0,00');
+  // const [cliente, setCliente] = useState('');
+  const [modalCliente, setModalCliente] = useState(false);
+  const [valorTotal, setValorTotal] = useState(0);
   const [listaProdutos, setListaProdutos] = useState([]);
 
   const verifyRandom = () => {
@@ -40,10 +35,7 @@ const Terminal = () => {
     return number;
   };
 
-  const calculateFinalValue = (valor, desconto, quantidade) => {
-    const value = (valor - ((desconto / 100) * valor)) * quantidade;
-    return new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(value);
-  };
+  const calculateFinalValue = (valor, d, q) => (valor - ((d / 100) * valor)) * q;
 
   const validateQuantidade = async (id, quantidade) => {
     const produtos = listaProdutos.filter(produto => produto.id === id);
@@ -74,8 +66,8 @@ const Terminal = () => {
         ...produto,
         random: verifyRandom(),
         nome: data.produto.nome,
-        valorUnitario: new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(produto.valorVenda),
-        desconto: produto.desconto ? `${produto.desconto}%` : '0%',
+        valorUnitario: produto.valorVenda,
+        desconto: produto.desconto ? produto.desconto : 0,
         valorFinal: calculateFinalValue(valorVenda, desconto, quantidade),
       };
       setListaProdutos([
@@ -92,31 +84,42 @@ const Terminal = () => {
     setListaProdutos(newLista);
   };
 
+  const onSelectCliente = (e) => {
+    console.log(e);
+    setModalCliente(false);
+  };
+
   useEffect(() => {
     let total = 0;
     listaProdutos.forEach((produto) => {
-      console.log(parseFloat(produto.valorFinal.replace('R$', '').replace(',', '.'), 10));
       total += parseFloat(produto.valorFinal, 10);
     });
+    setValorTotal(total);
   }, [listaProdutos]);
 
   return (
     <>
+      {modalCliente
+      && (
+      <ModalController>
+        <ReferenciarCliente onSelect={onSelectCliente} onCancel={() => setModalCliente(false)} />
+      </ModalController>
+      )
+    }
       <Header />
       <div style={{ padding: 24, minWidth: 1240 }}>
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
         <div className="terminal-wrapper">
           <div className="left">
             <section>
-              <TerminalTable onDelete={handleDelete} header={header} data={listaProdutos} />
+              <TerminalTable onDelete={handleDelete} data={listaProdutos} />
             </section>
             <footer>
               <Primary color={Color.RED} title="Finalizar" />
-              <Primary color={Color.GREY} title="Referenciar cliente" />
-              <div className="tooltip">
-                <Primary color={Color.GREY} title="Aplicar desconto" />
-              </div>
-              <Primary color={Color.GREY} title={valorTotal} />
+              <Primary color={Color.GREY} title="Referenciar cliente" click={() => setModalCliente(true)} />
+              <span className="valor-total">
+                {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(valorTotal)}
+              </span>
             </footer>
           </div>
           <div className="right">

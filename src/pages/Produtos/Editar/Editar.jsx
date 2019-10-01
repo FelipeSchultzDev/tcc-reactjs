@@ -13,11 +13,6 @@ import MyCurrencyInput from '../../../components/MyCurrencyInput/MyCurrencyInput
 
 export default class Editar extends Component {
   state = {
-    barcode: {
-      value: '',
-      error: false,
-      msg: '',
-    },
     nome: {
       value: '',
       error: false,
@@ -67,7 +62,6 @@ export default class Editar extends Component {
       combo: data.combo,
     });
     const produto = {
-      barcode: data.produto.barcode,
       nome: data.produto.nome,
       valorVenda: data.produto.valorVenda,
       quantidade: data.produto.quantidade,
@@ -117,7 +111,6 @@ export default class Editar extends Component {
 
   createObj = () => {
     const product = {
-      barcode: this.state.barcode.value.trim(),
       nome: this.state.nome.value.trim(),
       valorVenda: this.convertCurrency(this.state.valorVenda.value),
       quantidade: this.state.quantidade.value,
@@ -191,17 +184,6 @@ export default class Editar extends Component {
       <div className="editar-wrapper">
         <div className="form-editar-container">
           <div className="cadastrar-content">
-            <div className="separator">
-              <Input
-                placeholder="Ex. 0000000000000000000000"
-                label="Código de barras(Identificação)"
-                name="barcode"
-                value={this.state.barcode.value}
-                errorMsg={this.state.barcode.msg}
-                error={this.state.barcode.error}
-                onChange={this.handleChange}
-              />
-            </div>
             <div className="separator">
               <Input
                 placeholder="Ex. rosh"

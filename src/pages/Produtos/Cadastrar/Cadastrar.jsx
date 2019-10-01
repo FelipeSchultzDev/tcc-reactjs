@@ -12,11 +12,6 @@ import StyledSelect from '../../../components/StyledSelect/StyledSelect';
 
 export default class Cadastrar extends Component {
   state = {
-    barcode: {
-      value: '',
-      error: false,
-      msg: '',
-    },
     nome: {
       value: '',
       error: false,
@@ -96,7 +91,6 @@ export default class Cadastrar extends Component {
 
   createObj = () => {
     const product = {
-      barcode: this.state.barcode.value,
       nome: this.state.nome.value,
       valorVenda: this.convertCurrency(this.state.valorVenda.value),
       quantidade: this.state.quantidade.value,
@@ -188,17 +182,6 @@ export default class Cadastrar extends Component {
       <div className="cadastrar-wrapper">
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
-            <div className="separator">
-              <Input
-                placeholder="Ex. 0000000000000000000000"
-                label="Código de barras(Identificação)"
-                name="barcode"
-                value={this.state.barcode.value}
-                errorMsg={this.state.barcode.msg}
-                error={this.state.barcode.error}
-                onChange={this.handleChange}
-              />
-            </div>
             <div className="separator">
               <Input
                 placeholder="Ex. rosh"

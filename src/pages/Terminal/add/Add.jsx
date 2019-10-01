@@ -5,7 +5,7 @@ import './Add.scss';
 import Input from '../../../components/Input/Input';
 import MyCurrencyInput from '../../../components/MyCurrencyInput/MyCurrencyInput';
 import Autocomplete from '../../../components/Autocomplete/Autocomplete';
-import { Primary } from '../../../components/Buttons/Buttons';
+import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Color from '../../../components/Buttons/ButtonsColor.enum';
 import VendaService from '../../../Services/Venda.service';
 
@@ -13,6 +13,7 @@ const Add = ({ onChose }) => {
   const [options, setOptions] = useState([]);
   const [qtdError, setQtdError] = useState(false);
   const [canUseInsert, setCanUseInsert] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(false);
   const [produto, setProduto] = useState({
     id: '',
     barcode: '',
@@ -47,6 +48,7 @@ const Add = ({ onChose }) => {
         id: data.produto._id,
       });
       setCanUseInsert(true);
+      setSelectedProduct(true);
     }
   };
 
@@ -85,9 +87,23 @@ const Add = ({ onChose }) => {
     if (produto.quantidade) {
       resetProduct();
       onChose(produto);
+      setSelectedProduct(false);
     } else {
       setQtdError(true);
     }
+  };
+
+  const clear = () => {
+    setProduto({
+      id: '',
+      barcode: '',
+      quantidade: '',
+      desconto: '',
+      valorVenda: '',
+    });
+    setCanUseInsert(false);
+    setSelectedProduct(false);
+    setClearAutocomplete(true);
   };
 
   useEffect(() => {
@@ -101,16 +117,10 @@ const Add = ({ onChose }) => {
         placeholder="Ex. stem"
         field="label"
         options={options}
+        disabled={selectedProduct}
         onSelect={onSelectItem}
         afterClear={afterClear}
         clear={clearAutocomplete}
-      />
-      <Input
-        label="Código do produto"
-        value={produto.barcode}
-        name="barcode"
-        onChange={changeHandle}
-        placeholder="Ex. 235123235"
       />
       <Input
         label="Quantidade"
@@ -137,6 +147,12 @@ const Add = ({ onChose }) => {
         min="0"
         max="100"
         placeholder="Ex. 15"
+      />
+      <Secondary
+        color={Color.YELLOW}
+        title="Limpar"
+        click={clear}
+        disabled={!selectedProduct}
       />
       <Primary
         color={Color.GREEN}

@@ -4,7 +4,7 @@ import './Autocomplete.scss';
 
 import Autosuggest from 'react-autosuggest';
 
-const Autocomplete = ({ placeholder, label, options = [], field = '', onSelect, clear, afterClear }) => {
+const Autocomplete = ({ placeholder, label, options = [], field = '', onSelect, clear, afterClear, disabled }) => {
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
@@ -24,14 +24,14 @@ const Autocomplete = ({ placeholder, label, options = [], field = '', onSelect, 
     setValue(sla.newValue);
   };
 
-  const inputProps = { placeholder, value, onChange };
+  const inputProps = { placeholder, value, onChange, disabled };
 
   useEffect(() => {
     if (clear) {
       setValue('');
       afterClear();
     }
-  }, [clear]);
+  }, [clear, afterClear]);
 
   return (
     <div className="autocomplete-wrapper">
@@ -46,6 +46,7 @@ const Autocomplete = ({ placeholder, label, options = [], field = '', onSelect, 
         renderSuggestion={suggestion => <span>{suggestion[field]}</span>}
         inputProps={inputProps}
         onSuggestionSelected={onSelect}
+        disabled={disabled}
       />
     </div>
   );

@@ -14,8 +14,8 @@ export const Primary = ({ title = '', type = 'button', disabled, icon, color, cl
   </button>
 );
 
-export const Secondary = ({ title = '', type = 'button', icon, color, click = () => {} }) => (
-  <button className="secondary-button shadow ripple" style={{ borderColor: color, color }} onClick={click} type={type}>
+export const Secondary = ({ title = '', type = 'button', disabled, icon, color, click = () => {} }) => (
+  <button className="secondary-button shadow ripple" disabled={disabled} style={{ borderColor: color, color }} onClick={click} type={type}>
     {icon && (
     <div className="icon">
       <FontAwesomeIcon icon={icon} />
