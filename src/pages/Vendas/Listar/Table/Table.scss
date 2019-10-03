@@ -1,0 +1,126 @@
+@import '../../../../Assets/styles';
+
+.table-wrapper{
+    padding: 16px;
+    background-color: $white;
+    border-radius: 4px;
+    box-shadow: $header-shadow;
+
+    .table-component{
+        width: 100%;
+        border-collapse: collapse;
+
+        thead{
+            tr{
+                border-bottom: 1px solid $border;
+                color: $color-madatory;
+
+                th{
+                    border-right: 1px solid $border;
+                    height: 64px;
+                    font-size: 14px;
+                    color: $grey-normal;
+                    text-align: start;
+                    padding-left: 12px;
+                }
+
+                th:last-child{
+                    border: none;
+                    text-align: center;
+                    width: 136px;
+                    padding: 0;
+                }
+            }
+        }
+
+        tbody{
+            tr{
+                background-color: $white;
+
+                td{
+                    border-right: 1px solid $border;
+                    padding: 4px 12px;
+                    height: 48px;
+                    font-weight: 300;
+                    text-align: center;
+                }
+
+                td:last-child{
+                    border: none;
+                    padding: 0px 16px 0px 16px;
+                    text-align: center;
+                }
+
+                .actions{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+
+                    .edit, .delete, .details{
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 2px;
+                        opacity: .5;
+                        transition: .2s;
+                    }
+
+                    .edit:hover{ background-color: orange; }
+                    .delete:hover{ background-color: $red-normal; }
+                    .details:hover{ background-color: $green-normal; }
+                }
+
+
+            }
+
+            tr:nth-child(2n + 2){
+                background-color: $background;
+            }
+
+            tr:last-child{
+                border-bottom: 1px solid $border;
+            }
+
+            tr:hover{
+                background-color: #efefef;
+            }
+        }
+
+    }
+    .paginator{
+        height: 40px;
+        padding-top: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .previous, .next{
+        width: 24px;
+        height: 24px;
+        border: none;
+        background-color: transparent;
+        outline: none;
+        border-radius: 4px;
+        transition: .2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $grey-lighter;
+    }
+
+    .previous:not(:disabled):hover, .next:not(:disabled):hover{
+        background-color: #d8d8d8;
+    }
+
+    .previous:disabled, .next:disabled{
+        opacity: .3;
+    }
+
+    .recordsPerPage{
+        width: 60px;
+        height: 40px;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #d8d8d8;
+    }
+}

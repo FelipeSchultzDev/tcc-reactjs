@@ -11,6 +11,7 @@ import Clientes from '../pages/Clientes/Clientes';
 import Terminal from '../pages/Terminal/Terminal';
 import Produtos from '../pages/Produtos/Produtos';
 import Movimentacoes from '../pages/Movimentacoes/Movimentacoes';
+import Vendas from '../pages/Vendas/Vendas';
 
 const container = props => (
   <div>
@@ -21,6 +22,7 @@ const container = props => (
       <Route path={`${props.path}/clientes`} component={Clientes} />
       <Route path={`${props.path}/produtos`} component={Produtos} />
       <Route path={`${props.path}/movimentacoes`} component={Movimentacoes} />
+      <Route path={`${props.path}/vendas`} component={Vendas} />
     </div>
   </div>
 );
