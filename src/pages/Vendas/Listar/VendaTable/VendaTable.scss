@@ -1,6 +1,6 @@
 @import '../../../../Assets/styles';
 
-.table-wrapper{
+.venda-table-wrapper{
     padding: 16px;
     background-color: $white;
     border-radius: 4px;
@@ -22,13 +22,10 @@
                     color: $grey-normal;
                     text-align: start;
                     padding-left: 12px;
-                }
 
+                }
                 th:last-child{
-                    border: none;
-                    text-align: center;
-                    width: 136px;
-                    padding: 0;
+                    border-right: none !important;
                 }
             }
         }
@@ -50,38 +47,35 @@
                     padding: 0px 16px 0px 16px;
                     text-align: center;
                 }
-
-                .actions{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-
-                    .edit, .delete, .details{
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 2px;
-                        opacity: .5;
-                        transition: .2s;
-                    }
-
-                    .edit:hover{ background-color: orange; }
-                    .delete:hover{ background-color: $red-normal; }
-                    .details:hover{ background-color: $green-normal; }
-                }
-
-
             }
 
-            tr:nth-child(2n + 2){
-                background-color: $background;
+            tr.even{
+                background-color: #e6e6e6 !important;
+            }
+
+            tr.row{
+                cursor: pointer;
             }
 
             tr:last-child{
                 border-bottom: 1px solid $border;
             }
 
-            tr:hover{
+            tr.row:hover{
                 background-color: #efefef;
+            }
+
+            tr.expendedRow.even{
+                background-color: #f1f1f1 !important;
+            }
+            tr.expendedRow{
+                border-top: 1px solid $border;
+                border-bottom: 1px solid $border;
+
+                td div{
+                    display: flex;
+                    justify-content: space-around
+                }
             }
         }
 
