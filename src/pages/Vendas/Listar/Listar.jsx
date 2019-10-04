@@ -6,7 +6,7 @@ import VendaService from '../../../Services/Venda.service';
 
 import InputSearch from '../../../components/InputSearch/InputSearch';
 // import Table from './Table/Table';
-import Teste from './Teste';
+import Teste from './Table/Teste';
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Secondary } from '../../../components/Buttons/Buttons';
 
@@ -21,6 +21,7 @@ export default class Listar extends Component {
     } });
 
     if (data.success) {
+      console.log(data.vendas);
       this.setState({
         vendas: data.vendas,
       });
@@ -38,7 +39,7 @@ export default class Listar extends Component {
         </div>
         <div className="table">
           {/* <Table data={this.state.vendas} /> */}
-          <Teste />
+          <Teste data={this.state.vendas} />
         </div>
         <div className="footer" style={{ marginTop: 24 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />

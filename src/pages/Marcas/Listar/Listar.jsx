@@ -128,7 +128,7 @@ export default class Listar extends Component {
 
   render() {
     return (
-      <div style={{ padding: 24, minWidth: 954 }}>
+      <div className="listar-marcas" style={{ padding: 24, minWidth: 954 }}>
         {this.state[TableType.TYPE.DISABLE] && (
         <ModalControler>
           <WarningModal

@@ -158,7 +158,7 @@ export default class Listar extends Component {
 
   render() {
     return (
-      <div style={{ padding: 24, minWidth: 954 }}>
+      <div className="listar-produtos" style={{ padding: 24, minWidth: 954 }}>
         {this.state[TableType.TYPE.DETAIL] && (
         <ModalControler>
           <Detalhes
