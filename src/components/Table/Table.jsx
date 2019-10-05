@@ -52,7 +52,7 @@ const Table = ({
     }
     setFrom(newFrom);
     setTo(newTo);
-    setTableData(dataTable.slice(newFrom, newTo));
+    setTableData(dataTable.slice(newFrom - 1, newTo));
   };
 
   const nextPage = () => {
@@ -65,15 +65,19 @@ const Table = ({
     filter(data, page - 1);
   };
 
+  const getColspan = () => Object.keys(header).length + 1;
+
   useEffect(() => {
     filter(data, page);
     setTotalItems(data.length);
+    // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
     setTotalItems(data.length);
     setPage(0);
     filter(data, 0);
+    // eslint-disable-next-line
   }, [itemsPerPage]);
 
   return (
@@ -86,6 +90,11 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
+          {!tableData.length && (
+            <tr>
+              <td colSpan={getColspan()}><span>Sem registros</span></td>
+            </tr>
+          ) }
           {tableData.map(row => (
             <tr key={row._id}>
               {header.map(head => (

@@ -103,7 +103,7 @@ export default class Listar extends Component {
             noAction
           />
         </div>
-        <div className="footer" style={{ marginTop: 24 }}>
+        <div className="footer" style={{ marginTop: 20 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
         </div>
       </div>

@@ -5,6 +5,7 @@ import './Terminal.scss';
 
 import ProdutoService from '../../Services/Produto.service';
 import VendaService from '../../Services/Venda.service';
+import ClienteService from '../../Services/Cliente.service';
 
 import Header from '../../components/Header/Header';
 import ModalController from '../../components/Modals/ModalController/ModalController';
@@ -15,6 +16,7 @@ import Add from './add/Add';
 import ReferenciarCliente from './ReferenciarCliente/ReferenciarCliente';
 
 const Terminal = () => {
+  const [listaCliente, setListaCliente] = useState(null);
   const [cliente, setCliente] = useState(null);
   const [modalCliente, setModalCliente] = useState(false);
   const [valorTotal, setValorTotal] = useState(0);
@@ -34,6 +36,23 @@ const Terminal = () => {
       }
     }
     return number;
+  };
+
+  const changeCpf = cpf => `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}`;
+
+  const getClientes = async () => {
+    const { data } = await ClienteService.get('habilitados', { headers: {
+      _token: localStorage.getItem('token'),
+    } });
+    if (data.success) {
+      const tmp = data.clientes.map(tmpCliente => ({
+        _id: tmpCliente._id,
+        nome: tmpCliente.nome,
+        email: tmpCliente.email,
+        cpf: changeCpf(tmpCliente.cpf),
+      }));
+      setListaCliente(tmp);
+    }
   };
 
   const calculateFinalValue = (valor, d, q) => (valor - ((d / 100) * valor)) * q;
@@ -124,6 +143,11 @@ const Terminal = () => {
   };
 
   useEffect(() => {
+    getClientes();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     let total = 0;
     listaProdutos.forEach((produto) => {
       total += parseFloat(produto.valorFinal, 10);
@@ -136,11 +160,15 @@ const Terminal = () => {
       {modalCliente
       && (
       <ModalController>
-        <ReferenciarCliente onSelect={onSelectCliente} onCancel={() => setModalCliente(false)} />
+        <ReferenciarCliente
+          data={listaCliente}
+          onSelect={onSelectCliente}
+          onCancel={() => setModalCliente(false)}
+        />
       </ModalController>
       )
     }
-      <Header />
+      <Header isBack />
       <div style={{ padding: 24, minWidth: 1240 }}>
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
         <div className="terminal-wrapper">

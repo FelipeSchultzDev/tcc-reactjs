@@ -50,13 +50,16 @@ const Paginator = ({ data, onPaginate }) => {
   useEffect(() => {
     filter(data, page);
     setTotalItems(data.length);
+    // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
     setTotalItems(data.length);
     setPage(0);
     filter(data, 0);
+    // eslint-disable-next-line
   }, [itemsPerPage]);
+
   return (
     <div className="paginator">
       <button className="previous" type="button" disabled={!previousButtonState} onClick={previousPage}>

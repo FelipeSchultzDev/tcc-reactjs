@@ -77,7 +77,7 @@ export default class Listar extends Component {
         <div className="table">
           <VendaTable data={this.state.vendasFiltradas} />
         </div>
-        <div className="footer" style={{ marginTop: 24 }}>
+        <div className="footer" style={{ marginTop: 20 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
         </div>
       </div>

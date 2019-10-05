@@ -12,12 +12,13 @@ import Terminal from '../pages/Terminal/Terminal';
 import Produtos from '../pages/Produtos/Produtos';
 import Movimentacoes from '../pages/Movimentacoes/Movimentacoes';
 import Vendas from '../pages/Vendas/Vendas';
+import Home from '../pages/Home/Home';
 
 const container = props => (
   <div>
     <Sidebar {...props} />
     <div style={{ width: 'calc(100% - 224px)', position: 'absolute', right: 0 }}>
-      <Route path={`${props.path}/home`} component={() => <h1>Home</h1>} />
+      <Route path={`${props.path}/home`} component={Home} />
       <Route path={`${props.path}/marcas`} component={Marcas} />
       <Route path={`${props.path}/clientes`} component={Clientes} />
       <Route path={`${props.path}/produtos`} component={Produtos} />

@@ -19,6 +19,14 @@ export default class VendaTable extends Component {
     }
   }
 
+  isEven = index => index % 2 === 0
+
+  onPaginate = (e) => {
+    this.setState({
+      vendasFiltradas: e,
+    });
+  }
+
   dateConvert = (date) => {
     if (date) {
       const year = date.substring(0, 4);
@@ -29,14 +37,6 @@ export default class VendaTable extends Component {
     }
     return '';
   };
-
-  onPaginate = (e) => {
-    this.setState({
-      vendasFiltradas: e,
-    });
-  }
-
-  isEven = index => index % 2 === 0
 
   handleRowClick(rowId) {
     const currentExpandedRows = this.state.expandedRows;
