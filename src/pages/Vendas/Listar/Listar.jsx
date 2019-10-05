@@ -10,9 +10,16 @@ import VendaTable from './VendaTable/VendaTable';
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Secondary } from '../../../components/Buttons/Buttons';
 
+const header = [
+  'dataVenda',
+  'valorTotal',
+  'cliente',
+];
+
 export default class Listar extends Component {
   state = {
     vendas: [],
+    vendasFiltradas: [],
   }
 
   async componentDidMount() {
@@ -23,10 +30,41 @@ export default class Listar extends Component {
     if (data.success) {
       this.setState({
         vendas: data.vendas,
+        vendasFiltradas: data.vendas,
       });
     }
   }
 
+  filter = (e) => {
+    const { vendas } = this.state;
+    if (e) {
+      const query = e.target.value.trim().toLowerCase();
+      if (query) {
+        const filteredVendas = vendas.filter((venda) => {
+          let TMP = false;
+          header.forEach((head) => {
+            if (venda[head] && venda[head].toString().toLowerCase().includes(query)) {
+              TMP = true;
+            } else if (venda[head] && venda[head].nome) {
+              TMP = true;
+            }
+          });
+          return TMP;
+        });
+        this.setState({
+          vendasFiltradas: filteredVendas,
+        });
+      } else {
+        this.setState({
+          vendasFiltradas: vendas,
+        });
+      }
+    } else {
+      this.setState({
+        vendasFiltradas: vendas,
+      });
+    }
+  }
 
   backPage = () => this.props.history.push('../home');
 
@@ -37,7 +75,7 @@ export default class Listar extends Component {
           <div className="busca"><InputSearch change={this.filter} /></div>
         </div>
         <div className="table">
-          <VendaTable data={this.state.vendas} />
+          <VendaTable data={this.state.vendasFiltradas} />
         </div>
         <div className="footer" style={{ marginTop: 24 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />

@@ -31,78 +31,50 @@ const Table = ({
   const [previousButtonState, setPreviousButtonState] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [tableData, setTableData] = useState([]);
+  const [from, setFrom] = useState(1);
+  const [to, setTo] = useState(10);
+  const [page, setPage] = useState(0);
 
-  const [filterState, setFilterState] = useState({
-    from: 1,
-    to: 10,
-    page: 0,
-  });
-
-  function filter() {
-    const dataFilter = data.slice(1 - filterState.from, filterState.to);
-    setTableData(dataFilter);
-  }
-
-  function calculate(page) {
-    if (page >= 1) {
-      setPreviousButtonState(true);
-    } else {
-      setPreviousButtonState(false);
-    }
-
-    setFilterState({
-      from: 1 + (itemsPerPage * page),
-      to: (1 + (itemsPerPage * page)) + itemsPerPage - 1,
-      page,
-    });
-
-    if ((1 + (itemsPerPage * page)) + itemsPerPage - 1 >= totalItems) {
-      setFilterState({
-        from: 1 + (itemsPerPage * page),
-        to: totalItems,
-        page,
-      });
+  const filter = (dataTable, currentPage) => {
+    const newFrom = 1 + (itemsPerPage * currentPage);
+    let newTo = newFrom + itemsPerPage - 1;
+    if (newTo > dataTable.length) {
+      newTo = dataTable.length;
       setNextButtonState(false);
     } else {
       setNextButtonState(true);
     }
-  }
 
-  function previousPage() {
-    calculate(filterState.page - 1);
-  }
+    if (currentPage === 0) {
+      setPreviousButtonState(false);
+    } else {
+      setPreviousButtonState(true);
+    }
+    setFrom(newFrom);
+    setTo(newTo);
+    setTableData(dataTable.slice(newFrom, newTo));
+  };
 
-  function nextPage() {
-    calculate(filterState.page + 1);
-  }
+  const nextPage = () => {
+    setPage(page + 1);
+    filter(data, page + 1);
+  };
+
+  const previousPage = () => {
+    setPage(page - 1);
+    filter(data, page - 1);
+  };
 
   useEffect(() => {
+    filter(data, page);
     setTotalItems(data.length);
-    setNextButtonState((data.length > itemsPerPage));
-    if (filterState.to > data.length) {
-      setFilterState({
-        ...filterState,
-        to: itemsPerPage,
-      });
-    }
-    filter();
-    // eslint-disable-next-line
   }, [data]);
 
   useEffect(() => {
-    setFilterState({
-      from: 1,
-      to: itemsPerPage,
-      page: 0,
-    });
-    setPreviousButtonState(false);
-    setNextButtonState(true);
+    setTotalItems(data.length);
+    setPage(0);
+    filter(data, 0);
   }, [itemsPerPage]);
-
-  useEffect(() => {
-    filter();
-    // eslint-disable-next-line
-  }, [filterState]);
 
   return (
     <div className="table-wrapper">
@@ -152,14 +124,14 @@ const Table = ({
         </button>
         <div className="quantidade">
           <span>Registros por paginas: </span>
-          <select className="recordsPerPage" onChange={e => setItemsPerPage(parseInt(e.target.value, 10))}>
+          <select className="recordsPerPage" onChange={e => setItemsPerPage(Number(e.target.value))}>
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option>
             <option value="30">30</option>
           </select>
         </div>
-        <span>{`${filterState.from} - ${filterState.to} de ${totalItems}`}</span>
+        <span>{`${from} - ${to} de ${totalItems}`}</span>
         <button className="next" type="button" disabled={!nextButtonState} onClick={nextPage}>
           <FontAwesomeIcon icon={faChevronRight} />
         </button>

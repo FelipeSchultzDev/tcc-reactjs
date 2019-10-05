@@ -2,10 +2,22 @@ import React, { Component } from 'react';
 
 import './VendaTable.scss';
 
+import Paginator from './Paginator/Paginator';
+
 export default class VendaTable extends Component {
   state = {
+    vendas: [],
+    vendasFiltradas: [],
     expandedRows: [],
   };
+
+  componentWillReceiveProps(e) {
+    if (e.data && e.data.length) {
+      this.setState({
+        vendas: e.data,
+      });
+    }
+  }
 
   dateConvert = (date) => {
     if (date) {
@@ -17,6 +29,12 @@ export default class VendaTable extends Component {
     }
     return '';
   };
+
+  onPaginate = (e) => {
+    this.setState({
+      vendasFiltradas: e,
+    });
+  }
 
   isEven = index => index % 2 === 0
 
@@ -31,10 +49,7 @@ export default class VendaTable extends Component {
     this.setState({ expandedRows: newExpandedRows });
   }
 
-
   renderItem(venda, index) {
-    console.log();
-
     const clickCallback = () => this.handleRowClick(venda._id);
     const itemRows = [
       <tr onClick={clickCallback} key={`row-data-${venda._id}`} className={`row ${index ? 'even' : ''}`}>
@@ -83,8 +98,7 @@ export default class VendaTable extends Component {
   render() {
     let allItemRows = [];
 
-
-    this.props.data.forEach((venda, index) => {
+    this.state.vendasFiltradas.forEach((venda, index) => {
       allItemRows = allItemRows.concat(this.renderItem(venda, this.isEven(index + 1)));
     });
 
@@ -102,6 +116,7 @@ export default class VendaTable extends Component {
             {allItemRows}
           </tbody>
         </table>
+        <Paginator data={this.state.vendas} onPaginate={this.onPaginate} />
       </div>
     );
   }
