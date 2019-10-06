@@ -15,6 +15,7 @@ import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import TableType from '../../../components/Table/TableType.enum';
 import Detalhes from './Detalhes/Detalhes';
+import AlterarEstoque from './AlterarEstoque/AlterarEstoque';
 
 const header = [
   { title: 'Nome', col: 'nome' },
@@ -30,13 +31,19 @@ export default class Listar extends Component {
     produtos: [],
     produtosFiltrados: [],
     itemTemp: {},
+    changeEstoque: false,
+    estoqueId: '',
     [TableType.TYPE.DISABLE]: false,
     [TableType.TYPE.DELETE]: false,
     [TableType.TYPE.DETAIL]: false,
   }
 
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getProdutos();
+  }
+
+  getProdutos = async () => {
     const response = await ProdutoService.get('habilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
@@ -61,7 +68,6 @@ export default class Listar extends Component {
     }
     this.filter();
   }
-
 
   onActionToModal = ({ type, item, action }) => {
     const Type = TableType.TYPE;
@@ -100,7 +106,6 @@ export default class Listar extends Component {
     const response = await ProdutoService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
-    console.log(response.data);
     if (response.data.success) this.componentDidMount();
   };
 
@@ -145,6 +150,15 @@ export default class Listar extends Component {
 
   convertCpf = cpf => `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}`;
 
+  onDoubleClick = (id, col) => {
+    if (col === 'quantidade') {
+      this.setState({
+        estoqueId: id,
+        changeEstoque: true,
+      });
+    }
+  }
+
   dateConvert = (date) => {
     if (date) {
       const year = date.substring(0, 4);
@@ -159,6 +173,21 @@ export default class Listar extends Component {
   render() {
     return (
       <div className="listar-produtos" style={{ padding: 24, minWidth: 954 }}>
+        {this.state.changeEstoque && (
+        <ModalControler>
+          <AlterarEstoque
+            id={this.state.estoqueId}
+            onClose={() => this.setState({ changeEstoque: false, estoqueId: '' })}
+            onComplete={() => {
+              this.getProdutos();
+              this.setState({
+                estoqueId: '',
+                changeEstoque: false,
+              });
+            }}
+          />
+        </ModalControler>
+        )}
         {this.state[TableType.TYPE.DETAIL] && (
         <ModalControler>
           <Detalhes
@@ -221,6 +250,7 @@ export default class Listar extends Component {
             onEdit={this.onActionToModal}
             onDelete={this.onActionToModal}
             onDetail={this.onActionToModal}
+            onDoubleClick={this.onDoubleClick}
           />
         </div>
         <div className="footer" style={{ marginTop: 24 }}>

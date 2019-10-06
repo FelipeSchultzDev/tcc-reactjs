@@ -38,6 +38,7 @@ export default class Listar extends Component {
           ...movimento,
           tipo: movimento.tipo.nome,
           produto: movimento.produto.nome,
+          valor: new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(movimento.valor),
           dataVenda: this.dateConvert(movimento.dataVenda),
         }));
         this.setState({

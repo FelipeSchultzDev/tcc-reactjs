@@ -10,7 +10,9 @@ export const Primary = ({ title = '', type = 'button', disabled, icon, color, cl
       <FontAwesomeIcon icon={icon} />
     </div>
     )}
-    <span>{title}</span>
+    {title && (
+      <span>{title}</span>
+    )}
   </button>
 );
 
@@ -22,5 +24,15 @@ export const Secondary = ({ title = '', type = 'button', disabled, icon, color, 
     </div>
     )}
     <span>{title}</span>
+  </button>
+);
+
+export const PrimaryIcon = ({ type = 'button', disabled, icon, color, click = () => {} }) => (
+  <button className="primary-button-icon shadow ripple" disabled={disabled} style={{ backgroundColor: color }} onClick={click} type={type}>
+    {icon && (
+    <div className="icon">
+      <FontAwesomeIcon icon={icon} />
+    </div>
+    )}
   </button>
 );

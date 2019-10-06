@@ -23,11 +23,6 @@ export default class Editar extends Component {
       error: false,
       msg: '',
     },
-    quantidade: {
-      value: '',
-      error: false,
-      msg: '',
-    },
     descricao: {
       value: '',
       error: false,
@@ -64,7 +59,6 @@ export default class Editar extends Component {
     const produto = {
       nome: data.produto.nome,
       valorVenda: data.produto.valorVenda,
-      quantidade: data.produto.quantidade,
       descricao: data.produto.descricao,
       marca: data.produto.marca._id,
       unidadeMedida: data.produto.unidadeMedida._id,
@@ -113,7 +107,6 @@ export default class Editar extends Component {
     const product = {
       nome: this.state.nome.value.trim(),
       valorVenda: this.convertCurrency(this.state.valorVenda.value),
-      quantidade: this.state.quantidade.value,
       descricao: this.state.descricao.value.trim(),
       unidadeMedida: this.state.unidadeMedida.value,
       qtdMinima: this.state.qtdMinima.value,
@@ -226,19 +219,6 @@ export default class Editar extends Component {
                 onChange={this.handleChange}
                 errorMsg={this.state.unidadeMedida.msg}
                 error={this.state.unidadeMedida.error}
-              />
-            </div>
-            <div className="separator">
-              <Input
-                placeholder="Ex. 12"
-                label="Quantidade"
-                name="quantidade"
-                type="number"
-                config={{ min: 0 }}
-                value={this.state.quantidade.value}
-                errorMsg={this.state.quantidade.msg}
-                error={this.state.quantidade.error}
-                onChange={this.handleChange}
               />
             </div>
             <div className="separator">

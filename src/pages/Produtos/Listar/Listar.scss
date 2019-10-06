@@ -1,3 +1,5 @@
+@import '../../../Assets/styles';
+
 .listar-produtos{
   .top-items{
     display: flex;
@@ -15,6 +17,33 @@
 
     .filtro{
       margin-left: 16px;
+    }
+  }
+
+  .table .table-wrapper tbody tr{
+    td:nth-child(4) div{
+      position: relative;
+    }
+
+    td:nth-child(4) div:after{
+      content: 'Clique duas vezes para alterar a quantidade no estoque';
+      display: none;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      padding: 4px;
+      width: 200px;
+      border-radius: 4px;
+      color: white;
+      opacity: 0;
+      background-color: $color-madatory;
+      transition: .2s;
+    }
+    td:nth-child(4) div:hover::after{
+        display: inline;
+        opacity: .8;
     }
   }
 }

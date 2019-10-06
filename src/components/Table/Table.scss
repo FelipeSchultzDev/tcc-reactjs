@@ -39,10 +39,20 @@
 
                 td{
                     border-right: 1px solid $border;
-                    padding: 4px 12px;
                     height: 48px;
                     font-weight: 300;
                     text-align: center;
+
+                    div{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 48px;
+
+                        span{
+                            pointer-events: none;
+                        }
+                    }
                 }
 
                 td:last-child{

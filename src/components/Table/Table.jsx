@@ -25,6 +25,7 @@ const Table = ({
   onEdit = () => {},
   onDelete = () => {},
   onDetail = () => {},
+  onDoubleClick = () => {},
 }) => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [nextButtonState, setNextButtonState] = useState(true);
@@ -38,7 +39,7 @@ const Table = ({
   const filter = (dataTable, currentPage) => {
     const newFrom = 1 + (itemsPerPage * currentPage);
     let newTo = newFrom + itemsPerPage - 1;
-    if (newTo > dataTable.length) {
+    if (newTo >= dataTable.length) {
       newTo = dataTable.length;
       setNextButtonState(false);
     } else {
@@ -99,7 +100,9 @@ const Table = ({
             <tr key={row._id}>
               {header.map(head => (
                 <td key={head.col}>
-                  <span>{row[head.col]}</span>
+                  <div onDoubleClick={() => onDoubleClick(row._id, head.col)}>
+                    <span>{row[head.col]}</span>
+                  </div>
                 </td>
               ))}
               {!noAction && (

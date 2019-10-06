@@ -35,7 +35,7 @@ const HomeTable = ({
               <span>{row.qtdMinima}</span>
             </td>
             <td className="status">
-              {(row.quantidade < row.qtdMinima && row.quantidade > 0) && (
+              {(row.quantidade <= row.qtdMinima && row.quantidade > 0) && (
                 <div className="atention">
                   <FontAwesomeIcon icon={faInfoCircle} />
                 </div>

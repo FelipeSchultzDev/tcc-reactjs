@@ -15,7 +15,6 @@ export default class Header extends Component {
   }
 
   back = () => {
-    console.log(this.props);
     this.setState({ back: true });
   }
 

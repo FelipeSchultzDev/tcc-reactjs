@@ -1,0 +1,76 @@
+@import '../../../../Assets/styles';
+
+.alterar-estoque-wrapper{
+  width: 600px;
+  height: 300px;
+  background-color: white;
+  box-shadow: $header-shadow;
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  header{
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: $color-madatory;
+    border-bottom: 1px solid $border;
+  }
+
+  section{
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+
+    input{
+      font-family: 'Rubik';
+      width: 84px;
+      height: 36px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid $border;
+      outline: none;
+      text-align: center;
+    }
+  }
+
+  footer:not(.cancel){
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-sizing: border-box;
+  }
+
+  .minValue{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    span{
+      font-size: 12px;
+      position: absolute;
+      top: 40px;
+      white-space: nowrap;
+    }
+  }
+
+  .value input{
+    font-family: 'Rubik';
+    width: 84px;
+    height: 36px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid $border;
+    outline: none;
+    text-align: center;
+  }
+}
