@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-const venda = axios.create({ baseURL: 'http://localhost:3001/venda' });
+const venda = axios.create({ baseURL: 'https://back-end-tcc.herokuapp.com/venda' });
 
 export default venda;
