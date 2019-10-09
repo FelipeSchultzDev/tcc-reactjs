@@ -1,15 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
+import HomeService from '../../Services/Home.service';
 
 import './Home.scss';
 
-import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
+import HomeTable from './HomeTable/HomeTable';
 
-const Home = ({ path }) => (
-  <div className="page-wrapper">
-    <Sidebar path={path}>
+const Home = () => {
+  const [produtos, setProdutos] = useState([]);
+  const [totalHoje, setTotalHoje] = useState('00');
+  const [totalMes, setTotalMes] = useState('00');
+  const [totalAtention, setTotalAtention] = useState(0);
+  const [totalDanger, setTotalDanger] = useState(0);
+
+  const retrieveProdutos = async () => {
+    const { data } = await HomeService.get('', { headers: {
+      _token: localStorage.getItem('token'),
+    } });
+    if (data && data.success) {
+      setProdutos(data.listaProdutos.produtos);
+      setTotalHoje(data.totalVendasHoje);
+      setTotalMes(data.totalVendasMes);
+      setTotalDanger(data.listaProdutos.vazio);
+      setTotalAtention(data.listaProdutos.quantidadeBaixa);
+    }
+  };
+
+  useEffect(() => {
+    retrieveProdutos();
+  }, []);
+
+  return (
+    <>
       <Header />
-    </Sidebar>
-  </div>
-);
+      <div className="home-container">
+        <div className="quantidades">
+          <div className="total-dia">
+            <div className="total-title">Total de vendas de hoje</div>
+            <div className="value">{totalHoje}</div>
+          </div>
+          <div className="total-mes">
+            <div className="total-title">Total de vendas do mês</div>
+            <div className="value">{totalMes}</div>
+          </div>
+        </div>
+        <div className="table">
+          <header>
+            <div className="atention">
+              <FontAwesomeIcon icon={faInfoCircle} />
+              <span>{totalAtention}</span>
+            </div>
+            <div className="danger">
+              <FontAwesomeIcon icon={faTimesCircle} />
+              <span>{totalDanger}</span>
+            </div>
+          </header>
+          <section>
+            <HomeTable data={produtos} />
+          </section>
+        </div>
+      </div>
+    </>
+  );
+};
 export default Home;

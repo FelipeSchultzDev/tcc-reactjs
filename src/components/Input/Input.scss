@@ -19,7 +19,7 @@
     outline: none;
     transition: .2s;
   }
-  
+
   .input:hover{
     box-shadow: $header-shadow;
   }
@@ -35,11 +35,11 @@
   span.hint{
     margin-left: 2px;
     font-size: 12px;
-    color: red;
+    color: $red-normal;
     white-space: nowrap;
   }
 }
 
 .error .input{
-  border-color: red;
+  border-color: $red-normal;
 }

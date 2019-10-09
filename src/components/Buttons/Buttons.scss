@@ -10,6 +10,8 @@
   outline: none;
   font-size: 18px;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   cursor: pointer;
   transition: .2s;
 
@@ -30,6 +32,11 @@
   span{
     padding-left: 8px;
   }
+}
+
+.primary-button:disabled{
+  background-color: $border !important;
+  pointer-events: none;
 }
 
 .secondary-button{
@@ -42,6 +49,7 @@
   outline: none;
   font-size: 18px;
   display: flex;
+  justify-content: center;
   cursor: pointer;
   transition: .2s;
 
@@ -64,7 +72,51 @@
   }
 }
 
-.shadow:hover{ box-shadow: $button-shadow }
+.secondary-button:disabled{
+  border: 1px solid $border !important;
+  color: $border !important;
+  pointer-events: none;
+}
+
+.primary-button-icon{
+  padding: 0px 8px 0px 8px;
+  height: 40px;
+  position: relative;
+  border: none;
+  border-radius: 4px;
+  color: $white;
+  outline: none;
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+  transition: .2s;
+
+  .icon{
+    width: 24px;
+    height: 24px;
+    position: relative;
+
+    svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+    }
+  }
+
+  span{
+    padding-left: 8px;
+  }
+}
+.primary-button-icon:disabled{
+  background-color: $border !important;
+  pointer-events: none;
+}
+
+.shadow:not(:disabled):hover{ box-shadow: $button-shadow }
 
 // .primary-button.green{ background-color: $green-normal }
 // .primary-button.red{ background-color: $red-normal }

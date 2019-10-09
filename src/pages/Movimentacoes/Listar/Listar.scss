@@ -1,0 +1,20 @@
+.movimentacao{
+  .top-items{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+    
+    .left, .right{
+      display: flex;
+    }
+    
+    .cadastrar{
+      margin-right: 16px;
+    }
+    
+    .filtro{
+      margin-left: 16px;
+    }
+  }
+}

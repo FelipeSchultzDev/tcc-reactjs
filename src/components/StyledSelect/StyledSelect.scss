@@ -1,0 +1,32 @@
+@import '../../Assets/styles';
+
+.styled-select-wrapper{
+  height: 78px;
+  display: flex;
+  flex-direction: column;
+
+  .select-label{
+    font-style: italic;
+    color: $color-madatory;
+  }
+
+  select{
+    height: 40px;
+    border: 1px solid $border;
+    font-size: 18px;
+    padding-left: 12px;
+    outline: none;
+    transition: .2s;
+  }
+  
+  select:focus{
+    border: 1px solid $green-normal;
+  }
+
+  span.hint{
+    margin-left: 2px;
+    font-size: 12px;
+    color: $red-normal;
+    white-space: nowrap;
+  }
+}

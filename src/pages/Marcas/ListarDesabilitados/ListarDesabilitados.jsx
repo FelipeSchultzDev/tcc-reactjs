@@ -133,7 +133,7 @@ export default class ListarDesabilitados extends Component {
         <div className="table">
           <Table header={header} data={this.state.marcasFiltradas} enable="true" onEnable={this.onActionToModal} />
         </div>
-        <div className="footer" style={{ marginTop: 24 }}>
+        <div className="footer" style={{ marginTop: 20 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
         </div>
       </div>

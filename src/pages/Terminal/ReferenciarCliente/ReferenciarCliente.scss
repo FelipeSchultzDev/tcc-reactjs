@@ -1,0 +1,64 @@
+@import '../../../Assets/styles';
+
+.referenciar-cliente{
+  padding: 16px;
+  width: 700px;
+  height: 500px;
+  background-color: white;
+  box-shadow: $header-shadow;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  .list-wrapper{
+    width: 600px;
+    height: 310px;
+    overflow-y: auto;
+
+    .content{
+      height: 40px;
+      color: $color-madatory;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-left: 16px;
+      border-bottom: 1px solid $border;
+      transition: .2s;
+
+      div:nth-child(1), div:nth-child(3){
+        width: calc(60% - 140px);
+      }
+      div:nth-child(2){
+        width: 140px;
+      }
+
+      span{
+        pointer-events: none;
+      }
+    }
+    .content:first-child{
+      border-top: 1px solid $border;
+    }
+
+    .content:hover{
+      background-color: $grey-lighter;
+      color: white;
+    }
+  }
+}
+
+.list-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+
+.list-wrapper::-webkit-scrollbar-thumb {
+  background: rgb(197, 197, 197);
+  border-radius: 20px;
+}
+
+.list-wrapper::-webkit-scrollbar-track {
+  background: rgb(236, 236, 236);
+  border-radius: 20px;
+}

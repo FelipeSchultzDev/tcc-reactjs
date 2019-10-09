@@ -128,7 +128,7 @@ export default class Listar extends Component {
 
   render() {
     return (
-      <div style={{ padding: 24, minWidth: 954 }}>
+      <div className="listar-marcas" style={{ padding: 24, minWidth: 954 }}>
         {this.state[TableType.TYPE.DISABLE] && (
         <ModalControler>
           <WarningModal
@@ -173,7 +173,7 @@ export default class Listar extends Component {
         <div className="table">
           <Table header={header} data={this.state.marcasFiltradas} disable="true" edit="true" remove="true" onDisable={this.onActionToModal} onEdit={this.onActionToModal} onDelete={this.onActionToModal} />
         </div>
-        <div className="footer" style={{ marginTop: 24 }}>
+        <div className="footer" style={{ marginTop: 20 }}>
           <Secondary title="Voltar" color={ButtonsColor.RED} click={this.backPage} />
         </div>
       </div>

@@ -60,7 +60,9 @@ export default class Listar extends Component {
 
 
   onActionToModal = ({ type, item, action }) => {
-    if (action && (type === TableType.TYPE.DETAIL || type === TableType.TYPE.DISABLE || type === TableType.TYPE.DELETE)) {
+    if (action
+      && (type === TableType.TYPE.DETAIL
+        || type === TableType.TYPE.DISABLE || type === TableType.TYPE.DELETE)) {
       switch (action) {
         case TableType.ACTION.CANCEL:
           this.closeModal(type);
@@ -153,10 +155,14 @@ export default class Listar extends Component {
 
   render() {
     return (
-      <div style={{ padding: 24, minWidth: 954 }}>
+      <div className="listar-clientes" style={{ padding: 24, minWidth: 954 }}>
         {this.state[TableType.TYPE.DETAIL] && (
         <ModalControler>
-          <Detalhes type={TableType.TYPE.DETAIL} onAccept={this.onActionToModal} id={this.state.itemTemp._id} />
+          <Detalhes
+            type={TableType.TYPE.DETAIL}
+            onAccept={this.onActionToModal}
+            id={this.state.itemTemp._id}
+          />
         </ModalControler>
         )}
         {this.state[TableType.TYPE.DISABLE] && (

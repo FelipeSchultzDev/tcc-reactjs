@@ -1,5 +1,6 @@
 import axios from 'axios';
+import URL from './config';
 
-const marca = axios.create({ baseURL: 'http://localhost:3001/marca' });
+const marca = axios.create({ baseURL: `${URL}/marca` });
 
 export default marca;

@@ -18,6 +18,10 @@ const Detalhes = ({ id, type, onAccept }) => {
     return `${date.substring(8, 10)}/${date.substring(5, 7)}/${date.substring(0, 4)}`;
   }
 
+  function formarCpf(cpf = '') {
+    return `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}`;
+  }
+
   async function getCliente() {
     const { data } = await ClienteService.get(id, { headers: {
       _token: localStorage.getItem('token'),
@@ -25,6 +29,7 @@ const Detalhes = ({ id, type, onAccept }) => {
     if (data.success) {
       data.cliente = {
         ...data.cliente,
+        cpf: formarCpf(data.cliente.cpf),
         nascimento: dateFormat(data.cliente.nascimento),
         createdAt: dateFormat(data.cliente.createdAt),
       };
@@ -34,49 +39,49 @@ const Detalhes = ({ id, type, onAccept }) => {
 
   useEffect(() => {
     getCliente();
-  }, []);
+  });
 
 
   return (
     <div className="detalhes-wrapper">
       <div className="separator">
         <Label>
-          Nome:
+          <span className="label-title">Nome:</span>
           {' '}
           {cliente.nome}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        E-mail:
+          <span className="label-title">E-mail:</span>
           {' '}
           {cliente.email ? cliente.email : '-'}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        Celular:
+          <span className="label-title">Celular:</span>
           {' '}
           {cliente.celular ? cliente.celular : '-'}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        Cpf:
+          <span className="label-title">Cpf:</span>
           {' '}
           {cliente.cpf}
         </Label>
       </div>
       <div className="separator">
         <Label>
-          Data de nascimento:
+          <span className="label-title">Data de nascimento:</span>
           {' '}
           {cliente.nascimento}
         </Label>
       </div>
       <div className="separator">
         <Label>
-        Data de criação:
+          <span className="label-title">Data de cadastro:</span>
           {' '}
           {cliente.createdAt}
         </Label>

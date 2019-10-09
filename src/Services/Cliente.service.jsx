@@ -1,5 +1,6 @@
 import axios from 'axios';
+import URL from './config';
 
-const cliente = axios.create({ baseURL: 'http://localhost:3001/cliente' });
+const cliente = axios.create({ baseURL: `${URL}/cliente` });
 
 export default cliente;

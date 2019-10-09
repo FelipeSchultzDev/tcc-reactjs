@@ -1,0 +1,23 @@
+@import '../../../../Assets/styles';
+
+.detalhes-produto-wrapper{
+  width: 500px;
+  height: 600px;
+  background-color: $white;
+  border-radius: 4px;
+  box-shadow: $header-shadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px;
+
+  .separator{
+    margin-bottom: 8px;
+    width: 300px;
+
+    span.label-title{
+      font-weight: bold;
+    }
+  }
+}
