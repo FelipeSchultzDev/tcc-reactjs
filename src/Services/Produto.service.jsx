@@ -1,5 +1,6 @@
 import axios from 'axios';
+import URL from './config';
 
-const produto = axios.create({ baseURL: 'https://back-end-tcc.herokuapp.com/produto' });
+const produto = axios.create({ baseURL: `${URL}/produto` });
 
 export default produto;

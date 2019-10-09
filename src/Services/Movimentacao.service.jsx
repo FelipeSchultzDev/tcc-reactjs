@@ -1,5 +1,6 @@
 import axios from 'axios';
+import URL from './config';
 
-const movimento = axios.create({ baseURL: 'https://back-end-tcc.herokuapp.com/movimento' });
+const movimento = axios.create({ baseURL: `${URL}/movimento` });
 
 export default movimento;
