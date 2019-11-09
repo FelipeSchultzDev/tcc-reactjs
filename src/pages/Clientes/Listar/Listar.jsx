@@ -16,6 +16,8 @@ import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import TableType from '../../../components/Table/TableType.enum';
 import Detalhes from './Detalhes/Detalhes';
 
+import Loader from '../../../components/Loader/Loader';
+
 const header = [
   { title: 'Nome', col: 'nome' },
   { title: 'Data de cadastro', col: 'createdAt' },
@@ -31,14 +33,21 @@ export default class Listar extends Component {
     [TableType.TYPE.DISABLE]: false,
     [TableType.TYPE.DELETE]: false,
     [TableType.TYPE.DETAIL]: false,
+    showLoader: false,
   }
 
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ClienteService.get('habilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
     if (response.data.success) {
+      this.setState({
+        showLoader: false,
+      });
       if (response.data.clientes.length === 0) {
         this.setState({
           clientes: [],
@@ -156,6 +165,7 @@ export default class Listar extends Component {
   render() {
     return (
       <div className="listar-clientes" style={{ padding: 24, minWidth: 954 }}>
+        {this.state.showLoader && <Loader />}
         {this.state[TableType.TYPE.DETAIL] && (
         <ModalControler>
           <Detalhes
