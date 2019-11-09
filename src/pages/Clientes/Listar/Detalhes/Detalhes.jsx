@@ -9,10 +9,13 @@ import Label from '../../../../components/Label/Label';
 import Color from '../../../../components/Buttons/ButtonsColor.enum';
 import TableType from '../../../../components/Table/TableType.enum';
 
+import Loader from '../../../../components/Loader/Loader';
+
 const Detalhes = ({ id, type, onAccept }) => {
   const [cliente, setCliente] = useState({
     Nome: '',
   });
+  const [showLoader, setShowLoader] = useState(false);
 
   function dateFormat(date) {
     return `${date.substring(8, 10)}/${date.substring(5, 7)}/${date.substring(0, 4)}`;
@@ -23,6 +26,7 @@ const Detalhes = ({ id, type, onAccept }) => {
   }
 
   async function getCliente() {
+    setShowLoader(true);
     const { data } = await ClienteService.get(id, { headers: {
       _token: localStorage.getItem('token'),
     } });
@@ -35,6 +39,7 @@ const Detalhes = ({ id, type, onAccept }) => {
       };
       setCliente(data.cliente);
     }
+    setShowLoader(false);
   }
 
   useEffect(() => {
@@ -44,6 +49,7 @@ const Detalhes = ({ id, type, onAccept }) => {
 
   return (
     <div className="detalhes-wrapper">
+      {showLoader && <Loader />}
       <div className="separator">
         <Label>
           <span className="label-title">Nome:</span>

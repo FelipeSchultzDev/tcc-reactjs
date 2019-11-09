@@ -9,6 +9,8 @@ import './Home.scss';
 import Header from '../../components/Header/Header';
 import HomeTable from './HomeTable/HomeTable';
 
+import Loader from '../../components/Loader/Loader';
+
 const Home = () => {
   const [produtos, setProdutos] = useState([]);
   const [totalHoje, setTotalHoje] = useState('00');
@@ -16,11 +18,14 @@ const Home = () => {
   const [totalAtention, setTotalAtention] = useState(0);
   const [totalDanger, setTotalDanger] = useState(0);
 
+  const [showLoader, setShowLoader] = useState(false);
+
   const retrieveProdutos = async () => {
     const { data } = await HomeService.get('', { headers: {
       _token: localStorage.getItem('token'),
     } });
     if (data && data.success) {
+      setShowLoader(false);
       setProdutos(data.listaProdutos.produtos);
       setTotalHoje(data.totalVendasHoje);
       setTotalMes(data.totalVendasMes);
@@ -30,11 +35,13 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setShowLoader(true);
     retrieveProdutos();
   }, []);
 
   return (
     <>
+      {showLoader && <Loader />}
       <Header />
       <div className="home-container">
         <div className="quantidades">
