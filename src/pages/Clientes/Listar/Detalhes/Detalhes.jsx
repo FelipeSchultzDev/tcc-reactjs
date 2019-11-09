@@ -26,11 +26,11 @@ const Detalhes = ({ id, type, onAccept }) => {
   }
 
   async function getCliente() {
-    setShowLoader(true);
     const { data } = await ClienteService.get(id, { headers: {
       _token: localStorage.getItem('token'),
     } });
     if (data.success) {
+      setShowLoader(false);
       data.cliente = {
         ...data.cliente,
         cpf: formarCpf(data.cliente.cpf),
@@ -39,12 +39,12 @@ const Detalhes = ({ id, type, onAccept }) => {
       };
       setCliente(data.cliente);
     }
-    setShowLoader(false);
   }
 
   useEffect(() => {
+    setShowLoader(true);
     getCliente();
-  });
+  }, []);
 
 
   return (

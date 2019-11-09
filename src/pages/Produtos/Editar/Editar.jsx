@@ -10,9 +10,11 @@ import Input from '../../../components/Input/Input';
 import StyledSelect from '../../../components/StyledSelect/StyledSelect';
 import MyCurrencyInput from '../../../components/MyCurrencyInput/MyCurrencyInput';
 
+import Loader from '../../../components/Loader/Loader';
 
 export default class Editar extends Component {
   state = {
+    showLoader: false,
     nome: {
       value: '',
       error: false,
@@ -50,28 +52,34 @@ export default class Editar extends Component {
   }
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const { data } = await ProdutoService.get(this.props.match.params.id, { headers: {
       _token: localStorage.getItem('token'),
     } });
     this.setState({
+      showLoader: false,
       combo: data.combo,
     });
     const produto = {
       nome: data.produto.nome,
       valorVenda: data.produto.valorVenda,
       descricao: data.produto.descricao,
-      marca: data.produto.marca._id,
+      marca: data.produto.marca ? data.produto.marca._id : '',
       unidadeMedida: data.produto.unidadeMedida._id,
       qtdMinima: data.produto.qtdMinima,
     };
     Object.keys(produto).forEach((key) => {
       const previouState = this.state[key];
-      this.setState({
-        [key]: {
-          ...previouState,
-          value: produto[key],
-        },
-      });
+      if (key !== 'showLoader') {
+        this.setState({
+          [key]: {
+            ...previouState,
+            value: produto[key],
+          },
+        });
+      }
     });
   }
 
@@ -91,10 +99,16 @@ export default class Editar extends Component {
   }
 
   edit = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const { id } = this.props.match.params;
     const { data } = await ProdutoService.put(id, this.createObj(), { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (typeof data.msg === 'object') {
       this.validate(data.msg);
     }
@@ -134,13 +148,15 @@ export default class Editar extends Component {
 
   clear = () => {
     Object.keys(this.state).forEach((key) => {
-      this.setState({
-        [key]: {
-          value: '',
-          error: false,
-          msg: '',
-        },
-      });
+      if (key !== 'showLoader') {
+        this.setState({
+          [key]: {
+            value: '',
+            error: false,
+            msg: '',
+          },
+        });
+      }
     });
   }
 
@@ -148,7 +164,7 @@ export default class Editar extends Component {
 
   validate = (errorList = []) => {
     Object.keys(this.state).forEach((key) => {
-      if (key !== 'combo') {
+      if (key !== 'combo' && key !== 'showLoader') {
         if (errorList.some(error => error.toLowerCase().includes(key.toLocaleLowerCase()))) {
           const { value } = this.state[key];
           this.setState({
@@ -175,6 +191,7 @@ export default class Editar extends Component {
   render() {
     return (
       <div className="editar-wrapper">
+        {this.state.showLoader && <Loader />}
         <div className="form-editar-container">
           <div className="cadastrar-content">
             <div className="separator">

@@ -10,6 +10,8 @@ import VendaTable from './VendaTable/VendaTable';
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Secondary } from '../../../components/Buttons/Buttons';
 
+import Loader from '../../../components/Loader/Loader';
+
 const header = [
   'dataVenda',
   'valorTotal',
@@ -20,13 +22,19 @@ export default class Listar extends Component {
   state = {
     vendas: [],
     vendasFiltradas: [],
+    showLoader: false,
   }
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const { data } = await VendaService.get('', { headers: {
       _token: localStorage.getItem('token'),
     } });
-
+    this.setState({
+      showLoader: false,
+    });
     if (data.success) {
       this.setState({
         vendas: data.vendas,
@@ -71,6 +79,7 @@ export default class Listar extends Component {
   render() {
     return (
       <div style={{ padding: 24, minWidth: 954 }}>
+        {this.state.showLoader && <Loader />}
         <div className="top-items">
           <div className="busca"><InputSearch change={this.filter} /></div>
         </div>

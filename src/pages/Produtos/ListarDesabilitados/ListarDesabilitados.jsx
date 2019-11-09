@@ -12,6 +12,8 @@ import { Secondary } from '../../../components/Buttons/Buttons';
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import TableType from '../../../components/Table/TableType.enum';
 
+import Loader from '../../../components/Loader/Loader';
+
 const header = [
   { title: 'Nome', col: 'nome' },
   { title: 'Data de cadastro', col: 'createdAt' },
@@ -29,12 +31,19 @@ export default class ListarDesabilitados extends Component {
     [TableType.TYPE.DISABLE]: false,
     [TableType.TYPE.DELETE]: false,
     [TableType.TYPE.DETAIL]: false,
+    showLoader: false,
   }
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ProdutoService.get('desabilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) {
       if (response.data.produtos.length === 0) {
         this.setState({
@@ -90,7 +99,13 @@ export default class ListarDesabilitados extends Component {
 
   [TableType.TYPE.ENABLE] = async () => {
     const _token = localStorage.getItem('token');
+    this.setState({
+      showLoader: true,
+    });
     const response = await ProdutoService.put(`${this.state.itemTemp._id}/ativar`, {}, { headers: { _token } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) this.componentDidMount();
   };
 
@@ -138,6 +153,7 @@ export default class ListarDesabilitados extends Component {
   render() {
     return (
       <div className="lista-desabilitados" style={{ padding: 24, minWidth: 954 }}>
+        {this.state.showLoader && <Loader />}
         {this.state[TableType.TYPE.ENABLE] && (
         <ModalControler>
           <WarningModal

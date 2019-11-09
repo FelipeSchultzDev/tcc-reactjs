@@ -15,6 +15,8 @@ import Color from '../../components/Buttons/ButtonsColor.enum';
 import Add from './add/Add';
 import ReferenciarCliente from './ReferenciarCliente/ReferenciarCliente';
 
+import Loader from '../../components/Loader/Loader';
+
 const Terminal = () => {
   const [listaCliente, setListaCliente] = useState(null);
   const [cliente, setCliente] = useState(null);
@@ -22,6 +24,8 @@ const Terminal = () => {
   const [valorTotal, setValorTotal] = useState(0);
   const [listaProdutos, setListaProdutos] = useState([]);
   const [clear, setClear] = useState(false);
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const verifyRandom = () => {
     let val = true;
@@ -41,9 +45,11 @@ const Terminal = () => {
   const changeCpf = cpf => `${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}`;
 
   const getClientes = async () => {
+    setShowLoader(true);
     const { data } = await ClienteService.get('habilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
+    setShowLoader(false);
     if (data.success) {
       const tmp = data.clientes.map(tmpCliente => ({
         _id: tmpCliente._id,
@@ -67,17 +73,22 @@ const Terminal = () => {
 
     totalQtd += parseInt(quantidade, 10);
 
+    setShowLoader(true);
 
     const { data } = await VendaService.get(`validarQuantidade/${id}?qtd=${totalQtd}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    setShowLoader(false);
     return data.validate;
   };
 
   const handleChose = async (produto) => {
+    setShowLoader(true);
     const { data } = await ProdutoService.get(produto.id, { headers: {
       _token: localStorage.getItem('token'),
     } });
+
+    setShowLoader(false);
 
     const { valorVenda, desconto, quantidade, id } = produto;
 
@@ -127,9 +138,12 @@ const Terminal = () => {
     if (cliente) {
       body.cliente = cliente._id;
     }
+    setShowLoader(true);
     const { data } = await VendaService.post('vender', body, { headers: {
       _token: localStorage.getItem('token'),
     } });
+
+    setShowLoader(false);
 
     if (data.success) {
       setListaProdutos([]);
@@ -157,6 +171,7 @@ const Terminal = () => {
 
   return (
     <>
+      {showLoader && <Loader />}
       {modalCliente
       && (
       <ModalController>

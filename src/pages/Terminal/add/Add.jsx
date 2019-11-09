@@ -9,6 +9,8 @@ import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Color from '../../../components/Buttons/ButtonsColor.enum';
 import VendaService from '../../../Services/Venda.service';
 
+import Loader from '../../../components/Loader/Loader';
+
 const Add = ({ onChose, clearForm, afterClearForm }) => {
   const [options, setOptions] = useState([]);
   const [qtdError, setQtdError] = useState(false);
@@ -22,13 +24,16 @@ const Add = ({ onChose, clearForm, afterClearForm }) => {
     valorVenda: '',
   });
 
+  const [showLoader, setShowLoader] = useState(false);
+
   const [clearAutocomplete, setClearAutocomplete] = useState(false);
 
   const retrieveOptions = async () => {
+    setShowLoader(true);
     const { data } = await VendaService.get('listaProduto', { headers: {
       _token: localStorage.getItem('token'),
     } });
-
+    setShowLoader(false);
     if (data.success && data.produtos.length) {
       setOptions(data.produtos);
     } else {
@@ -37,9 +42,11 @@ const Add = ({ onChose, clearForm, afterClearForm }) => {
   };
 
   const selectProduct = async (id) => {
+    setShowLoader(true);
     const { data } = await VendaService.get(`listaProduto/${id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    setShowLoader(false);
     if (data.success) {
       const previousProduto = produto;
       setProduto({
@@ -128,6 +135,7 @@ const Add = ({ onChose, clearForm, afterClearForm }) => {
 
   return (
     <>
+      {showLoader && <Loader />}
       <Autocomplete
         label="Nome do produto"
         placeholder="Ex. stem"
@@ -144,6 +152,7 @@ const Add = ({ onChose, clearForm, afterClearForm }) => {
         errorMsg="Quantidade é obrigatória"
         name="quantidade"
         type="number"
+        min="1"
         value={produto.quantidade}
         onChange={changeHandle}
         placeholder="Ex. 12"

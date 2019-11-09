@@ -17,6 +17,8 @@ import TableType from '../../../components/Table/TableType.enum';
 import Detalhes from './Detalhes/Detalhes';
 import AlterarEstoque from './AlterarEstoque/AlterarEstoque';
 
+import Loader from '../../../components/Loader/Loader';
+
 const header = [
   { title: 'Nome', col: 'nome' },
   { title: 'Data de cadastro', col: 'createdAt' },
@@ -36,6 +38,7 @@ export default class Listar extends Component {
     [TableType.TYPE.DISABLE]: false,
     [TableType.TYPE.DELETE]: false,
     [TableType.TYPE.DETAIL]: false,
+    showLoader: false,
   }
 
 
@@ -44,9 +47,15 @@ export default class Listar extends Component {
   }
 
   getProdutos = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ProdutoService.get('habilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) {
       if (response.data.produtos.length === 0) {
         this.setState({
@@ -96,16 +105,28 @@ export default class Listar extends Component {
   }
 
   [TableType.TYPE.DISABLE] = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ProdutoService.put(`${this.state.itemTemp._id}/desativar`, {}, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) this.componentDidMount();
   };
 
   [TableType.TYPE.DELETE] = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ProdutoService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) this.componentDidMount();
   };
 
@@ -173,6 +194,7 @@ export default class Listar extends Component {
   render() {
     return (
       <div className="listar-produtos" style={{ padding: 24, minWidth: 954 }}>
+        {this.state.showLoader && <Loader />}
         {this.state.changeEstoque && (
         <ModalControler>
           <AlterarEstoque

@@ -9,9 +9,12 @@ import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Input from '../../../components/Input/Input';
 import MyInputMask from '../../../components/MyInputMask/MyInputMask';
 
+import Loader from '../../../components/Loader/Loader';
+
 
 export default class Cadastrar extends Component {
   state = {
+    showLoader: false,
     nome: {
       value: '',
       error: false,
@@ -55,6 +58,9 @@ export default class Cadastrar extends Component {
   }
 
   create = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const { data } = await ClienteService.post('', this.createObj(), { headers: {
       _token: localStorage.getItem('token'),
     } });
@@ -77,19 +83,21 @@ export default class Cadastrar extends Component {
 
   clear = () => {
     Object.keys(this.state).forEach((key) => {
-      this.setState({
-        [key]: {
-          value: '',
-          error: false,
-          msg: '',
-        },
-      });
+      if (key !== 'showLoader') {
+        this.setState({
+          [key]: {
+            value: '',
+            error: false,
+            msg: '',
+          },
+        });
+      }
     });
   }
 
   validate = (errorList = []) => {
     Object.keys(this.state).forEach((key) => {
-      if (errorList.some(error => error.toLowerCase().includes(key))) {
+      if (key !== 'showLoader' && errorList.some(error => error.toLowerCase().includes(key))) {
         const { value } = this.state[key];
         this.setState({
           [key]: {
@@ -98,7 +106,7 @@ export default class Cadastrar extends Component {
             msg: errorList.filter(error => error.toLowerCase().includes(key))[0],
           },
         });
-      } else {
+      } else if (key !== 'showLoader') {
         const { value } = this.state[key];
         this.setState({
           [key]: {
@@ -113,6 +121,9 @@ export default class Cadastrar extends Component {
 
   createAndback= async () => {
     const data = await this.create();
+    this.setState({
+      showLoader: false,
+    });
     if (data.success) {
       this.backPage();
     }
@@ -120,6 +131,9 @@ export default class Cadastrar extends Component {
 
   createAndNew = async () => {
     const data = await this.create();
+    this.setState({
+      showLoader: false,
+    });
     if (data.success) {
       this.clear();
     }
@@ -135,6 +149,7 @@ export default class Cadastrar extends Component {
   render() {
     return (
       <div className="cadastrar-wrapper">
+        {this.state.showLoader && <Loader />}
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
             <div className="separator">

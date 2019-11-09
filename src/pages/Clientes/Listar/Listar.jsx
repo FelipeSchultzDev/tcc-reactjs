@@ -96,18 +96,34 @@ export default class Listar extends Component {
   }
 
   [TableType.TYPE.DISABLE] = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ClienteService.put(`${this.state.itemTemp._id}/desativar`, {}, { headers: {
       _token: localStorage.getItem('token'),
     } });
-    if (response.data.success) this.componentDidMount();
+    if (response.data.success) {
+      this.componentDidMount();
+      this.setState({
+        showLoader: false,
+      });
+    }
   };
 
   [TableType.TYPE.DELETE] = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await ClienteService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
     console.log(response.data);
-    if (response.data.success) this.componentDidMount();
+    if (response.data.success) {
+      this.componentDidMount();
+      this.setState({
+        showLoader: false,
+      });
+    }
   };
 
   filter = (e) => {

@@ -37,7 +37,7 @@ $loader-color: #5a5a5a;
     width: 150px;
     height: 150px;
     border-bottom-color: $loader-color;
-    animation: rotate $animation-time infinite;
+    animation: reverseRotate $animation-time infinite;
   }
 
   .loader-4{

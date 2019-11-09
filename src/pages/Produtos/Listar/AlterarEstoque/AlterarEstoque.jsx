@@ -9,6 +9,8 @@ import { Primary, Secondary, PrimaryIcon } from '../../../../components/Buttons/
 import Color from '../../../../components/Buttons/ButtonsColor.enum';
 import MyCurrencyInput from '../../../../components/MyCurrencyInput/MyCurrencyInput';
 
+import Loader from '../../../../components/Loader/Loader';
+
 const StateEnum = {
   RETIRAR: 'RETIRAR',
   ADICIONAR: 'ADICIONAR',
@@ -20,6 +22,8 @@ const AlterarEstoque = ({ id, onClose, onComplete }) => {
   const [minValue, setMinValue] = useState(0);
   const [selectState, setSelectState] = useState(true);
   const [state, setState] = useState('');
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const handleChange = (e) => {
     e.persist();
@@ -49,9 +53,11 @@ const AlterarEstoque = ({ id, onClose, onComplete }) => {
   const minus = () => setInputValue(Number(inputValue) ? Number(inputValue) - 1 : 0);
 
   const retirar = async () => {
+    setShowLoader(true);
     const { data } = await ProdutoService.put(`${id}/retirada_estoque`, { quantidade: Number(inputValue) }, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    setShowLoader(false);
     if (data && data.success) {
       onComplete();
     }
@@ -60,11 +66,13 @@ const AlterarEstoque = ({ id, onClose, onComplete }) => {
   const adicionar = async () => {
     const tmpValor = valor.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
       .replace(',', '.');
+    setShowLoader(true);
     const { data } = await ProdutoService.put(`${id}/entrada_estoque`,
       { quantidade: Number(inputValue), valor: tmpValor },
       { headers: {
         _token: localStorage.getItem('token'),
       } });
+    setShowLoader(false);
     if (data && data.success) {
       onComplete();
     }
@@ -78,6 +86,7 @@ const AlterarEstoque = ({ id, onClose, onComplete }) => {
 
   return (
     <div className="alterar-estoque-wrapper">
+      {showLoader && <Loader />}
       <header>Alterar estoque</header>
       {selectState ? (
         <>

@@ -9,9 +9,11 @@ import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Input from '../../../components/Input/Input';
 import MyInputMask from '../../../components/MyInputMask/MyInputMask';
 
+import Loader from '../../../components/Loader/Loader';
 
 export default class Editar extends Component {
   state = {
+    showLoader: false,
     nome: {
       value: '',
       error: false,
@@ -40,6 +42,9 @@ export default class Editar extends Component {
   }
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const { data } = await ClienteService.get(this.props.match.params.id, { headers: {
       _token: localStorage.getItem('token'),
     } });
@@ -59,6 +64,9 @@ export default class Editar extends Component {
         },
       });
     });
+    this.setState({
+      showLoader: false,
+    });
   }
 
   backPage = () => {
@@ -77,6 +85,9 @@ export default class Editar extends Component {
   }
 
   edit = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const { id } = this.props.match.params;
     const { data } = await ClienteService.put(id, this.createObj(), { headers: {
       _token: localStorage.getItem('token'),
@@ -87,6 +98,9 @@ export default class Editar extends Component {
     if (data.success) {
       this.props.history.push('../listar');
     }
+    this.setState({
+      showLoader: false,
+    });
   }
 
   createObj = () => {
@@ -102,13 +116,15 @@ export default class Editar extends Component {
 
   clear = () => {
     Object.keys(this.state).forEach((key) => {
-      this.setState({
-        [key]: {
-          value: '',
-          error: false,
-          msg: '',
-        },
-      });
+      if (key !== 'showLoader') {
+        this.setState({
+          [key]: {
+            value: '',
+            error: false,
+            msg: '',
+          },
+        });
+      }
     });
   }
 
@@ -116,7 +132,7 @@ export default class Editar extends Component {
 
   validate = (errorList = []) => {
     Object.keys(this.state).forEach((key) => {
-      if (errorList.some(error => error.toLowerCase().includes(key))) {
+      if (key !== 'showLoader' && errorList.some(error => error.toLowerCase().includes(key))) {
         const { value } = this.state[key];
         this.setState({
           [key]: {
@@ -125,7 +141,7 @@ export default class Editar extends Component {
             msg: errorList.filter(error => error.toLowerCase().includes(key))[0],
           },
         });
-      } else {
+      } else if (key !== 'showLoader') {
         const { value } = this.state[key];
         this.setState({
           [key]: {
@@ -142,6 +158,7 @@ export default class Editar extends Component {
     return (
 
       <div className="editar-wrapper">
+        {this.state.showLoader && <Loader />}
         <div className="form-editar-container">
           <div className="cadastrar-content">
             <div className="separator">

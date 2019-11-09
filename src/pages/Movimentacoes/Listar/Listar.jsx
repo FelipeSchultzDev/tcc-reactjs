@@ -9,6 +9,8 @@ import Table from '../../../components/Table/Table';
 import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Secondary } from '../../../components/Buttons/Buttons';
 
+import Loader from '../../../components/Loader/Loader';
+
 const header = [
   { title: 'Tipo', col: 'tipo' },
   { title: 'Produto', col: 'produto' },
@@ -21,13 +23,20 @@ export default class Listar extends Component {
   state = {
     movimentos: [],
     movimentosFiltrados: [],
+    showLoader: false,
   }
 
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const response = await MovimentacaoService.get('', { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) {
       if (response.data.movimentos.length === 0) {
         this.setState({
@@ -94,6 +103,7 @@ export default class Listar extends Component {
   render() {
     return (
       <div className="movimentacao" style={{ padding: 24, minWidth: 954 }}>
+        {this.state.showLoader && <Loader />}
         <div className="top-items">
           <div className="busca"><InputSearch change={this.filter} /></div>
         </div>

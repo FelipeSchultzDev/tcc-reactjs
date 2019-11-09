@@ -8,12 +8,14 @@ import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import Input from '../../../components/Input/Input';
 
+import Loader from '../../../components/Loader/Loader';
 
 export default class Cadastrar extends Component {
   state = {
     nome: '',
     erro: false,
     errorMsg: 'O campo nome é obrigatório!',
+    showLoader: false,
   }
 
   handleChange = (e) => {
@@ -38,6 +40,9 @@ export default class Cadastrar extends Component {
   }
 
   create = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const { nome } = this.state;
     if (nome) {
       const { data } = await MarcaService.post('', { nome }, { headers: {
@@ -59,6 +64,9 @@ export default class Cadastrar extends Component {
 
   createAndback= async () => {
     const data = await this.create();
+    this.setState({
+      showLoader: false,
+    });
     if (data.success) {
       this.backPage();
     }
@@ -66,6 +74,9 @@ export default class Cadastrar extends Component {
 
   createAndNew = async () => {
     const data = await this.create();
+    this.setState({
+      showLoader: false,
+    });
     if (data.success) {
       this.setState({
         nome: '',
@@ -77,6 +88,7 @@ export default class Cadastrar extends Component {
   render() {
     return (
       <div className="cadastrar-wrapper">
+        {this.state.showLoader && <Loader />}
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
             <Input placeholder="Digite o nome da marca" name="nome" value={this.state.nome} errorMsg={this.state.errorMsg} error={this.state.erro} onChange={this.handleChange} />

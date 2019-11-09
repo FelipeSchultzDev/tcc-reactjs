@@ -15,6 +15,8 @@ import ButtonsColor from '../../../components/Buttons/ButtonsColor.enum';
 import { Primary, Secondary } from '../../../components/Buttons/Buttons';
 import TableType from '../../../components/Table/TableType.enum';
 
+import Loader from '../../../components/Loader/Loader';
+
 const header = [
   { title: 'Nome', col: 'nome' },
   { title: 'Data de cadastro', col: 'createdAt' },
@@ -26,9 +28,13 @@ export default class Listar extends Component {
     marcasFiltradas: [],
     itemTemp: {},
     [TableType.TYPE.DISABLE]: false,
+    showLoader: false,
   }
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const response = await MarcaService.get('habilitados', { headers: {
       _token: localStorage.getItem('token'),
     } });
@@ -47,6 +53,9 @@ export default class Listar extends Component {
         });
       }
     }
+    this.setState({
+      showLoader: false,
+    });
     this.filter();
   }
 
@@ -74,16 +83,28 @@ export default class Listar extends Component {
   }
 
   [TableType.TYPE.DISABLE] = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await MarcaService.put(`${this.state.itemTemp._id}/desativar`, {}, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) this.componentDidMount();
   };
 
   [TableType.TYPE.DELETE] = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const response = await MarcaService.delete(`${this.state.itemTemp._id}`, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (response.data.success) this.componentDidMount();
   };
 
@@ -129,6 +150,7 @@ export default class Listar extends Component {
   render() {
     return (
       <div className="listar-marcas" style={{ padding: 24, minWidth: 954 }}>
+        {this.state.showLoader && <Loader />}
         {this.state[TableType.TYPE.DISABLE] && (
         <ModalControler>
           <WarningModal

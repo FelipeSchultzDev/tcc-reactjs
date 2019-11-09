@@ -10,8 +10,11 @@ import Input from '../../../components/Input/Input';
 import MyCurrencyInput from '../../../components/MyCurrencyInput/MyCurrencyInput';
 import StyledSelect from '../../../components/StyledSelect/StyledSelect';
 
+import Loader from '../../../components/Loader/Loader';
+
 export default class Cadastrar extends Component {
   state = {
+    showLoader: false,
     nome: {
       value: '',
       error: false,
@@ -54,9 +57,15 @@ export default class Cadastrar extends Component {
   }
 
   async componentDidMount() {
+    this.setState({
+      showLoader: true,
+    });
     const { data } = await ProdutoService.get('comboOptions', { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (data.success) {
       this.setState({
         combo: data.combo,
@@ -80,9 +89,15 @@ export default class Cadastrar extends Component {
   }
 
   create = async () => {
+    this.setState({
+      showLoader: true,
+    });
     const { data } = await ProdutoService.post('', this.createObj(), { headers: {
       _token: localStorage.getItem('token'),
     } });
+    this.setState({
+      showLoader: false,
+    });
     if (typeof data.msg === 'object') {
       this.validate(data.msg);
     }
@@ -118,7 +133,7 @@ export default class Cadastrar extends Component {
 
   clear = () => {
     Object.keys(this.state).forEach((key) => {
-      if (key !== 'combo') {
+      if (key !== 'combo' && key !== 'showLoader') {
         this.setState({
           [key]: {
             value: '',
@@ -132,7 +147,7 @@ export default class Cadastrar extends Component {
 
   validate = (errorList = []) => {
     Object.keys(this.state).forEach((key) => {
-      if (key !== 'combo') {
+      if (key !== 'combo' && key !== 'showLoader') {
         if (errorList.some(error => error.toLowerCase().includes(key.toLocaleLowerCase()))) {
           const { value } = this.state[key];
           this.setState({
@@ -180,6 +195,7 @@ export default class Cadastrar extends Component {
   render() {
     return (
       <div className="cadastrar-wrapper">
+        {this.state.showLoader && <Loader />}
         <div className="form-cadastrar-container">
           <div className="cadastrar-content">
             <div className="separator">

@@ -9,18 +9,24 @@ import Label from '../../../../components/Label/Label';
 import Color from '../../../../components/Buttons/ButtonsColor.enum';
 import TableType from '../../../../components/Table/TableType.enum';
 
+import Loader from '../../../../components/Loader/Loader';
+
 const Detalhes = ({ id, type, onAccept }) => {
   const [produto, setProduto] = useState({
   });
+
+  const [showLoader, setShowLoader] = useState(false);
 
   function dateFormat(date) {
     return `${date.substring(8, 10)}/${date.substring(5, 7)}/${date.substring(0, 4)}`;
   }
 
   async function getCliente() {
+    setShowLoader(true);
     const { data } = await ProdutoService.get(id, { headers: {
       _token: localStorage.getItem('token'),
     } });
+    setShowLoader(false);
     if (data.success) {
       data.produto = {
         ...data.produto,
@@ -32,11 +38,12 @@ const Detalhes = ({ id, type, onAccept }) => {
 
   useEffect(() => {
     getCliente();
-  });
+  }, []);
 
 
   return (
     <div className="detalhes-produto-wrapper">
+      {showLoader && <Loader />}
       <div className="separator">
         <Label>
           <span className="label-title">Nome:</span>
